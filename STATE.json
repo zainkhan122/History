@@ -1,10 +1,10 @@
 {
- "now": "ep01 v2 cloud render (tag ep01-petrov-v2); engine has motion clips + archive inserts + FX",
+ "now": "ep01 v2 delivered (release ep01-petrov-v2). Waiting on owner: review v2 + optional free HF token for 4 more clips",
  "next": [
-  "Check ep01-petrov-v2 render (python3 reelkit/cloud.py status), review, send to owner",
-  "Get a free HF token from owner -> clips.py gen ep01 (s01_bunker s05_officer s06_phone s09_kitchen pending) -> re-render v3",
-  "Ep02: pick next Paper Trail subject (docs/NICHE_RESEARCH.md), research + script + plates + clips.json from day one",
-  "Optional: depth-parallax fallback for plates when GPU quota is out (Depth-Anything ONNX on CPU)"
+  "Owner feedback on v2",
+  "With HF_TOKEN: clips.py gen ep01 (s01_bunker s05_officer s06_phone s09_kitchen) -> media push -> cloud render v3",
+  "Ep02 Paper Trail: research + script + plates + clips.json (4-6 Wan + 1-2 archive) from day one",
+  "Optional: CPU depth-parallax fallback when GPU quota is out"
  ],
  "owner_rules": [
   "Repo zainkhan122/History is the SSOT; sync every change (tools/sync.sh) so a new session resumes exactly",
@@ -23,17 +23,18 @@
   "huggingface": "not provided (optional: raises ZeroGPU quota)",
   "cloudflare": "not provided (optional: Workers AI images 10k neurons/day)"
  },
- "updated_at": "2026-10-11T09:04:07Z",
+ "updated_at": "2026-10-11T09:11:20Z",
  "episodes": {
   "series/paper-trail/ep01-petrov": {
    "title": "The Man Who Did Nothing",
-   "status": "v2 rendering in cloud (2 Wan motion clips + archival Minuteman insert + light leaks/film FX); 4 more clips pending HF quota",
-   "release": "ep01-petrov-v1 (v2: ep01-petrov-v2)",
+   "status": "v2 delivered (cloud render #2, QA pass): 2 Wan motion clips + archival Minuteman insert + light leaks/film FX; v3 = 4 more clips once HF token available",
+   "release": "ep01-petrov-v2",
    "updated": "2026-10-11"
   }
  },
  "proven": {
   "cloud_render": "run #1 success 2026-10-11, 10 min, QA pass (release ep01-petrov-cloud-test)",
-  "media_roundtrip": "fresh clone + media pull: 21/21 sha256 verified"
+  "media_roundtrip": "fresh clone + media pull: 21/21 sha256 verified",
+  "cloud_render_v2": "run #2 success, QA pass: -14.08 LUFS, TP -1.22, ASR 0.963"
  }
 }
