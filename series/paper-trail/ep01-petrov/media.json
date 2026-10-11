@@ -1,0 +1,90 @@
+{
+ "files": {
+  "assets/memorial_stone.jpg": {
+   "sha256": "819883abb1ad4ad13665a1708f0dd28bc66921452a93fcafa066a55a89ce7a7e",
+   "size": 526696
+  },
+  "assets/s01_bunker.jpg": {
+   "sha256": "e542a31fdd583976bcaf7fc2dccecf9d320659f99032c3f59f2e40c22f59a679",
+   "size": 684187
+  },
+  "assets/s02_jet.jpg": {
+   "sha256": "f7bbf98675691c33d4ae3664d4cf698d3f5b37bce9ad3348b147cb2aff3b9b4e",
+   "size": 559345
+  },
+  "assets/s03_console.jpg": {
+   "sha256": "f481952122bb5fa15fb24e1666d6637b0a4dabb89e621fec7733e38f0d388745",
+   "size": 747462
+  },
+  "assets/s04_globe.jpg": {
+   "sha256": "e843a54ce2ff21dc085e694390230b15de3d579876a3478a50ad682c0ac15669",
+   "size": 627206
+  },
+  "assets/s05_officer.jpg": {
+   "sha256": "4a17d55277dbc76760b39725f12b6d23b0b7ffff8814579618ba1be31205195d",
+   "size": 776947
+  },
+  "assets/s06_phone.jpg": {
+   "sha256": "d4360a7ef0c486f9694cdc2e1ce428d79c4dafd93fe9170f643c29fa2fd5e47b",
+   "size": 734424
+  },
+  "assets/s07_sunlight.jpg": {
+   "sha256": "f5a7adcae7178ce0acb198debfb9318a44d3c1266a03cb0d732cb95485de2e88",
+   "size": 743414
+  },
+  "assets/s08_logbook.jpg": {
+   "sha256": "0cf86755b53618a6daff0abda14465acf0317e4f2e2266a0a59b028c727fd7de",
+   "size": 630585
+  },
+  "assets/s09_kitchen.jpg": {
+   "sha256": "b83a8ab95c1e85918b6185b4cdd7ca704b142ab70d63e92348f36fd6f8796a5a",
+   "size": 740362
+  },
+  "assets/s10_earth.jpg": {
+   "sha256": "1a0a068a16937a3ad8d517436f64d76a0a107be020fc9a6dae1e8c6cb3b01124",
+   "size": 535813
+  },
+  "vo/v01.mp3": {
+   "sha256": "9156909adf6230af88784e7ce8519a6660b98983e2e6e87c2ddd1847de47814e",
+   "size": 68772
+  },
+  "vo/v02.mp3": {
+   "sha256": "e4a987ad588de992fc01a7cc81cabe5c9299b9af094d8ccb5d9b4a635d0773f8",
+   "size": 72533
+  },
+  "vo/v03.mp3": {
+   "sha256": "888e33fe68ee3fce685b670110b6902be7d0de8a84f33e51fa77c3733d28bdae",
+   "size": 48292
+  },
+  "vo/v04.mp3": {
+   "sha256": "2f333ad90808e4d2e31231dc40ac9a1f1daef1f5132d05167a5ae19c42abc29b",
+   "size": 53725
+  },
+  "vo/v05.mp3": {
+   "sha256": "006189ea972abe5afa956bad7e6cbc2ef882abdf07b1931d89f7f8e27843ad59",
+   "size": 77549
+  },
+  "vo/v06.mp3": {
+   "sha256": "9b00abc45a6b68d24ec7569ddc24f73c687349693cbda5b988a5ead0b34fc7b2",
+   "size": 65010
+  },
+  "vo/v07.mp3": {
+   "sha256": "7939ffadacc4f0befaec502a718cafa92a20894825c9a868e0d8a85704cc8d7d",
+   "size": 47247
+  },
+  "vo/v08.mp3": {
+   "sha256": "bcb1255949d654b09bd7ab85f42882768f257a5d40b7dab7c24c175ca3751e22",
+   "size": 49964
+  },
+  "vo/v09.mp3": {
+   "sha256": "130841642af19ed6c5f68b65be63b0a78a3b07d11bbd16d589459b574f2a23dd",
+   "size": 60204
+  },
+  "vo/v10.mp3": {
+   "sha256": "60c9a3f8aff2c88d7bea1bb2fe4ca22b68984c6ee87f4c62ffe649189940de62",
+   "size": 94058
+  }
+ },
+ "release": "media-ep01-petrov",
+ "repo": "zainkhan122/History"
+}

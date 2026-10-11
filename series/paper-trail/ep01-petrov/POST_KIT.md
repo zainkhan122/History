@@ -5,7 +5,7 @@
 |---|---|
 | Format | 9:16 · 1080×1920 · 30 fps · H.264 + AAC |
 | Length | 87 s |
-| Audio | −14 LUFS integrated, true peak ≤ −1.5 dBTP |
+| Audio | −14 LUFS integrated, true peak −1.3 dBTP |
 
 `final.mp4` is the upload file. `cover.jpg` is the thumbnail / Reels cover.
 

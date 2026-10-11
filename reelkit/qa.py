@@ -31,8 +31,9 @@ try:
     if a.words:
         pcm = subprocess.run([FF, "-v", "error", "-i", a.video, "-ac", "1", "-ar", "16000", "-f", "s16le", "-"], capture_output=True).stdout
         segs, _ = WhisperModel("small.en", device="cpu", compute_type="int8").transcribe(np.frombuffer(pcm, np.int16).astype(np.float32) / 32768, beam_size=1, language="en")
-        norm = lambda s: re.sub(r"[^a-z ]", " ", s.lower()).split()
-        ref = norm(" ".join(w["w"] for w in json.load(open(a.words))["words"])); hyp = norm(" ".join(s.text for s in segs))
+        norm = lambda s: re.sub(r"[^a-z0-9 ]", " ", s.lower()).split()
+        W = json.load(open(a.words)); W = W["words"] if "words" in W else [w for k in sorted(W) for w in W[k]]
+        ref = norm(" ".join(w.get("w") or w.get("word", "") for w in W)); hyp = norm(" ".join(s.text for s in segs))
         res["asr_match"] = round(difflib.SequenceMatcher(None, ref, hyp).ratio(), 3)
         if res["asr_match"] < 0.90: fails.append("intelligibility")
 except ImportError:
