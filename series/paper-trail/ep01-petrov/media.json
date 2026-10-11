@@ -44,6 +44,18 @@
    "sha256": "1a0a068a16937a3ad8d517436f64d76a0a107be020fc9a6dae1e8c6cb3b01124",
    "size": 535813
   },
+  "clips/arch_minuteman.mp4": {
+   "sha256": "3a0e10e64617b957defaae96c76e02b0849bded2c8a7658762b51dd3a9d388a8",
+   "size": 594777
+  },
+  "clips/s03_console.mp4": {
+   "sha256": "5ceb3380b0092c37ab0805bbd30af79d3e61830cf92745c17e554eb5458f0f2b",
+   "size": 1247006
+  },
+  "clips/s07_sunlight.mp4": {
+   "sha256": "56873541eeed683ae15a312481f534c6566f894d6ec4f31f15dc8b49d77f2e4d",
+   "size": 2032386
+  },
   "vo/v01.mp3": {
    "sha256": "9156909adf6230af88784e7ce8519a6660b98983e2e6e87c2ddd1847de47814e",
    "size": 68772

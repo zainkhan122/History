@@ -6,6 +6,8 @@ import json, re, sys, html
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+REPO = HERE.parents[2]
+sys.path.insert(0, str(REPO / "engine")); import fx
 HF = Path(sys.argv[1] if len(sys.argv) > 1 else Path.home() / ".cache/build/ep01-petrov/hf")
 TL = json.load(open(HERE / "timeline.json"))
 C, SC, TOTAL, WORDS = TL["cues"], {s["id"]: s for s in TL["scenes"]}, TL["total"], TL["words"]
@@ -14,6 +16,7 @@ INK, CREAM, RED, MUSTARD = "#141414", "#F4ECD8", "#C8102E", "#E3A72F"
 
 body, js = [], []                     # html chunks, js timeline lines
 def J(s): js.append(s)
+FX = fx.FX(J, HERE / "clips.json", SC, hf=HF)   # motion layers + pro transitions (engine/fx.py)
 def f(x): return f"{x:.3f}"
 
 # deterministic pseudo-random (LCG) for shakes/rotations
@@ -23,7 +26,7 @@ def rnd():
     return _seed[0] / 2147483648
 
 def shake(sel, t, dur=0.45, amp=18):
-    steps = max(3, int(dur / 0.045)); out = []
+    steps = max(3, int(dur / 0.045)); out = []; sel = FX.shake_targets(sel)
     for i in range(steps):
         a = amp * (1 - i / steps)
         out.append(f"tl.to('{sel}',{{x:{(rnd()*2-1)*a:.1f},y:{(rnd()*2-1)*a:.1f},rotation:{(rnd()*2-1)*a*0.04:.2f},duration:0.043,ease:'none'}},{f(t+i*0.045)});")
@@ -36,9 +39,10 @@ def clip(id_, start, end, inner, z=10, extra_cls="", style=""):
 
 def kb(id_, img, overlays="", style=""):
     # 1296x2322 art plate centred on the 1080x1920 frame (Ken Burns headroom); overlays use % of the plate
-    return (f'<div id="{id_}" class="kb" style="{style}"><img src="assets/{img}.jpg" alt="">{overlays}</div>')
+    return (f'<div id="{id_}" class="kb" style="{style}">{FX.plate(img, id_)}{overlays}</div>')
 
 def kb_move(sel, t0, t1, s0, s1, x0=0, x1=0, y0=0, y1=0, ease="none"):
+    sel = FX.kb_targets(sel)
     J(f"tl.fromTo('{sel}',{{scale:{s0},x:{x0},y:{y0}}},{{scale:{s1},x:{x1},y:{y1},duration:{f(t1-t0)},ease:'{ease}',immediateRender:false}},{f(t0)});")
 
 def tag(id_, text, x, y, size=40, rot=-1.5, extra=""):
@@ -160,6 +164,14 @@ for i, t in enumerate(node_t):
 stamp_anim("stmin", C["minutes"] + 0.05, 7)
 J(f"tl.fromTo('#sc04',{{backgroundColor:'rgba(200,16,46,0)'}},{{backgroundColor:'rgba(200,16,46,0.22)',duration:0.15,immediateRender:false}},{f(C['strike'])});")
 shake("#sc04", C["strike"], 0.4, 12)
+
+# archival insert on "strike back": real U.S. ICBM launch film, projected (v2)
+if (HF / "assets/clips/arch_minuteman.mp4").exists():
+    ins0, ins1 = C["strike"] - 0.42, SC["s04"]["end"] + 0.25
+    clip("ins04", ins0, ins1, FX.film_insert("ins04", "arch_minuteman", ins0, ins1, "U.S. ICBM LAUNCH · ARCHIVE FILM",
+         "Illustrative: Minuteman III test launch · USAF film · public domain"), z=35)
+    FX.flash(ins0, 0.9)
+    FX.film_burn(SC["s04"]["end"] - 0.12, 0.5)
 
 # ======================= S5 — Petrov + quote =======================
 s = SC["s05"]
@@ -346,6 +358,12 @@ for ci, ch in enumerate(chunks):
         J(f"tl.set('#c{ci}_{wi}',{{attr:{{class:'cw{k}'}}}},{f(end_t)});")
 clip("captions", 0, TOTAL, "".join(cap_html), z=50, style="pointer-events:none")
 
+# ======================= pro light: leaks on revelation / memory beats (v2) =======================
+clip("fxo", 0, TOTAL, FX.overlays(), z=65, style="pointer-events:none")
+FX.light_leak(C["sunlight"] - 0.25, 2.8, 0.70)          # "It was sunlight..."
+FX.light_leak(C["wife"] - 0.6, 3.2, 0.45)               # memory: his wife
+FX.light_leak(C["survived"] - 0.3, 3.4, 0.40)           # "...survived by"
+
 # ======================= global chrome: bug, progress, grain, vignette =======================
 clip("chrome", 0, TOTAL,
      '<div id="bug" class="bug">PAPER TRAIL <b>·</b> FILE 01</div>'
@@ -359,7 +377,7 @@ while gt < TOTAL:
 J(f"tl.to('#grain',{{opacity:0.07,duration:0.8}},{f(SC['s09']['start'])});")
 J(f"tl.to('#grain',{{opacity:0.13,duration:0.8}},{f(SC['s10']['start'])});")
 
-CSS = f"""
+CSS = fx.CSS + f"""
 @font-face{{font-family:'Oswald';src:url('fonts/Oswald.ttf');font-weight:200 700}}
 @font-face{{font-family:'Anton';src:url('fonts/Anton-Regular.ttf')}}
 @font-face{{font-family:'DM Serif';src:url('fonts/DMSerifDisplay-Regular.ttf')}}
@@ -442,6 +460,8 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:{CREAM}}}
 .grain{{position:absolute;left:0;top:0;width:1600px;height:2440px;background:url(assets/grain.png) repeat;opacity:.13;mix-blend-mode:overlay}}
 .vignette{{position:absolute;left:0;top:0;width:1080px;height:1920px;background:radial-gradient(ellipse at 50% 48%,rgba(0,0,0,0) 55%,rgba(0,0,0,.42) 100%)}}
 """
+
+body.append(FX.video_layers())   # root-level timed <video> layers (engine/fx.py)
 
 doc = f"""<!doctype html>
 <html lang="en" data-resolution="portrait">

@@ -71,6 +71,9 @@ place(sfx, S.whoosh(0.8, 0.28), C["chain"] - 0.6)
 for kk, t in enumerate([C["chain"] + 0.2, C["chain"] + 1.1, C["chain"] + 2.0, C["minutes"] - 0.3]):
     place(sfx, S.tick(True, 0.16), t, pan=-0.3 + 0.2 * kk)       # node pops
 place(sfx, S.boom(1.4, 80, 35, 0.45), C["strike"])
+if (HERE / "clips" / "arch_minuteman.mp4").exists() or (HERE / "clips.json").exists():   # v2 archival insert (build.py)
+    place(sfx, S.projector(SC["s04"]["end"] + 0.25 - (C["strike"] - 0.42), 0.14), C["strike"] - 0.42)
+    place(sfx, S.whoosh(0.45, 0.22, up=False), SC["s04"]["end"] - 0.3)            # film burn-out
 place(sfx, S.hit(0.35), C["petrov"] - 0.08)
 place(music, S.bell(N("A4"), 3.0, 0.05), C["quote"] - 0.2)
 

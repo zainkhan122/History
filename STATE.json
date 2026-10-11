@@ -1,10 +1,10 @@
 {
- "now": "Repo SSOT migration done; testing free video-clip generators for ep01 v2",
+ "now": "ep01 v2 cloud render (tag ep01-petrov-v2); engine has motion clips + archive inserts + FX",
  "next": [
-  "Verify cloud render of ep01 on Actions (render.yml) end-to-end",
-  "Write docs/VIDEO_SOURCES.md from real generator tests",
-  "Add clip support to the engine (reelkit/clips.py + <video> layers + transitions)",
-  "Ep01 v2: replace 4-6 stills with motion clips, re-render in cloud"
+  "Check ep01-petrov-v2 render (python3 reelkit/cloud.py status), review, send to owner",
+  "Get a free HF token from owner -> clips.py gen ep01 (s01_bunker s05_officer s06_phone s09_kitchen pending) -> re-render v3",
+  "Ep02: pick next Paper Trail subject (docs/NICHE_RESEARCH.md), research + script + plates + clips.json from day one",
+  "Optional: depth-parallax fallback for plates when GPU quota is out (Depth-Anything ONNX on CPU)"
  ],
  "owner_rules": [
   "Repo zainkhan122/History is the SSOT; sync every change (tools/sync.sh) so a new session resumes exactly",
@@ -15,19 +15,25 @@
   "Buffer / YouTube auto-sharing: NOT now (later)",
   "Ideas must run inside the agent; give real inputs (prompts, scripts, beat maps), not generic advice"
  ],
- "blockers": [],
+ "blockers": [
+  "HF ZeroGPU anonymous quota exhausted today (needs HF_TOKEN for more clips)"
+ ],
  "secrets": {
   "github": "fine-grained PAT, expires 2026-11-10, stored only at ~/.cache/secrets/gh_token (ask owner each new session)",
   "huggingface": "not provided (optional: raises ZeroGPU quota)",
   "cloudflare": "not provided (optional: Workers AI images 10k neurons/day)"
  },
- "updated_at": "2026-10-11T08:47:00Z",
+ "updated_at": "2026-10-11T09:02:43Z",
  "episodes": {
   "series/paper-trail/ep01-petrov": {
    "title": "The Man Who Did Nothing",
-   "status": "v1 delivered (stills + motion graphics); v2 with video clips planned",
-   "release": "ep01-petrov-v1",
+   "status": "v2 rendering in cloud (2 Wan motion clips + archival Minuteman insert + light leaks/film FX); 4 more clips pending HF quota",
+   "release": "ep01-petrov-v1 (v2: ep01-petrov-v2)",
    "updated": "2026-10-11"
   }
+ },
+ "proven": {
+  "cloud_render": "run #1 success 2026-10-11, 10 min, QA pass (release ep01-petrov-cloud-test)",
+  "media_roundtrip": "fresh clone + media pull: 21/21 sha256 verified"
  }
 }

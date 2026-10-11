@@ -113,6 +113,19 @@ def tick(hi=True, level=0.12):
     return (x * level).astype(np.float32)
 
 
+def projector(d=2.0, level=0.16, fps=24):
+    """16 mm projector: 24 Hz shutter clatter + motor hum + hiss, fades in/out (archival inserts)."""
+    n = int(d * SR); t = t_(d); x = np.zeros(n)
+    click = filt(RNG.standard_normal(int(0.012 * SR)), "band", (900, 5000)) * np.exp(-t_(0.012) * 400)
+    for k in range(int(d * fps)):
+        i = int(k * SR / fps + RNG.uniform(-40, 40))
+        if 0 <= i < n - len(click): x[i:i + len(click)] += click * (0.7 + 0.3 * RNG.random())
+    x += np.sin(2 * np.pi * 50 * t) * 0.10 + np.sin(2 * np.pi * 100 * t) * 0.05
+    x += filt(RNG.standard_normal(n), "band", (2000, 8000)) * 0.05
+    env = np.minimum(1, np.minimum(t / 0.08, (d - t) / 0.15).clip(0))
+    return (x * env * level).astype(np.float32)
+
+
 def heartbeat(level=0.5):
     def thump(f, l):
         t = t_(0.22)

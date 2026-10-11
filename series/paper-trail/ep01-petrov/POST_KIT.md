@@ -42,6 +42,8 @@
 ## 5 · Credits & disclosures (paste in description or "About")
 - Memorial stone photo (Warsaw): Brandmeister / Togrul Safarov, Wikimedia Commons, **Public Domain**.
 - Illustrations were AI-generated in a collage style. Petrov is depicted as an illustration, not a real photograph.
+- **v2:** several illustrations are animated with an AI image-to-video model (Wan 2.2, Apache-2.0).
+- **v2 archive footage:** "Minuteman III test launch, Vandenberg SFB, 9 Feb 2023" by SSgt Draeke Layman, Space Launch Delta 30 Public Affairs. U.S. Government work, public domain, via Wikimedia Commons. It is shown as illustrative footage of a U.S. ICBM launch and is labelled on screen; it is not footage from 1983.
 - Narration is an AI voice (TTS). The music and sound design are original and generated procedurally.
 - **AI disclosure:** on YouTube, tick *"Altered or synthetic content"* if asked; this video depicts real events with AI-generated imagery. On TikTok, enable the *"AI-generated content"* label.
 

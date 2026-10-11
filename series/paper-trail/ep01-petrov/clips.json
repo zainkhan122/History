@@ -1,0 +1,75 @@
+{
+ "_doc": "Motion layers for v2. AI clips animate the original plates (image-to-video, style preserved). Generate: python3 reelkit/clips.py gen <ep>. Raw clips go to the media release; prep happens in the build.",
+ "clips": [
+  {
+   "id": "s01_bunker",
+   "engine": "wan",
+   "image": "assets/s01_bunker.jpg",
+   "scene": "s01",
+   "seconds": 5,
+   "seed": 11,
+   "prompt": "red alarm light slowly pulses across the dark bunker, the glowing world map on the wall flickers, monitor screens blink, the seated officer stays still, slow cinematic push-in, illustrated cut-paper collage style preserved, no new people"
+  },
+  {
+   "id": "s03_console",
+   "engine": "wan",
+   "image": "assets/s03_console.jpg",
+   "scene": "s03",
+   "seconds": 3.5,
+   "seed": 7,
+   "prompt": "the big red screen flashes brighter and brighter, warning lamps blink, gauge needles twitch nervously, slow push-in, camera steady, no hands, no people, illustrated paper collage texture preserved"
+  },
+  {
+   "id": "s05_officer",
+   "engine": "wan",
+   "image": "assets/s05_officer.jpg",
+   "scene": "s05",
+   "seconds": 5,
+   "seed": 5,
+   "prompt": "the officer thinks deeply, his eyes slowly narrow and he breathes, the red beacon behind him pulses, tiny dust in the air, very slow push-in, face stays consistent, illustrated collage style preserved"
+  },
+  {
+   "id": "s06_phone",
+   "engine": "wan",
+   "image": "assets/s06_phone.jpg",
+   "scene": "s06",
+   "seconds": 5,
+   "seed": 3,
+   "prompt": "the clock's second hand ticks forward, the hand rests on the telephone receiver and slowly lifts it, red light flickers, dust floats, static camera, illustrated paper collage style preserved"
+  },
+  {
+   "id": "s07_sunlight",
+   "engine": "wan",
+   "image": "assets/s07_sunlight.jpg",
+   "scene": "s07",
+   "seconds": 3.5,
+   "seed": 7,
+   "prompt": "the sun rises over the cloud tops and its golden glare grows brighter, the glints on the clouds flare like missile plumes, the satellite drifts slowly, subtle parallax, illustrated paper collage style preserved, no new objects"
+  },
+  {
+   "id": "s09_kitchen",
+   "engine": "wan",
+   "image": "assets/s09_kitchen.jpg",
+   "scene": "s09",
+   "seconds": 5,
+   "seed": 9,
+   "prompt": "a quiet evening, the warm lamp light flickers softly, the old couple eat slowly, the wife gently turns her head toward her husband, snow falls outside the window, static camera, illustrated style preserved"
+  },
+  {
+   "id": "arch_minuteman",
+   "engine": "url",
+   "dur": 2.1,
+   "fit": [
+    1040,
+    585
+   ],
+   "grade": "film",
+   "in": 14.5,
+   "out": 17.0,
+   "url": "https://upload.wikimedia.org/wikipedia/commons/0/00/Minuteman_GT_245_Operational_Test_Launch_-_LF-10_Vandenberg_Space_Force_Base_CA_-_9_Feb_2023.webm",
+   "source": "https://commons.wikimedia.org/wiki/File:Minuteman_GT_245_Operational_Test_Launch_-_LF-10_Vandenberg_Space_Force_Base_CA_-_9_Feb_2023.webm",
+   "credit": "Minuteman III test launch, Vandenberg SFB, 9 Feb 2023. SSgt Draeke Layman, Space Launch Delta 30 PA (U.S. Government work, public domain). Shown as illustrative footage of a U.S. ICBM launch; it is not 1983 footage.",
+   "eq": "contrast=1.35:brightness=0.06:gamma=1.35"
+  }
+ ]
+}

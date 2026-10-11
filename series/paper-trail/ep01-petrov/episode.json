@@ -3,10 +3,10 @@
  "episode": 1,
  "title": "The Man Who Did Nothing",
  "subject": "Stanislav Petrov, Soviet nuclear false alarm, 26 Sept 1983",
- "status": "v1 delivered (stills + motion graphics); v2 with video clips planned",
+ "status": "v2 rendering in cloud (2 Wan motion clips + archival Minuteman insert + light leaks/film FX); 4 more clips pending HF quota",
  "format": "9:16 1080x1920 30fps, 87.4 s",
  "voice": "Arena TTS voice-01 (en, masculine, narration) — mp3s in media store",
- "release": "ep01-petrov-v1",
+ "release": "ep01-petrov-v1 (v2: ep01-petrov-v2)",
  "media_release": "media-ep01-petrov",
  "updated": "2026-10-11"
 }
