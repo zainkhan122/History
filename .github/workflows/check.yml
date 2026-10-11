@@ -1,0 +1,17 @@
+# Repo hygiene on every push: code compiles, shell parses, and NO media/bloat sneaks into git.
+name: check
+on:
+  push:
+  pull_request:
+jobs:
+  hygiene:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python compiles
+        run: python3 -m compileall -q reelkit series tools
+      - name: Shell parses
+        run: for f in $(git ls-files '*.sh'); do bash -n "$f"; done
+      - name: Size guard
+        run: python3 tools/repo_guard.py

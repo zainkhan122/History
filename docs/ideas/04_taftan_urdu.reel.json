@@ -1,0 +1,61 @@
+{
+  "title": "تفتان — پاکستان کا شہر، ایران کے آتش فشاں کے نام پر",
+  "research": {
+    "source": "en.wikipedia.org/wiki/Taftan,_Pakistan (scraped with Lightpanda)",
+    "facts": [
+      "Taftan is the headquarters town of Taftan District, Balochistan; one of Pakistan's border crossings with Iran (Iranian side: Mirjaveh)",
+      "Over 500 km from Quetta by road or rail; on the N40",
+      "62 km north-east of the thermally active peak also called Taftan, which lies wholly in Iran",
+      "Served by Koh-e-Taftan railway station on the Quetta-Taftan line, which since 1940 continues to Zahedan, Iran"
+    ],
+    "why": "Local-pride + 'wait, what?' geography fact = high shares in Urdu-speaking Reels/Shorts/WhatsApp status; zero competition in Urdu collage format"
+  },
+  "arc": "myth_buster", "hook": "surprising_stat", "ending": "loop_close (punchline question)",
+  "W": 1080, "H": 1920, "fps": 30, "caption_y": 0.72, "caption_size": 84, "tail": 1.0,
+  "rtl": true, "font": "/home/user/fonts/NotoNastaliqUrdu.ttf",
+  "asr_language": "ur", "asr_model": "small",
+  "palette": ["#F2B33D", "#C0392B", "#F4E9D8", "#3B2F2F"],
+  "voice": {"add_voice": {"language": "ur", "use_case": "narration"}, "kokoro_voice": "not supported (Kokoro has no Urdu) - use generate_speech", "tone": "curious storyteller, punchy"},
+  "style_block": "Mixed-media hand-cut PAPER COLLAGE, editorial zine style with Balochi embroidery and truck-art accents. Torn and scissor-cut paper edges, masking-tape corners, halftone print dots, old map clippings, railway tickets, real paper drop shadows. Figures are PRINTED-texture halftone cut-outs, not CGI, not a 3D render, keep print grain. Palette: desert sand, rust red, mustard, dark brown. Vertical 9:16 poster, flat scanned lighting. No text in the image. Keep the bottom quarter simple.",
+  "keyframes": {
+    "keyframes/k1.png": "SCENE as layered paper cut-outs: a lone desert volcano peak cut from an old engraving, wisps of paper steam rising from its summit, a torn paper map with a dotted border line and a question mark stamp. Bold flat rust-red background.",
+    "keyframes/k2.png": "SCENE as layered paper cut-outs: a small desert border town with a gate, trucks decorated with Pakistani truck-art patterns, a border fence line, two paper flags as plain colour shapes (green-white and green-white-red, no emblems). Bold flat mustard background.",
+    "keyframes/k3.png": "SCENE as layered paper cut-outs: a long highway ribbon and a railway track crossing a sand-colour paper desert, a vintage steam train, a milestone stone, a vintage railway ticket. Bold flat desert-sand background.",
+    "keyframes/k4.png": "SCENE as layered paper cut-outs: the volcano peak again seen across a border fence, a paper ruler measuring the distance between a small town and the mountain, glowing orange paper vents. Bold flat dark brown background.",
+    "keyframes/k5.png": "SCENE as layered paper cut-outs: a 1940-style steam locomotive pulling carriages across the border, an old calendar page cut-out, a railway signal, a station board with no readable text. Bold flat rust-red background.",
+    "keyframes/k6.png": "SCENE as layered paper cut-outs: two signposts pointing in opposite directions, one toward a small town, one toward a volcano, a puzzled camel cut-out between them, scattered paper stars. Bold flat mustard background."
+  },
+  "beats": [
+    {"id": "b1", "vo": "vo/b1.wav", "mood": "tension",
+     "script": "پاکستان کا ایک شہر || ایک آتش فشاں کے نام پر ہے۔ || اور وہ آتش فشاں || *ایران* میں ہے۔",
+     "shots": [{"img": "keyframes/k1.png", "move": "push_in", "focus": [0.5, 0.4]}]},
+    {"id": "b2", "vo": "vo/b2.wav", "mood": "tension",
+     "script": "یہ ہے *تفتان* || بلوچستان میں || پاکستان اور ایران کی سرحد پر۔",
+     "shots": [{"img": "keyframes/k2.png", "move": "pan_lr"}]},
+    {"id": "b3", "vo": "vo/b3.wav", "mood": "tension",
+     "script": "کوئٹہ سے *<500|پانچ سو>* کلومیٹر سے بھی زیادہ دور۔ || سڑک سے بھی، || ریل سے بھی۔",
+     "shots": [{"img": "keyframes/k3.png", "move": "pan_rl"}]},
+    {"id": "b4", "vo": "vo/b4.wav", "mood": "tension",
+     "script": "اور اصل کوہِ تفتان؟ || سرحد کے پار، || *<62|باسٹھ>* کلومیٹر دور، || ایک گرم اور جاگتا ہوا پہاڑ۔",
+     "shots": [{"img": "keyframes/k4.png", "move": "push_in", "focus": [0.6, 0.4]}]},
+    {"id": "b5", "vo": "vo/b5.wav", "mood": "triumph",
+     "script": "یہاں کی ریلوے لائن || *<1940|انیس سو چالیس>* سے || ایران کے شہر *زاہدان* تک جاتی ہے۔",
+     "shots": [{"img": "keyframes/k5.png", "move": "tilt_up"}]},
+    {"id": "b6", "vo": "vo/b6.wav", "mood": "tender",
+     "script": "تو اگلی بار کوئی پوچھے || تفتان کہاں ہے؟ || تو پوچھیے: || *کون* سا تفتان؟",
+     "shots": [{"img": "keyframes/k6.png", "move": "static"}]}
+  ],
+  "events": [
+    {"at": "b1:ایران", "type": "punch", "amt": 0.12, "sfx": "stamp"},
+    {"at": "b2:تفتان", "type": "punch", "amt": 0.08},
+    {"at": "b3:500", "type": "punch", "amt": 0.08},
+    {"at": "b5:زاہدان", "type": "punch", "amt": 0.08, "sfx": "stamp"},
+    {"at": "b6:کون", "type": "punch", "amt": 0.12, "sfx": "impact"}
+  ],
+  "post": {
+    "yt_title": "تفتان کا نام ایران کے آتش فشاں پر کیوں؟ | Taftan Explained",
+    "ig_caption": "پاکستان کا تفتان... اور ایران کا کوہِ تفتان 🌋 کیا آپ کو پتہ تھا؟ اپنے بلوچستان والے دوست کو ٹیگ کریں!",
+    "hashtags": ["#Taftan", "#Balochistan", "#Pakistan", "#Quetta", "#UrduFacts", "#کیاآپجانتےہیں", "#travelpakistan"],
+    "pinned_comment": "اگلی ویڈیو کس شہر پر بنائیں؟ 👇"
+  }
+}

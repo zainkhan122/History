@@ -1,0 +1,63 @@
+{
+  "title": "At 5 she testified against a thief. At 85 she won the Nobel Peace Prize.",
+  "research": {
+    "source": "Wikipedia 'In the news' (Main Page, 10 Oct 2026) + en.wikipedia.org/wiki/Navi_Pillay, scraped with Lightpanda",
+    "facts": [
+      "Navanethem 'Navi' Pillay, born 23 Sept 1941, poor neighbourhood of Durban; grandparents came from India as indentured sugar-plantation workers in the 1890s",
+      "Aged 5 she testified in court after being robbed of 5 pounds (her father's monthly wages); thief convicted, money never returned",
+      "1967: started her own law firm (first woman to do so in Natal); defended anti-apartheid activists",
+      "1995: first non-white female judge of the High Court of South Africa; then judge and president of the International Criminal Tribunal for Rwanda",
+      "UN High Commissioner for Human Rights 2008-2014; Nobel Peace Prize 2026"
+    ],
+    "timeliness": "Nobel Peace Prize announced this week; peak search window is the next 7-10 days"
+  },
+  "arc": "origin", "hook": "outcome_tease", "ending": "loop_close (last line answers the first)",
+  "W": 1080, "H": 1920, "fps": 30, "caption_y": 0.71, "caption_size": 100, "tail": 1.0,
+  "palette": ["#E8B53A", "#B23A2E", "#F2E8D5", "#1F1F1F"],
+  "voice": {"add_voice": {"language": "en", "use_case": "narration", "gender": "feminine"}, "kokoro_voice": "bf_emma", "tone": "measured documentary, rising to triumphant"},
+  "style_block": "Mixed-media hand-cut PAPER COLLAGE, editorial zine style, theme 'newsprint-editorial' mixed with South African protest-poster screenprint. Torn and scissor-cut paper edges, masking-tape corners, heavy halftone print dots, newspaper clippings, rubber-stamp marks, real paper drop shadows. Figures are PRINTED-texture halftone cut-outs, not CGI, not a 3D render, keep print grain. Palette: cream, deep red, gold, charcoal. Vertical 9:16 poster, flat scanned lighting. Keep the bottom quarter simple.",
+  "keyframes": {
+    "keyframes/k1.png": "SCENE as layered paper cut-outs: a tiny five-year-old girl in a 1940s dress standing on a wooden witness box in a huge, old courtroom, a judge's bench towering over her, a gavel cut-out. Bold flat charcoal background. Upper third: torn cream banner, headline \"WITNESS, AGE 5\" in deep-red wood-type.",
+    "keyframes/k2.png": "SCENE as layered paper cut-outs: an old British five-pound banknote torn in half and floating away, an empty pay envelope, a halftone photo of a worried father's hands. Bold flat deep-red background. Upper third: torn cream banner, headline \"£5\" huge in gold stencil letters.",
+    "keyframes/k3.png": "SCENE as layered paper cut-outs: sugar-cane stalks and a 1890s steamship cut from old engravings, a family photograph with torn edges, an apartheid-era segregation sign crossed out with red tape (sign text unreadable). Bold flat gold background. Upper third: torn charcoal banner, headline \"NOT SUPPOSED TO WIN\" in cream letters.",
+    "keyframes/k4.png": "SCENE as layered paper cut-outs: a woman lawyer in 1960s clothing walking up courthouse steps carrying legal files, a brass law-firm name plate (blank), a judge's robe on a hanger. Bold flat cream background. Upper third: torn red banner, headline \"FIRST\" in gold wood-type.",
+    "keyframes/k5.png": "SCENE as layered paper cut-outs: a blue-and-white paper globe emblem (no official logo), scales of justice, a stack of tribunal case files with red ribbons. Bold flat charcoal background. Upper third: torn gold banner, headline \"JUSTICE\" in charcoal letters.",
+    "keyframes/k6.png": "SCENE as layered paper cut-outs: a gold medal with a laurel wreath (generic, no real medal design), gold paper confetti, an elderly woman with short grey hair and glasses smiling, printed halftone cut-out, beside a small paper girl figure from the first scene. Bold flat deep-red background. Upper third: torn cream banner, headline \"NOBEL PEACE PRIZE\" in gold letters, small red seal \"2026\"."
+  },
+  "beats": [
+    {"id": "b1", "vo": "vo/b1.wav", "mood": "tension",
+     "script": "At *five,* she stood in a courtroom || and testified against the man || who *robbed* her.",
+     "shots": [{"img": "keyframes/k1.png", "move": "pull_out", "focus": [0.5, 0.6]}]},
+    {"id": "b2", "vo": "vo/b2.wav", "mood": "tension",
+     "script": "He stole *five* *pounds.* || Her father's wages for the month. || The thief was convicted. || The money... || never came *back.*",
+     "shots": [{"img": "keyframes/k2.png", "move": "push_in"}]},
+    {"id": "b3", "vo": "vo/b3.wav", "mood": "tension",
+     "script": "Her grandparents were *indentured* || sugar-cane workers. || Under apartheid, || she wasn't supposed to win || anything.",
+     "shots": [{"img": "keyframes/k3.png", "move": "pan_rl"}]},
+    {"id": "b4", "vo": "vo/b4.wav", "mood": "tension",
+     "script": "She opened her own law firm. || Then became South Africa's || first *non-white* woman || High Court judge.",
+     "shots": [{"img": "keyframes/k4.png", "move": "tilt_up"}]},
+    {"id": "b5", "vo": "vo/b5.wav", "mood": "tension",
+     "script": "She judged genocide || at the Rwanda tribunal. || Then led *<U.N.|U N>* human rights.",
+     "shots": [{"img": "keyframes/k5.png", "move": "push_in"}]},
+    {"id": "b6", "vo": "vo/b6.wav", "mood": "triumph",
+     "script": "This month, at <85,|eighty-five,> || Navi Pillay won || the *Nobel* *Peace* *Prize.* || That courtroom || finally paid her *back.*",
+     "shots": [{"img": "keyframes/k6.png", "move": "static"}]}
+  ],
+  "events": [
+    {"at": "b1:robbed", "type": "punch", "amt": 0.10, "sfx": "stamp"},
+    {"at": "b2:five", "type": "punch", "amt": 0.12},
+    {"at": "b2:back", "type": "shake", "amt": 12, "sfx": "stamp"},
+    {"at": "b4:first", "type": "punch", "amt": 0.10, "sfx": "stamp"},
+    {"at": "b6:nobel", "type": "punch", "amt": 0.16, "sfx": "impact"},
+    {"at": "b6:nobel", "type": "flash", "color": [255, 255, 255]},
+    {"at": "b6:nobel", "type": "confetti", "n": 150},
+    {"at": "b6:back", "type": "punch", "amt": 0.06}
+  ],
+  "post": {
+    "yt_title": "Robbed at 5, Nobel Peace Prize at 85 | Navi Pillay",
+    "ig_caption": "A stolen £5. An 80-year comeback. This week's Nobel Peace Prize winner, explained in 30 seconds.",
+    "hashtags": ["#NobelPeacePrize", "#NaviPillay", "#Nobel2026", "#humanrights", "#history", "#explained", "#womeninhistory"],
+    "pinned_comment": "Who should win next year's Nobel Peace Prize? 👇"
+  }
+}

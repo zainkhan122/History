@@ -1,0 +1,58 @@
+{
+  "title": "On this day (Oct 12, 1928): the first iron lung",
+  "series": "ON THIS DAY — daily, auto-researched by Lightpanda from Wikipedia:Selected_anniversaries/<Month_Day>",
+  "research": {
+    "source": "en.wikipedia.org/wiki/Wikipedia:Selected_anniversaries/October_12 (scraped with Lightpanda)",
+    "facts": [
+      "12 Oct 1928: the iron lung, a medical ventilator, was used for the first time, at Boston Children's Hospital, to treat an eight-year-old girl paralyzed by polio",
+      "Iron lungs work by negative pressure: changing air pressure around the body to draw air into the lungs"
+    ],
+    "verify_before_posting": "b5 claim: confirm that wild poliovirus is still endemic only in Pakistan and Afghanistan as of posting date (WHO / GPEI)."
+  },
+  "arc": "hook_payoff", "hook": "pattern_interrupt", "ending": "quick_cta (public-health)",
+  "W": 1080, "H": 1920, "fps": 30, "caption_y": 0.71, "caption_size": 100, "tail": 1.0,
+  "palette": ["#F2B33D", "#2E86AB", "#F1ECE2", "#22313F"],
+  "voice": {"add_voice": {"language": "en", "use_case": "narration"}, "kokoro_voice": "am_adam", "tone": "suspenseful then hopeful"},
+  "style_block": "Mixed-media hand-cut PAPER COLLAGE, editorial zine style, theme 'atomic-age' 1920s-50s medical poster. Torn and scissor-cut paper edges, masking-tape corners, halftone print dots, old medical-journal clippings, real paper drop shadows. Figures are PRINTED-texture halftone cut-outs, not CGI, not a 3D render, keep print grain. Palette: hospital teal, cream, mustard, dark navy. Vertical 9:16 poster, flat scanned lighting. Keep the bottom quarter simple.",
+  "keyframes": {
+    "keyframes/k1.png": "SCENE as layered paper cut-outs: a 1920s hospital bed with a small girl, a worried nurse in a white cap, a large clock showing midnight, oxygen bubble shapes. Bold flat dark navy background. Upper third: torn cream banner, headline \"SHE COULDN'T BREATHE\" in mustard wood-type.",
+    "keyframes/k2.png": "SCENE as layered paper cut-outs: an anatomical lung diagram from an old textbook, a microscope, a virus shape cut from red paper. Bold flat hospital-teal background. Upper third: torn navy banner, headline \"POLIO\" in cream letters.",
+    "keyframes/k3.png": "SCENE as layered paper cut-outs: a large riveted metal cylinder iron lung machine, a child's head resting outside one end on a pillow, pressure gauges, bellows, curved arrows showing air flowing in and out. Bold flat mustard background. Upper third: torn cream banner, headline \"THE IRON LUNG\" in navy wood-type.",
+    "keyframes/k4.png": "SCENE as layered paper cut-outs: a 1928 calendar page torn to October 12, a brick hospital building cut from an old photo, a newspaper strip. Bold flat cream background. Upper third: torn teal banner, headline \"OCT 12, 1928\" in cream letters.",
+    "keyframes/k5.png": "SCENE as layered paper cut-outs: a paper world map with almost all countries in green and two neighbouring countries in South Asia highlighted in red, a vaccine vial and dropper. Bold flat navy background. Upper third: torn mustard banner, headline \"ALMOST GONE\" in navy letters.",
+    "keyframes/k6.png": "SCENE as layered paper cut-outs: a smiling child receiving two oral vaccine drops from a health worker's dropper, paper sun rays, two big drop shapes. Bold flat hospital-teal background. Upper third: torn cream banner, headline \"2 DROPS\" in mustard wood-type."
+  },
+  "beats": [
+    {"id": "b1", "vo": "vo/b1.wav", "mood": "tension",
+     "script": "In <1928,|nineteen twenty-eight,> || an eight-year-old girl || couldn't *breathe.* || So doctors put her || inside a *machine.*",
+     "shots": [{"img": "keyframes/k1.png", "move": "push_in", "focus": [0.5, 0.55]}]},
+    {"id": "b2", "vo": "vo/b2.wav", "mood": "tension",
+     "script": "*Polio* had paralyzed || the muscles she needed || to breathe.",
+     "shots": [{"img": "keyframes/k2.png", "move": "pan_lr"}]},
+    {"id": "b3", "vo": "vo/b3.wav", "mood": "tension",
+     "script": "The machine was a metal tank. || It changed the air pressure || around her body || and *pulled* air into her lungs.",
+     "shots": [{"img": "keyframes/k3.png", "move": "tilt_down"}]},
+    {"id": "b4", "vo": "vo/b4.wav", "mood": "triumph",
+     "script": "October twelfth, <1928.|nineteen twenty-eight.> || The *iron* *lung* || was used for the first time.",
+     "shots": [{"img": "keyframes/k4.png", "move": "push_in"}]},
+    {"id": "b5", "vo": "vo/b5.wav", "mood": "tender",
+     "script": "Today, wild polio survives || in just *two* countries. || One of them... || is *Pakistan.*",
+     "shots": [{"img": "keyframes/k5.png", "move": "static"}]},
+    {"id": "b6", "vo": "vo/b6.wav", "mood": "tender",
+     "script": "Two drops of vaccine || do what the iron lung || never could. || *Give* the drops.",
+     "shots": [{"img": "keyframes/k6.png", "move": "pull_out"}]}
+  ],
+  "events": [
+    {"at": "b1:breathe", "type": "shake", "amt": 14},
+    {"at": "b1:machine", "type": "punch", "amt": 0.12, "sfx": "stamp"},
+    {"at": "b4:iron", "type": "punch", "amt": 0.12, "sfx": "impact"},
+    {"at": "b5:pakistan", "type": "punch", "amt": 0.10, "sfx": "stamp"},
+    {"at": "b6:give", "type": "punch", "amt": 0.08}
+  ],
+  "post": {
+    "yt_title": "They Put a Paralyzed Girl Inside a Machine (Oct 12, 1928)",
+    "ig_caption": "98 years ago today, an 8-year-old girl breathed again — inside a metal tank. Polio is almost gone. Almost. 💧💧",
+    "hashtags": ["#OnThisDay", "#history", "#polio", "#EndPolio", "#Pakistan", "#medicalhistory", "#explained"],
+    "pinned_comment": "Did your grandparents ever talk about polio? 👇"
+  }
+}

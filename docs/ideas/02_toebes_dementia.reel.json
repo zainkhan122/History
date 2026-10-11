@@ -1,0 +1,60 @@
+{
+  "title": "At 21, he moved into a locked dementia ward — as a resident",
+  "research": {
+    "source": "Wikipedia 'Did you know' (Main Page, 10 Oct 2026) + en.wikipedia.org/wiki/Teun_Toebes, scraped with Lightpanda",
+    "facts": [
+      "Teun Toebes, Dutch nurse, born 23 May 1999",
+      "In 2020, aged 21, lived in a closed ward at Voorhoeve nursing home, Utrecht; later moved to Groenelaan, Amstelveen; about three years in total",
+      "Book 'The Housemates' (VerpleegThuis, 2021) debuted at No.1 in the Netherlands",
+      "Documentary 'Human Forever' (2023) on dementia care worldwide; English book Sept 2026; sequel 'Human II Forever' (2026) acquired by PBS"
+    ],
+    "timeliness": "featured on Wikipedia Main Page this week + English book out Sept 2026 + PBS sequel"
+  },
+  "arc": "story_spine", "hook": "secret_reveal", "ending": "loop_close / comment-bait question",
+  "W": 1080, "H": 1920, "fps": 30, "caption_y": 0.71, "caption_size": 100, "tail": 1.0,
+  "palette": ["#F2B33D", "#C8553D", "#F6EEDC", "#2F4858"],
+  "voice": {"add_voice": {"language": "en", "use_case": "narration", "gender": "masculine"}, "kokoro_voice": "am_michael", "tone": "warm, intimate, slow"},
+  "style_block": "Mixed-media hand-cut PAPER COLLAGE, warm editorial zine style. Torn and scissor-cut paper edges, masking-tape corners, soft halftone print dots, old letters and photo-album scraps, paper-stencil shapes, real paper drop shadows. Figures are PRINTED-texture halftone cut-outs, not CGI, not a 3D render, keep print grain. Palette: warm cream, terracotta, slate teal, mustard. Vertical 9:16 poster, flat scanned lighting. Keep the bottom quarter simple and uncluttered.",
+  "keyframes": {
+    "keyframes/k1.png": "SCENE as layered paper cut-outs: a heavy institutional door with a keypad lock, half open; a young man with a backpack and a cardboard moving box stepping through, seen from behind; a torn hospital-corridor photo behind him. Bold flat slate-teal background. Upper third: torn cream banner, bold headline \"MOVING IN\" in terracotta wood-type.",
+    "keyframes/k2.png": "SCENE as layered paper cut-outs: a young nursing student in scrubs holding an open notebook, looking at a row of empty armchairs by a window; a pinned question-mark cut from newspaper. Bold flat terracotta background. Upper third: torn teal banner, headline \"WHAT DOES IT FEEL LIKE?\" in cream condensed letters.",
+    "keyframes/k3.png": "SCENE as layered paper cut-outs: a long shared dinner table seen from above with elderly residents and one young man among them, cut from halftone photos; teacups, a radio, a calendar page torn off. Bold flat mustard background. Upper third: torn cream banner, headline \"HOUSEMATES\" in slate wood-type.",
+    "keyframes/k4.png": "SCENE as layered paper cut-outs: an open book with a cream cover and a big paper '#1' rosette, a film-strip curling around a paper globe with travel stamps and airline tags. Bold flat slate-teal background. Upper third: torn terracotta banner, headline \"A BETTER WAY\" in cream letters.",
+    "keyframes/k5.png": "SCENE as layered paper cut-outs: two hands, one old and wrinkled, one young, holding each other, cut from a halftone photograph, surrounded by paper hearts and pressed flowers. Bold flat warm cream background. Upper third: torn teal banner, headline \"STILL PEOPLE\" in cream letters.",
+    "keyframes/k6.png": "SCENE as layered paper cut-outs: a vintage telephone with its cord forming a heart, a bunch of paper tulips, a handwritten paper note, a photo of a grandmother's empty armchair. Bold flat terracotta background. Upper third: torn cream banner, headline \"CALL THEM\" in slate wood-type."
+  },
+  "beats": [
+    {"id": "b1", "vo": "vo/b1.wav", "mood": "tension",
+     "script": "At <21,|twenty-one,> he moved into || a locked dementia ward. || Not as a nurse. || As a *resident.*",
+     "shots": [{"img": "keyframes/k1.png", "move": "push_in", "focus": [0.5, 0.5]}]},
+    {"id": "b2", "vo": "vo/b2.wav", "mood": "tender",
+     "script": "Teun Toebes was a nursing student. || He wanted to know || what it *feels* like || to live where we send || our grandparents.",
+     "shots": [{"img": "keyframes/k2.png", "move": "pan_lr"}]},
+    {"id": "b3", "vo": "vo/b3.wav", "mood": "tender",
+     "script": "He stayed for about *three* *years.* || He ate with them. || Lived by their rules. || Became their *housemate.*",
+     "shots": [{"img": "keyframes/k3.png", "move": "tilt_down"}]},
+    {"id": "b4", "vo": "vo/b4.wav", "mood": "tender",
+     "script": "His book became a *number-one* bestseller. || Then a documentary || searched the whole world || for a *better* way.",
+     "shots": [{"img": "keyframes/k4.png", "move": "push_in", "focus": [0.5, 0.45]}]},
+    {"id": "b5", "vo": "vo/b5.wav", "mood": "tender",
+     "script": "His point is simple. || People with dementia || are still *people.*",
+     "shots": [{"img": "keyframes/k5.png", "move": "static"}]},
+    {"id": "b6", "vo": "vo/b6.wav", "mood": "tender",
+     "script": "So... || when did you last *call* yours?",
+     "shots": [{"img": "keyframes/k6.png", "move": "pull_out", "focus": [0.5, 0.5]}]}
+  ],
+  "events": [
+    {"at": "b1:resident", "type": "punch", "amt": 0.14, "sfx": "stamp"},
+    {"at": "b1:resident", "type": "shake", "amt": 14},
+    {"at": "b3:housemate", "type": "punch", "amt": 0.06},
+    {"at": "b4:number-one", "type": "punch", "amt": 0.08, "sfx": "stamp"},
+    {"at": "b5:people#2", "type": "punch", "amt": 0.05},
+    {"at": "b6:call", "type": "punch", "amt": 0.08}
+  ],
+  "post": {
+    "yt_title": "He Moved Into a Dementia Ward at 21 — As a Resident",
+    "ig_caption": "He didn't visit. He moved in. 3 years living with people with dementia taught Teun Toebes one thing 👇 Tag someone who needs to call their grandparents today.",
+    "hashtags": ["#dementia", "#alzheimers", "#nursing", "#humanstories", "#grandparents", "#didyouknow", "#explained"],
+    "pinned_comment": "What's one thing your grandparents taught you? 👇"
+  }
+}

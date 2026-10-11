@@ -1,0 +1,33 @@
+{
+ "now": "Repo SSOT migration done; testing free video-clip generators for ep01 v2",
+ "next": [
+  "Verify cloud render of ep01 on Actions (render.yml) end-to-end",
+  "Write docs/VIDEO_SOURCES.md from real generator tests",
+  "Add clip support to the engine (reelkit/clips.py + <video> layers + transitions)",
+  "Ep01 v2: replace 4-6 stills with motion clips, re-render in cloud"
+ ],
+ "owner_rules": [
+  "Repo zainkhan122/History is the SSOT; sync every change (tools/sync.sh) so a new session resumes exactly",
+  "Keep the workspace clean (only ~/History); keep the repo small (media -> Release assets)",
+  "Premium editing: real motion (video clips, parallax), professional transitions/effects — not static images with light animation",
+  "Deep-research feel: sourced facts, archival details; emotional TTS",
+  "Lightpanda requested instead of Chrome: tested — cannot paint frames; used for scraping only",
+  "Buffer / YouTube auto-sharing: NOT now (later)",
+  "Ideas must run inside the agent; give real inputs (prompts, scripts, beat maps), not generic advice"
+ ],
+ "blockers": [],
+ "secrets": {
+  "github": "fine-grained PAT, expires 2026-11-10, stored only at ~/.cache/secrets/gh_token (ask owner each new session)",
+  "huggingface": "not provided (optional: raises ZeroGPU quota)",
+  "cloudflare": "not provided (optional: Workers AI images 10k neurons/day)"
+ },
+ "updated_at": "2026-10-11T08:42:19Z",
+ "episodes": {
+  "series/paper-trail/ep01-petrov": {
+   "title": "The Man Who Did Nothing",
+   "status": "v1 delivered (stills + motion graphics); v2 with video clips planned",
+   "release": "ep01-petrov-v1",
+   "updated": "2026-10-11"
+  }
+ }
+}

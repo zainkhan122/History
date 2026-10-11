@@ -1,0 +1,87 @@
+# Cloud render — one runner per episode (public repo runner: 4 vCPU / 16 GB, free).
+# Start: Actions → render → Run workflow, or `python3 reelkit/cloud.py render <episode_dir>` from any session.
+# Output: final.mp4 + cover.jpg + POST_KIT.md + qa.json attached to a GitHub Release (does not grow the repo).
+name: render
+on:
+  workflow_dispatch:
+    inputs:
+      episodes:
+        description: 'Episode dirs, space separated (e.g. series/paper-trail/ep01-petrov)'
+        required: true
+      tag:
+        description: 'Release tag (default: <episode>-r<run number>)'
+        required: false
+        default: ''
+      crf:
+        description: 'Master CRF before the delivery encode'
+        required: false
+        default: '18'
+permissions:
+  contents: write
+concurrency:
+  group: render-${{ github.ref }}-${{ inputs.episodes }}
+  cancel-in-progress: false
+env:
+  PYTHONUNBUFFERED: "1"
+  HYPERFRAMES_NO_TELEMETRY: "1"
+  HYPERFRAMES_NO_UPDATE_CHECK: "1"
+  DO_NOT_TRACK: "1"
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      eps: ${{ steps.p.outputs.eps }}
+    steps:
+      - id: p
+        env:
+          EPS: ${{ inputs.episodes }}
+        run: python3 -c "import json,os; print('eps='+json.dumps(os.environ['EPS'].replace(',',' ').split()))" >> "$GITHUB_OUTPUT"
+  render:
+    needs: plan
+    name: render ${{ matrix.ep }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        ep: ${{ fromJSON(needs.plan.outputs.eps) }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      WORKERS: "3"
+      CRF: ${{ inputs.crf }}
+      PRESET: medium
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/hyperframes
+            ~/.cache/pip
+            ~/.cache/huggingface
+          key: tools-hf0.8.137-${{ runner.os }}-${{ hashFiles('reelkit/ci_setup.sh') }}
+      - name: Toolchain
+        run: bash reelkit/ci_setup.sh
+      - name: Render pipeline (pull → trim → score → assets → build → lint → render → encode → QA)
+        run: bash reelkit/episode.sh "${{ matrix.ep }}"
+      - name: Publish release
+        run: |
+          EP="${{ matrix.ep }}"; NAME="$(basename "$EP")"
+          TAG="${{ inputs.tag }}"; TAG="${TAG:-$NAME-r${{ github.run_number }}}"
+          FILES="$EP/out/final.mp4 $EP/out/cover.jpg $EP/out/qa.json"
+          NOTES=(); [ -f "$EP/POST_KIT.md" ] && { FILES="$FILES $EP/POST_KIT.md"; NOTES=(--notes-file "$EP/POST_KIT.md"); }
+          python3 reelkit/media.py publish "$TAG" $FILES --title "$NAME (render #${{ github.run_number }})" "${NOTES[@]}"
+          echo "### $NAME → release \`$TAG\`" >> "$GITHUB_STEP_SUMMARY"
+          cat "$EP/out/qa.json" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: debug-${{ strategy.job-index }}
+          path: |
+            ~/.cache/build/*/snaps
+            ~/.cache/build/*/hf/index.html
+          if-no-files-found: ignore
+          retention-days: 5
