@@ -140,6 +140,7 @@ def cmd_status(a):
         if st != "ok": print(f"{st:8s} {f}")
     extra = set(collect(d, DEFAULT_GLOBS)) - set(man["files"])
     for f in sorted(extra): print(f"untracked {f}")
+    print(f"{len(man['files'])} files tracked in release {man.get('release')} — status checked")
 
 
 def cmd_publish(a):

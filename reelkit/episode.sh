@@ -22,7 +22,7 @@ has plan   && { log "timeline"; python3 "$EP/plan.py" >/dev/null; }
 has score  && { log "score + SFX + mix (-14 LUFS)"; python3 "$EP/score.py" "$BUILD" "$BUILD"; }
 has assets && { log "visual assets"; python3 "$EP/make_assets.py" "$HF"; [ -f "$EP/clips.json" ] && python3 "$REPO/reelkit/clips.py" prep "$EP" "$HF" || true; }
 has build  && { log "composition"; python3 "$EP/build.py" "$HF"; cp "$BUILD/mix.wav" "$HF/assets/mix.wav"; }
-has lint   && { log "lint"; (cd "$HF" && hyperframes lint 2>&1 | grep -E "✗|◇" ); (cd "$HF" && ! hyperframes lint 2>&1 | grep -q "✗"); }
+has lint   && { log "lint"; (cd "$HF" && hyperframes lint 2>&1 | grep -E "✗|◇" || true); (cd "$HF" && ! hyperframes lint 2>&1 | grep -q "✗"); }
 has snap   && { log "snapshots"; (cd "$HF" && hyperframes snapshot --at "${SNAP_AT:-1,20,47,71,86}" --no-end --timeout 30000 -o "$BUILD/snaps" >/dev/null 2>&1); ls "$BUILD/snaps"; }
 has render && { log "render ${FPS}fps crf $CRF workers $WORKERS"; (cd "$HF" && hyperframes render -f "$FPS" -w "$WORKERS" --crf "$CRF" -o "$BUILD/render.mp4" 2>&1 | grep -vE "@hf-progress|Render:trace|^\s+█" | tail -12); }
 has encode && { log "delivery encode (~3.6 Mbps, faststart)"; mkdir -p "$EP/out"
