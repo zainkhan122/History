@@ -6,7 +6,7 @@ disposable working copy. If it isn't in this repo (git or Release assets), it do
 ## Session start (empty workspace)
 1. Ask the owner for the GitHub token if `~/.cache/secrets/gh_token` is missing. Store it there (chmod 600).
    Never write tokens to the repo, the workspace or logs.
-2. `git clone https://github.com/zainkhan122/History.git ~/History && source ~/History/bootstrap.sh`
+2. `[ -d ~/History ] || git clone https://github.com/zainkhan122/History.git ~/History; source ~/History/bootstrap.sh`. Arena drops `.git/config` from snapshots; bootstrap restores it from `.repo`.
 3. Read `RESUME.md` and continue from its **Next** list. `python3 tools/state.py show` gives the short version.
 
 ## Session end, or after any meaningful change

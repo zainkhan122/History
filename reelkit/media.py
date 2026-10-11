@@ -31,8 +31,9 @@ def repo_slug():
     if os.environ.get("GITHUB_REPOSITORY"): return os.environ["GITHUB_REPOSITORY"]
     url = subprocess.run(["git", "remote", "get-url", "origin"], capture_output=True, text=True).stdout.strip()
     m = re.search(r"github\.com[:/](.+?)(?:\.git)?$", url)
-    if not m: sys.exit("cannot determine repo (no origin remote)")
-    return m.group(1)
+    if m: return m.group(1)
+    slug = (Path(__file__).resolve().parents[1] / ".repo").read_text().strip() if (Path(__file__).resolve().parents[1] / ".repo").exists() else ""
+    return slug or sys.exit("cannot determine repo (no origin remote, no .repo file)")
 
 
 def req(method, url, data=None, headers=None, raw=False):

@@ -23,7 +23,7 @@
   "huggingface": "not provided (optional: raises ZeroGPU quota)",
   "cloudflare": "not provided (optional: Workers AI images 10k neurons/day)"
  },
- "updated_at": "2026-10-11T09:02:43Z",
+ "updated_at": "2026-10-11T09:04:07Z",
  "episodes": {
   "series/paper-trail/ep01-petrov": {
    "title": "The Man Who Did Nothing",

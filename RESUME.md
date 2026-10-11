@@ -1,38 +1,59 @@
 # RESUME: living handoff (update before every sync)
 
-_Last updated: 2026-10-11 by the Arena agent._
+_Last updated: 2026-10-11 ~09:10 PKT by the Arena agent. Short form: `python3 tools/state.py show`._
 
 ## Where we are
-- **Repo SSOT live:** `zainkhan122/History`, public. Code and docs are in git; media is in Releases (`media-*` = inputs, `<episode>-v*` / `-r<run>` = deliverables).
-- **Paper Trail ep01 v1 delivered.** "The Man Who Did Nothing" (Petrov), 87.4 s, QA passed: −14.1 LUFS, TP −1.3, ASR 0.963. Files are in Release `ep01-petrov-v1`.
-- **Cloud render:** `.github/workflows/render.yml` runs `reelkit/episode.sh` on a 4 vCPU / 16 GB runner and publishes to a Release.
-- **Lightpanda vs Chrome:** owner asked to replace Chrome with Lightpanda for efficiency. Tested on nightly 1.1.0-nightly.10426: `fetch --dump png` renders text only (no CSS boxes, transforms, SVG or images), so it **cannot capture video frames**. Decision: Lightpanda for research scraping; chrome-headless-shell (HyperFrames) for frames. Efficiency comes from rendering in the cloud instead.
+- **Repo SSOT live:** `zainkhan122/History` (public). Code and docs are in git (~1.8 MB). Media is in **Releases**:
+  - `media-ep01-petrov`: plates, VO, raw clips (24 files, 11.8 MB, manifest `series/paper-trail/ep01-petrov/media.json`);
+  - `media-reel-hamilton`: Hamilton proof reel (15 files, 64.8 MB);
+  - `archive-research`: research scrapes tarball;
+  - `ep01-petrov-v1`: delivered v1 (final.mp4, cover, POST_KIT, qa.json);
+  - `ep01-petrov-cloud-test`: cloud render proof. Run #1: 10 min, QA pass, identical to local.
+  - `ep01-petrov-v2`: v2 from cloud run #2. **Verify it completed:** `python3 reelkit/cloud.py status`.
+- **Ep01 v2 engine upgrade (done, in git):**
+  - Wan 2.2 motion clips on s03 (console) and s07 (sunlight / satellite);
+  - archival **Minuteman launch film insert** on "strike back" (projected frame, gate weave, flicker, label, credit, projector SFX, flash in, film burn out);
+  - organic light leaks on the sunlight reveal, the wife memory and "survived by".
+- **Pending clips** (HF ZeroGPU anonymous quota hit after 3 clips): s01_bunker, s05_officer, s06_phone, s09_kitchen.
+  Prompts are ready in `clips.json`. Run `python3 reelkit/clips.py gen series/paper-trail/ep01-petrov` with `HF_TOKEN` set, then `media.py push` and a cloud render → v3.
+- **Lightpanda vs Chrome:** tested, and Lightpanda can't paint (`--dump png` is text-only). Chrome-headless-shell stays for frames; Lightpanda is for scraping only. Speed comes from cloud rendering.
 
 ## Owner rules (standing)
-See `STATE.json → owner_rules`. Key ones:
-- the repo is the SSOT, and every change is synced;
+See `STATE.json → owner_rules`:
+- the repo is the SSOT and every change is synced;
 - keep the workspace and repo lean;
 - premium editing with real motion;
 - sourced facts;
 - emotional TTS;
-- no auto-posting yet.
+- no auto-posting yet (Buffer/YT later).
 
-## How to continue
+## How to continue (new session)
 ```bash
-source ~/History/bootstrap.sh                 # toolchain + resume pack
-python3 reelkit/cloud.py status               # last cloud renders
+mkdir -p ~/.cache/secrets && printf %s "<TOKEN>" > ~/.cache/secrets/gh_token   # owner supplies the token (expires 2026-11-10)
+[ -d ~/History ] || git clone https://github.com/zainkhan122/History.git ~/History
+source ~/History/bootstrap.sh          # restores .git/config (Arena drops it), toolchain, prints resume pack
+python3 reelkit/cloud.py status        # last cloud renders
+python3 reelkit/media.py pull series/paper-trail/ep01-petrov   # only if you need the media locally
 ```
 
 ## Next
-1. Verify a cloud render of ep01 end-to-end (Actions → Release).
-2. `docs/VIDEO_SOURCES.md`: free image/video generators, tested.
-3. Engine: video-clip layers + professional transitions (`reelkit/clips.py`).
-4. Ep01 v2 with motion clips → cloud render → owner review.
+1. Confirm the `ep01-petrov-v2` release (QA pass), then show the owner.
+2. Get a free HF token from the owner → generate the 4 pending clips → render v3 in the cloud.
+3. Ep02 (Paper Trail): subject from `docs/NICHE_RESEARCH.md`. Build `clips.json` from day one:
+   - 4–6 Wan clips;
+   - 1–2 archive inserts (Commons / IA / NASA PD).
+4. Optional: CPU depth-parallax fallback (Depth-Anything ONNX) for when the GPU quota is out.
+5. Later (owner asked to wait): Buffer / YouTube auto-publish from the render workflow.
 
 ## Known gotchas
-- `/tmp` is a ~1 GB RAM disk. Builds go to `~/.cache/build`; renders need TMPDIR on disk (`episode.sh` sets it).
+- **Arena snapshots drop `.git/config`.** `bootstrap.sh` restores the remote, identity and auth; the slug lives in `.repo`.
+- `/tmp` is a ~1 GB RAM disk. Builds go to `~/.cache/build`; `episode.sh` sets TMPDIR on disk.
 - Sandbox restarts wipe `~/.cache` and pip user packages. Re-run `source bootstrap.sh`.
-- 2 vCPU / 2 GB sandbox: HyperFrames uses the low-memory screenshot mode (~10 min for 87 s). The cloud runner is much faster.
-- HyperFrames: `immediateRender:false` on every fromTo; an element starting hidden needs `autoAlpha:1` in its destination; give initial CSS opacity for wash layers; don't tween the same props on one element from two tweens (shake the parent instead).
-- GSAP 3: no `className` tweens; use `attr:{class:..}` in `tl.set`.
-- Fine-grained token expires **2026-11-10**.
+- The static ffmpeg in `~/.cache/bin` segfaults on HTTPS input. `clips.py` uses `/usr/bin/ffmpeg` and downloads first.
+- HyperFrames:
+  - `<video data-start>` must NOT be inside a timed div. `engine/fx.py` puts videos at root level under their scene and drives Ken Burns and shakes through `kb_targets` / `shake_targets`.
+  - `immediateRender:false` on every fromTo.
+  - Elements that start hidden need autoAlpha in the destination.
+  - Don't let two tweens animate the same property of one element at the same time.
+- read_file sometimes misses a just-written image; retry once.
+- The fine-grained token expires **2026-11-10**.
