@@ -18,12 +18,12 @@ DEFAULT_GLOBS = ["assets/*", "vo/*", "clips/*", "media/**"]   # out/ = deliverab
 MEDIA_EXT = {".jpg", ".jpeg", ".png", ".webp", ".mp3", ".wav", ".m4a", ".mp4", ".mov", ".webm", ".gif", ".flac", ".ogg", ".onnx", ".tar", ".gz", ".zip"}
 
 
-def token():
+def token(required=True):
     t = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
     if not t:
         p = Path.home() / ".cache/secrets/gh_token"
         t = p.read_text().strip() if p.exists() else None
-    if not t: sys.exit("no GitHub token: set GH_TOKEN or put it in ~/.cache/secrets/gh_token")
+    if not t and required: sys.exit("no GitHub token: set GH_TOKEN or put it in ~/.cache/secrets/gh_token")
     return t
 
 
@@ -37,7 +37,8 @@ def repo_slug():
 
 
 def req(method, url, data=None, headers=None, raw=False):
-    h = {"Authorization": f"Bearer {token()}", "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
+    tk = token(required=method != "GET")          # public repo: reads work without a token (60 req/h)
+    h = {"Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", **({"Authorization": f"Bearer {tk}"} if tk else {})}
     h.update(headers or {})
     body = json.dumps(data).encode() if isinstance(data, (dict, list)) else data
     r = urllib.request.Request(url, data=body, method=method, headers=h)

@@ -13,6 +13,7 @@ TL = json.load(open(HERE / "timeline.json"))
 C, SC, TOTAL, WORDS = TL["cues"], {s["id"]: s for s in TL["scenes"]}, TL["total"], TL["words"]
 TYPE_RATE = 22.0                      # chars/s — must match score.py
 INK, CREAM, RED, MUSTARD = "#141414", "#F4ECD8", "#C8102E", "#E3A72F"
+RED_ON_LIGHT, RED_ON_DARK = "#A50B25", "#FF4D4D"   # readable reds: text on paper / text on dark (textqa ≥ 4.5:1)
 
 body, js = [], []                     # html chunks, js timeline lines
 def J(s): js.append(s)
@@ -178,7 +179,7 @@ s = SC["s05"]
 qwords = [w for w in WORDS if w["scene"] == "s05" and w["s"] >= C["quote"] - 0.01]
 qwords = [w for w in qwords if w["w"].lower() not in ("he", "said,")]
 quote_html = "".join(f'<span class="qw" id="qw{i}">{html.escape(w["w"])}</span> ' for i, w in enumerate(qwords))
-quote = (f'<div id="qdim" class="wash" style="background:rgba(12,10,8,0.72);opacity:0"></div>'
+quote = (f'<div id="qdim" class="wash" style="background:rgba(12,10,8,0.86);opacity:0"></div>'
          f'<div id="quote" class="quote" data-layout-allow-overlap="true"><div class="qmark">“</div>{quote_html}'
          f'<div class="qby">— Stanislav Petrov</div></div>')
 clip("sc05", s["start"], s["end"], kb("kb05", "s05_officer") + typed("t_name", 56, 1190, 40, -1.0) + quote)
@@ -245,7 +246,7 @@ card8 = ('<div id="card8" class="card" style="left:150px;top:200px;width:780px;-
          '<div class="tape" style="left:300px;top:-22px;transform:rotate(-4deg)"></div></div>')
 st_rep = stamp("strep", ["ВЫГОВОР", "REPRIMAND"], 120, 420, -10, 84)
 st_sec = stamp("stsec", ["СЕКРЕТНО", "CLASSIFIED 1983–1998"], 230, 880, 6, 64)
-nomedal = '<div id="nomedal" class="tag" style="left:620px;top:150px;font-size:40px;transform:rotate(3deg)">MEDAL: <s style="color:#C8102E">NONE</s></div>'
+nomedal = '<div id="nomedal" class="tag" style="left:620px;top:150px;font-size:40px;transform:rotate(3deg)">MEDAL: <s style="color:#A50B25">NONE</s></div>'
 clip("sc08", s["start"], s["end"], card8 + nomedal + st_rep + st_sec)
 J(f"tl.fromTo('#card8',{{y:1700,rotation:9}},{{y:0,rotation:2,duration:0.5,ease:'power3.out',immediateRender:false}},{f(s['start']-0.02)});")
 J(f"tl.to('#card8',{{scale:1.04,y:-20,duration:{f(s['end']-s['start']-0.5)},ease:'none'}},{f(s['start']+0.5)});")
@@ -256,7 +257,7 @@ stamp_anim("stsec", C["secret"] + 0.1, 6); shake("#sc08", C["secret"] + 0.1, 0.2
 # ======================= S9 — the kitchen (heart) =======================
 s = SC["s09"]
 n9 = [w for w in WORDS if w["scene"] == "s09" and w["s"] >= C["nothing1"] - 0.01]
-serif9 = ('<div id="dim9" class="wash" style="background:linear-gradient(rgba(14,10,6,0.25),rgba(14,10,6,0.78));opacity:0"></div>'
+serif9 = ('<div id="dim9" class="wash" style="background:linear-gradient(rgba(14,10,6,0.55) 0%,rgba(14,10,6,0.86) 26%,rgba(14,10,6,0.86) 62%,rgba(14,10,6,0.60) 100%);opacity:0"></div>'
           '<div id="nothing" class="bigserif" data-layout-allow-overlap="true">'
           f'<div id="nl1">{html.escape(n9[0]["w"])}</div>'
           '<div id="nl2">' + " ".join(f'<span id="nw{i}">{html.escape(w["w"])}</span>' for i, w in enumerate(n9[1:])) + '</div></div>')
@@ -286,7 +287,7 @@ for key, txt, i in lines10:
 earth_txt = ('<div id="humanrace" class="hr" data-layout-allow-overlap="true">' +
              "".join(f'<div id="{i}" class="{ "hrbig" if i == "l10e" else ""}">{html.escape(txt)}</div>' for _, txt, i in lt) + '</div>')
 earth = (f'<div id="earth" class="wash" style="opacity:0">{kb("kb10", "s10_earth")}'
-         '<div class="wash" style="background:linear-gradient(rgba(240,232,212,0.85) 0%,rgba(240,232,212,0.55) 26%,rgba(240,232,212,0) 34%)"></div>'
+         '<div class="wash" style="background:linear-gradient(rgba(240,232,212,0.97) 0%,rgba(240,232,212,0.97) 29%,rgba(240,232,212,0) 37%)"></div>'
          f'{earth_txt}</div>')
 endcard = ('<div id="endcard" class="wash endcard" style="opacity:0" data-layout-allow-overlap="true">'
            '<div class="eklogo">PAPER TRAIL</div>'
@@ -395,7 +396,8 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:{CREAM}}}
 .strip.ink{{background:{INK};color:{CREAM};transform:rotate(-2deg)}}
 .strip.red{{background:{RED};color:{CREAM};transform:rotate(1.5deg)}}
 .title .strip{{display:block;width:max-content;margin:8px auto}}
-.kicker{{font-family:'DM Serif';font-style:italic;font-size:46px;color:{CREAM};margin-top:22px;text-shadow:0 3px 12px rgba(0,0,0,.85)}}
+.kicker{{display:block;width:max-content;margin:26px auto 0;font-family:'DM Serif';font-style:italic;font-size:50px;line-height:1.1;color:{INK};
+  background:#F3EAD3;padding:12px 30px 10px;transform:rotate(-1deg);box-shadow:0 8px 20px rgba(0,0,0,.45)}}
 .tag{{position:absolute;font-family:'Elite',monospace;color:{INK};background:#F3EAD3;padding:10px 20px 8px;
   box-shadow:0 6px 14px rgba(0,0,0,.35);white-space:nowrap;visibility:hidden;opacity:0;transform-origin:0 50%}}
 .tag .ch{{opacity:0}}
@@ -406,8 +408,9 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:{CREAM}}}
 .card{{position:absolute;background:#FBF7EE;padding:20px;box-shadow:0 24px 50px rgba(0,0,0,.40);transform:rotate(var(--r))}}
 .card img{{display:block}}
 .tape{{position:absolute;width:180px;height:54px;background:rgba(227,201,120,.62);box-shadow:0 2px 4px rgba(0,0,0,.15)}}
-.credit{{font-family:'Elite',monospace;font-size:21px;color:#3b3226;text-align:center;margin-top:-104px;padding:0 30px;position:relative}}
-.startglow{{position:absolute;display:flex;align-items:center;justify-content:center;opacity:0}}
+.credit{{font-family:'Elite',monospace;font-size:22px;color:{INK};text-align:center;position:relative;width:max-content;max-width:740px;margin:14px auto 0;
+  background:#F3EAD3;padding:8px 16px 6px;box-shadow:0 4px 10px rgba(0,0,0,.3)}}
+.startglow{{position:absolute;display:flex;align-items:center;justify-content:center;opacity:0;background:radial-gradient(ellipse at 50% 50%,rgba(40,0,6,.82) 0%,rgba(40,0,6,.62) 70%,rgba(40,0,6,.35) 100%);border-radius:18px}}
 .startglow span{{font-family:'Oswald';font-weight:700;font-size:180px;color:#FFF1EA;letter-spacing:.04em;
   text-shadow:0 0 18px #ff3b3b,0 0 50px #ff1a1a,0 0 110px #ff0000}}
 .arcs{{position:absolute;left:0;top:0;filter:drop-shadow(0 0 10px rgba(255,40,40,.8))}}
@@ -420,37 +423,38 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:{CREAM}}}
   box-shadow:0 8px 18px rgba(0,0,0,.30);visibility:hidden;opacity:0;white-space:nowrap}}
 .pin{{position:absolute;left:18px;top:50%;width:26px;height:26px;margin-top:-13px;border-radius:50%;
   background:radial-gradient(circle at 35% 35%,#ff6b6b,{RED} 60%,#6d0012);box-shadow:0 3px 5px rgba(0,0,0,.4)}}
-.quote{{position:absolute;left:90px;top:560px;width:900px;font-family:'DM Serif';font-style:italic;font-size:80px;line-height:1.12;color:{CREAM}}}
+.quote{{position:absolute;left:90px;top:560px;width:900px;font-family:'DM Serif';font-style:italic;font-size:80px;line-height:1.12;color:{CREAM};text-shadow:0 4px 18px rgba(0,0,0,.9)}}
 .qw{{display:inline-block;visibility:hidden;opacity:0}}
-.qmark{{font-family:'DM Serif';font-size:260px;line-height:.6;color:{RED};height:120px;visibility:hidden;opacity:0}}
+.qmark{{font-family:'DM Serif';font-size:260px;line-height:.6;color:{MUSTARD};height:120px;visibility:hidden;opacity:0}}
 .qby{{font-family:'Oswald';font-style:normal;font-size:40px;letter-spacing:.12em;color:{MUSTARD};margin-top:34px;text-transform:uppercase;visibility:hidden;opacity:0}}
-.waitbox{{position:absolute;left:190px;top:700px;width:700px;padding:30px 0 26px;text-align:center;background:rgba(20,20,20,.86);
+.waitbox{{position:absolute;left:190px;top:700px;width:700px;padding:30px 0 26px;text-align:center;background:rgba(14,12,10,.94);
   border:3px solid {RED};box-shadow:0 0 40px rgba(200,16,46,.45);visibility:hidden;opacity:0}}
 .wlabel{{font-weight:700;font-size:40px;letter-spacing:.2em;color:{CREAM}}}
 .digits{{position:relative;height:210px}}
 .dg{{position:absolute;left:0;width:700px;top:0;font-family:'Oswald';font-weight:700;font-size:200px;line-height:210px;color:{RED};
   font-variant-numeric:tabular-nums;visibility:hidden;opacity:0;text-shadow:0 0 24px rgba(255,30,30,.55)}}
+.dg{{color:{RED_ON_DARK} !important}}
 .glint{{position:absolute;width:520px;height:520px;margin:-260px 0 0 -260px;mix-blend-mode:screen;opacity:0;
   background:radial-gradient(circle,rgba(255,252,230,1) 0%,rgba(255,220,120,.85) 9%,rgba(255,190,60,.35) 26%,rgba(255,190,60,0) 50%),linear-gradient(90deg,rgba(255,230,150,0) 0%,rgba(255,236,170,.9) 50%,rgba(255,230,150,0) 100%) center/100% 6px no-repeat,linear-gradient(0deg,rgba(255,230,150,0) 20%,rgba(255,236,170,.7) 50%,rgba(255,230,150,0) 80%) center/4px 100% no-repeat}}
 .fivelabel{{position:absolute;left:50%;top:880px;white-space:nowrap;font-family:'Anton';font-size:84px;color:{CREAM};
   background:{INK};padding:4px 30px 0;letter-spacing:.02em;box-shadow:0 10px 24px rgba(0,0,0,.5);visibility:hidden;opacity:0}}
-.bigserif{{position:absolute;left:0;top:640px;width:1080px;text-align:center;font-family:'DM Serif';font-style:italic;color:#FFF6E4;
+.bigserif{{position:absolute;left:0;top:640px;width:1080px;text-align:center;font-family:'DM Serif';font-style:italic;color:#FFF6E4;text-shadow:0 4px 22px rgba(0,0,0,.95),0 0 2px rgba(0,0,0,.8);
   text-shadow:0 6px 30px rgba(0,0,0,.6)}}
 #nl1{{font-size:150px;line-height:1.1;visibility:hidden;opacity:0}}
 #nl2{{font-size:118px;line-height:1.1}}
 #nl2 span{{display:inline-block;visibility:hidden;opacity:0}}
 .hr{{position:absolute;left:0;top:96px;width:1080px;text-align:center;font-family:'DM Serif';font-size:60px;line-height:1.12;color:{INK}}}
 .hr>div{{visibility:hidden;opacity:0}}
-.hrbig{{font-style:italic;font-size:110px;color:{RED};line-height:1.05;margin-top:6px}}
-.endcard{{background:rgba(16,13,10,.90);text-align:center;padding-top:520px}}
-.eklogo{{font-family:'Oswald';font-weight:700;font-size:40px;letter-spacing:.5em;color:{RED};margin-bottom:34px;padding-left:.5em}}
+.hrbig{{font-style:italic;font-size:110px;color:{RED_ON_LIGHT};line-height:1.05;margin-top:6px}}
+.endcard{{background:rgba(16,13,10,.95);text-align:center;padding-top:520px}}
+.eklogo{{font-family:'Oswald';font-weight:700;font-size:40px;letter-spacing:.5em;color:{RED_ON_DARK};margin-bottom:34px;padding-left:.5em}}
 .strip.big{{display:block;width:max-content;margin:10px auto;font-size:136px}}
 .ename{{font-family:'DM Serif';font-style:italic;font-size:56px;color:{CREAM};margin-top:48px}}
 .efollow{{position:absolute;left:0;width:1080px;top:1380px;font-weight:600;font-size:50px;letter-spacing:.14em;color:{MUSTARD};visibility:hidden;opacity:0}}
 .cap{{position:absolute;left:0;top:1350px;width:1080px;text-align:center;visibility:hidden;opacity:0}}
 .capstrip{{display:inline-block;background:#F6EEDC;padding:12px 18px 8px;box-shadow:0 8px 0 rgba(0,0,0,.28),0 14px 28px rgba(0,0,0,.25);max-width:960px}}
 .cw{{display:inline-block;font-family:'Oswald';font-weight:600;font-size:76px;line-height:1.1;color:{INK};padding:0 8px;border-radius:6px}}
-.cw.key{{color:{RED}}}
+.cw.key{{color:{RED_ON_LIGHT}}}
 .cw.on{{background:{MUSTARD};color:{INK}}}
 .cw.on.key{{background:{RED};color:{CREAM}}}
 .bug{{position:absolute;right:40px;top:96px;font-weight:600;font-size:28px;letter-spacing:.22em;color:{CREAM};background:{INK};padding:8px 16px 6px}}

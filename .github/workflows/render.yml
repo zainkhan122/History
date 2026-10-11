@@ -71,7 +71,7 @@ jobs:
         run: |
           EP="${{ matrix.ep }}"; NAME="$(basename "$EP")"
           TAG="${{ inputs.tag }}"; TAG="${TAG:-$NAME-r${{ github.run_number }}}"
-          FILES="$EP/out/final.mp4 $EP/out/cover.jpg $EP/out/qa.json"
+          FILES="$EP/out/final.mp4 $EP/out/cover.jpg $EP/out/qa.json $EP/out/textqa.json"
           NOTES=(); [ -f "$EP/POST_KIT.md" ] && { FILES="$FILES $EP/POST_KIT.md"; NOTES=(--notes-file "$EP/POST_KIT.md"); }
           python3 reelkit/media.py publish "$TAG" $FILES --title "$NAME (render #${{ github.run_number }})" "${NOTES[@]}"
           echo "### $NAME → release \`$TAG\`" >> "$GITHUB_STEP_SUMMARY"

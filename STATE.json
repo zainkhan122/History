@@ -1,10 +1,11 @@
 {
- "now": "ep01 v2 delivered (release ep01-petrov-v2). Waiting on owner: review v2 + optional free HF token for 4 more clips",
+ "now": "ep01 v2.1 readability fix (all text passes textqa gate); CONTENT_STRATEGY.md written. LOCAL COMMITS NOT PUSHED until owner re-supplies token",
  "next": [
-  "Owner feedback on v2",
-  "With HF_TOKEN: clips.py gen ep01 (s01_bunker s05_officer s06_phone s09_kitchen) -> media push -> cloud render v3",
-  "Ep02 Paper Trail: research + script + plates + clips.json (4-6 Wan + 1-2 archive) from day one",
-  "Optional: CPU depth-parallax fallback when GPU quota is out"
+  "Owner re-supplies GitHub token -> bash tools/sync.sh -> cloud render tag ep01-petrov-v2.1 (or publish local render)",
+  "Owner review of v2.1 + strategy answers; then pre-launch: bank 6 episodes (docs/CONTENT_STRATEGY.md §1)",
+  "Build tools/factcheck.py (fact-sheet gate: claim->2 sources, URL live, Wayback archive)",
+  "With HF_TOKEN: 4 pending ep01 clips -> v3",
+  "Ep02-06 production (rotate formats: File / Close Call / Myth vs Record / One Document)"
  ],
  "owner_rules": [
   "Repo zainkhan122/History is the SSOT; sync every change (tools/sync.sh) so a new session resumes exactly",
@@ -13,17 +14,19 @@
   "Deep-research feel: sourced facts, archival details; emotional TTS",
   "Lightpanda requested instead of Chrome: tested — cannot paint frames; used for scraping only",
   "Buffer / YouTube auto-sharing: NOT now (later)",
-  "Ideas must run inside the agent; give real inputs (prompts, scripts, beat maps), not generic advice"
+  "Ideas must run inside the agent; give real inputs (prompts, scripts, beat maps), not generic advice",
+  "Text must be readable wherever it appears (plates/scrims/outlines; textqa gate ≥3:1, target 4.5:1) — casual-looking text = viewers leave"
  ],
  "blockers": [
-  "HF ZeroGPU anonymous quota exhausted today (needs HF_TOKEN for more clips)"
+  "GitHub token missing after sandbox restart (needed to push + cloud render)",
+  "HF token optional for more Wan clips"
  ],
  "secrets": {
   "github": "fine-grained PAT, expires 2026-11-10, stored only at ~/.cache/secrets/gh_token (ask owner each new session)",
   "huggingface": "not provided (optional: raises ZeroGPU quota)",
   "cloudflare": "not provided (optional: Workers AI images 10k neurons/day)"
  },
- "updated_at": "2026-10-11T09:11:20Z",
+ "updated_at": "2026-10-11T11:02:22Z",
  "episodes": {
   "series/paper-trail/ep01-petrov": {
    "title": "The Man Who Did Nothing",

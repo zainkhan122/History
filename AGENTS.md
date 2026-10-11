@@ -20,7 +20,8 @@ Update `RESUME.md` (and `STATE.json` via `tools/state.py set`) **before** syncin
 - **Workspace budget:** the Arena save limit is ~128 MB / 10k files. Keep only `~/History` in the workspace. Caches and models go in `~/.cache`.
 - **Renders:** short drafts or snapshots run locally. Full renders run in the cloud: `python3 reelkit/cloud.py render <episode_dir> --wait`.
 - **Lightpanda can't render frames.** Tested 2026-10-11: `--dump png` is text-only, with no CSS, images or SVG. It's used for fast research scraping only. Frame capture uses chrome-headless-shell (via HyperFrames).
-- **Accuracy:** every narrated fact needs a source in the episode's `script.md` fact sheet. Follow the guardrails listed there.
+- **Readability:** every on-screen text must pass `reelkit/textqa.py`, which runs in `episode.sh`. FAIL (< 3:1) blocks the render. Owner rule: free-floating white text over imagery is poor editing and loses viewers. See `series/paper-trail/SERIES.md`.
+- **Accuracy:** every narrated fact needs 2 independent sources in the episode's `script.md` fact sheet (protocol in `docs/CONTENT_STRATEGY.md` §3). Follow the guardrails listed there.
 - **Licensing:** commercial-safe assets only (PD / CC0 / CC BY with credit / own-generated). Avoid CC BY-SA for monetised video. Credit everything in `POST_KIT.md`.
 - Auto-posting (Buffer / YouTube API) is **not wanted yet**. Do not build or trigger it until the owner asks.
 

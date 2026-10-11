@@ -134,5 +134,5 @@ CSS = """
 .sprk.l{left:6px}.sprk.r{right:6px}
 .filmlabel{position:absolute;left:70px;font-family:'Elite',monospace;font-size:38px;color:#141414;background:#F3EAD3;padding:10px 20px 8px;
   transform:rotate(-1.2deg);box-shadow:0 6px 14px rgba(0,0,0,.45);white-space:nowrap;visibility:hidden;opacity:0}
-.filmcredit{position:absolute;left:0;width:1080px;text-align:center;font-family:'Elite',monospace;font-size:20px;color:#bfb29a}
+.filmcredit{position:absolute;left:0;width:1080px;text-align:center;font-family:'Elite',monospace;font-size:25px;color:#EFE6D2;text-shadow:0 2px 6px #000}
 """

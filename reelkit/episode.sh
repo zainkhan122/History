@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # One-command episode pipeline — identical in the sandbox and on GitHub Actions.
 #   bash reelkit/episode.sh <episode_dir> [stage...]
-# stages (default: all): pull trim plan score assets build lint snap render encode qa
+# stages (default: all): pull trim plan score assets build lint textqa snap render encode qa
 # Build dir: $BUILD (default ~/.cache/build/<episode-name>) — never inside the repo.
 set -euo pipefail
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 EP="$(cd "$1" && pwd)"; shift || true
 NAME="$(basename "$EP")"
 BUILD="${BUILD:-$HOME/.cache/build/$NAME}"; HF="$BUILD/hf"
-STAGES="${*:-pull trim plan score assets build lint render encode qa}"
+STAGES="${*:-pull trim plan score assets build lint textqa render encode qa}"
 FPS="${FPS:-30}"; CRF="${CRF:-18}"; WORKERS="${WORKERS:-auto}"
 export HYPERFRAMES_NO_TELEMETRY=1 HYPERFRAMES_NO_UPDATE_CHECK=1 DO_NOT_TRACK=1 HYPERFRAMES_SKIP_SKILLS=1
 export PATH="$HOME/.cache/bin:$HOME/.cache/node/bin:$HOME/.cache/npm-global/bin:/usr/local/bin:$PATH"
@@ -23,6 +23,7 @@ has score  && { log "score + SFX + mix (-14 LUFS)"; python3 "$EP/score.py" "$BUI
 has assets && { log "visual assets"; python3 "$EP/make_assets.py" "$HF"; [ -f "$EP/clips.json" ] && python3 "$REPO/reelkit/clips.py" prep "$EP" "$HF" || true; }
 has build  && { log "composition"; python3 "$EP/build.py" "$HF"; cp "$BUILD/mix.wav" "$HF/assets/mix.wav"; }
 has lint   && { log "lint"; (cd "$HF" && hyperframes lint 2>&1 | grep -E "✗|◇" || true); (cd "$HF" && ! hyperframes lint 2>&1 | grep -q "✗"); }
+has textqa && { log "readability gate (every on-screen text ≥ 3:1, target 4.5:1)"; mkdir -p "$EP/out"; python3 "$REPO/reelkit/textqa.py" "$HF" --report "$EP/out/textqa.json" --sheet "$BUILD/textqa_fails.jpg"; }
 has snap   && { log "snapshots"; (cd "$HF" && hyperframes snapshot --at "${SNAP_AT:-1,20,47,71,86}" --no-end --timeout 30000 -o "$BUILD/snaps" >/dev/null 2>&1); ls "$BUILD/snaps"; }
 has render && { log "render ${FPS}fps crf $CRF workers $WORKERS"; (cd "$HF" && hyperframes render -f "$FPS" -w "$WORKERS" --crf "$CRF" -o "$BUILD/render.mp4" 2>&1 | grep -vE "@hf-progress|Render:trace|^\s+█" | tail -12); }
 has encode && { log "delivery encode (~3.6 Mbps, faststart)"; mkdir -p "$EP/out"

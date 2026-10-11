@@ -3,6 +3,13 @@
 _Last updated: 2026-10-11 ~09:10 PKT by the Arena agent. Short form: `python3 tools/state.py show`._
 
 ## Where we are
+- **2026-10-11 (later): v2.1 readability pass.** Owner: "text must be readable wherever it appears". Fixes:
+  - kicker on a paper strip; stronger scrims on the quote, "Nothing" and "survived by" lines;
+  - readable reds (`#A50B25` on paper, `#FF4D4D` on dark); dark CRT backing behind СТАРТ;
+  - paper label on the memorial credit; larger film credit.
+  - **New gate `reelkit/textqa.py`** (stage `textqa` in episode.sh): result 132 text units, 0 FAIL.
+  - Strategy answers are in `docs/CONTENT_STRATEGY.md`.
+  - **If local commits are not on origin, push first:** `bash tools/sync.sh`. The token was lost in a sandbox restart.
 - **Repo SSOT live:** `zainkhan122/History` (public). Code and docs are in git (~1.8 MB). Media is in **Releases**:
   - `media-ep01-petrov`: plates, VO, raw clips (24 files, 11.8 MB, manifest `series/paper-trail/ep01-petrov/media.json`);
   - `media-reel-hamilton`: Hamilton proof reel (15 files, 64.8 MB);

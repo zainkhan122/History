@@ -40,3 +40,15 @@ Copy `ep01-petrov/`, then replace:
 - the arrangement in `score.py`
 
 The engine pieces are reusable as-is.
+
+## Readability rule (owner standard, 2026-10-11)
+No free-floating light text over imagery.
+- Every text sits on **its own plate** (paper strip, ink strip, card), on a **scrim ≥ 0.85**, or has a **≥ 3 px outline**.
+- Reds:
+  - `#A50B25` for red text on paper;
+  - `#FF4D4D` for red text on dark;
+  - brand `#C8102E` only as a fill or background behind cream text.
+- Minimum sizes: 40 px primary, 22 px credits.
+- Enforced by `reelkit/textqa.py`, which runs automatically in `episode.sh` (stage `textqa`):
+  - FAIL < 3:1 blocks the render;
+  - the target is ≥ 4.5:1 (WCAG contrast measured behind the glyphs, worst 10% of pixels).
