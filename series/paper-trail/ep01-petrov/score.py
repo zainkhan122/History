@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Paper Trail Ep.01 — original score + SFX + VO mix (procedural, royalty-free, D minor -> F major).
-Reads timeline.json + trimmed VO wavs. Writes <out>/mix.wav (48k stereo, -14 LUFS, TP -1.5) + stems.
+Reads timeline.json + trimmed VO wavs. Writes <out>/mix.wav (48k stereo, -14 LUFS, TP -2.0 pre-AAC) + stems + mix_report.json (reelkit/master.py).
 usage: python3 score.py [vo_dir] [out_dir]
 """
-import json, sys, subprocess, re, shutil
+import json, sys
 from pathlib import Path
 import numpy as np
 import soundfile as sf
@@ -156,24 +156,12 @@ for t0, text, _id in TL["typed"]:
 music = S.reverb(music, secs=2.2, wet=0.12, bright=6000)[:n]
 env = S.follower(vo[:, 0], 0.03, 0.40)
 env = env / (env.max() + 1e-9)
-duck = 1.0 - 0.72 * np.clip(env * 3.0, 0, 1)                  # up to ~-11 dB under speech
+duck = 1.0 - 0.77 * np.clip(env * 3.0, 0, 1)                  # up to ~-12.8 dB under speech (VO ≥ 15 dB over bed)
 duck_sfx = 1.0 - 0.35 * np.clip(env * 3.0, 0, 1)
 mix = vo * 1.0 + music * duck[:, None] * 0.95 + sfx * duck_sfx[:, None] * 0.9
 # soft limiter-ish safety before loudnorm
 mix = np.tanh(mix * 1.1) / 1.1
 fade = int(1.2 * SR); mix[-fade:] *= np.linspace(1, 0, fade)[:, None]
-OUT.mkdir(parents=True, exist_ok=True)
-sf.write(OUT / "mix_raw.wav", mix, SR, subtype="FLOAT")
-sf.write(OUT / "stem_music.wav", (music * duck[:, None]), SR, subtype="FLOAT")
-
-# ---------- two-pass loudnorm to -14 LUFS / TP -1.5 ----------
-def ln(args):
-    return subprocess.run([shutil.which("ffmpeg") or "ffmpeg", "-hide_banner", "-nostats", "-y"] + args, capture_output=True, text=True).stderr
-st = ln(["-i", str(OUT / "mix_raw.wav"), "-af", "loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json", "-f", "null", "-"])
-m = json.loads(re.search(r"\{[^{}]*\"input_i\"[^{}]*\}", st, re.S).group(0))
-af = (f"loudnorm=I=-14:TP=-1.5:LRA=11:measured_I={m['input_i']}:measured_TP={m['input_tp']}:"
-      f"measured_LRA={m['input_lra']}:measured_thresh={m['input_thresh']}:offset={m['target_offset']}:linear=true")
-ln(["-i", str(OUT / "mix_raw.wav"), "-af", af + ",aresample=48000", "-ar", "48000", "-ac", "2", "-c:a", "pcm_s16le", str(OUT / "mix.wav")])
-st = ln(["-i", str(OUT / "mix.wav"), "-af", "loudnorm=I=-14:TP=-1.5:print_format=json", "-f", "null", "-"])
-m2 = json.loads(re.search(r"\{[^{}]*\"input_i\"[^{}]*\}", st, re.S).group(0))
-print("final LUFS", m2["input_i"], "TP", m2["input_tp"], "LRA", m2["input_lra"])
+# ---------- shared mastering: -14 LUFS / -2.0 dBTP (AAC-safe) + VO/music/SFX balance report ----------
+from master import finish
+finish(mix, OUT, vo=vo, music=music * duck[:, None] * 0.95, sfx=sfx * duck_sfx[:, None] * 0.9)

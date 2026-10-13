@@ -51,6 +51,7 @@ jobs:
       WORKERS: "3"
       CRF: ${{ inputs.crf }}
       PRESET: medium
+      THREADS: "0"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -65,13 +66,13 @@ jobs:
           key: tools-hf0.8.137-${{ runner.os }}-${{ hashFiles('reelkit/ci_setup.sh') }}
       - name: Toolchain
         run: bash reelkit/ci_setup.sh
-      - name: Render pipeline (pull → trim → score → assets → build → lint → render → encode → QA)
+      - name: Render pipeline (pull → trim → plan → score → assets → build → check → textqa → render → encode → QA)
         run: bash reelkit/episode.sh "${{ matrix.ep }}"
       - name: Publish release
         run: |
           EP="${{ matrix.ep }}"; NAME="$(basename "$EP")"
           TAG="${{ inputs.tag }}"; TAG="${TAG:-$NAME-r${{ github.run_number }}}"
-          FILES="$EP/out/final.mp4 $EP/out/cover.jpg $EP/out/qa.json $EP/out/textqa.json"
+          FILES="$EP/out/final.mp4 $EP/out/cover.jpg $(ls $EP/out/*.json | tr '\n' ' ')"   # every gate report travels with the release
           NOTES=(); [ -f "$EP/POST_KIT.md" ] && { FILES="$FILES $EP/POST_KIT.md"; NOTES=(--notes-file "$EP/POST_KIT.md"); }
           python3 reelkit/media.py publish "$TAG" $FILES --title "$NAME (render #${{ github.run_number }})" "${NOTES[@]}"
           echo "### $NAME → release \`$TAG\`" >> "$GITHUB_STEP_SUMMARY"

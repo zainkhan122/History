@@ -25,7 +25,7 @@ function chrome() {
   await pg.goto("file://" + path.resolve(hf, "index.html"), { waitUntil: "load" });
   await pg.evaluate(async () => { await document.fonts.ready; });
   await pg.addStyleTag({ content: ".__tqh,.__tqh *{color:transparent!important;text-shadow:none!important;-webkit-text-stroke:0 transparent!important}" });
-  const meta = []; const last = {};
+  const meta = []; const last = {}; const seen = {};
   for (const t of times) {
     const units = await pg.evaluate(async (t, UNIT) => {
       const root = document.querySelector("[data-composition-id]");
@@ -52,7 +52,8 @@ function chrome() {
         const r = document.createRange(); r.selectNodeContents(n); const bb = r.getBoundingClientRect();
         if (bb.width < 2 || bb.height < 2 || bb.right < 0 || bb.bottom < 0 || bb.left > 1080 || bb.top > 1920) continue;
         if (!unit.id) unit.id = "tq" + Math.random().toString(36).slice(2, 8);
-        const u = found.get(unit.id) || { id: unit.id, text: "", colors: [], box: [1e9, 1e9, -1e9, -1e9], size: 0 };
+        const u = found.get(unit.id) || { id: unit.id, text: "", colors: [], box: [1e9, 1e9, -1e9, -1e9], size: 0,
+          cls: String(unit.className || ""), spoken: !!unit.closest('.cap,[data-tq-spoken]'), dwellOff: !!unit.closest('[data-tq-dwell="off"]'), safeOff: !!unit.closest('[data-tq-safe="off"]') };
         u.text += n.nodeValue; const c = getComputedStyle(el).color; if (!u.colors.includes(c)) u.colors.push(c);
         u.size = Math.max(u.size, parseFloat(getComputedStyle(el).fontSize));
         const cs = getComputedStyle(el), sw = parseFloat(cs.webkitTextStrokeWidth || "0");
@@ -63,6 +64,9 @@ function chrome() {
       return [...found.values()];
     }, t, UNIT);
     for (const u of units) {
+      const sv = seen[u.id] || (seen[u.id] = { id: u.id, first: t, last: t, text: "", spoken: u.spoken, dwellOff: u.dwellOff, safeOff: u.safeOff, cls: u.cls, boxes: [] });
+      sv.last = t; if (u.text.trim().length > sv.text.length) sv.text = u.text.trim();
+      sv.boxes.push([t, u.box.map(Math.round)]);                     // per-sample box -> persistent dead-zone intrusions only
       const key = u.id + "|" + u.text.trim();
       if (last[key] !== undefined && t - last[key] < 1.5) continue;
       last[key] = t;
@@ -78,6 +82,7 @@ function chrome() {
     }
   }
   fs.writeFileSync(path.join(out, "meta.json"), JSON.stringify(meta, null, 1));
+  fs.writeFileSync(path.join(out, "seen.json"), JSON.stringify(Object.values(seen), null, 1));
   await b.close();
   console.log(`probed ${meta.length} text appearances at ${times.length} times`);
 })().catch(e => { console.error(e); process.exit(2); });

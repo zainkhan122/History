@@ -46,8 +46,9 @@ def kb_move(sel, t0, t1, s0, s1, x0=0, x1=0, y0=0, y1=0, ease="none"):
     sel = FX.kb_targets(sel)
     J(f"tl.fromTo('{sel}',{{scale:{s0},x:{x0},y:{y0}}},{{scale:{s1},x:{x1},y:{y1},duration:{f(t1-t0)},ease:'{ease}',immediateRender:false}},{f(t0)});")
 
-def tag(id_, text, x, y, size=40, rot=-1.5, extra=""):
-    chars = "".join(f'<span class="ch" id="{id_}_{i}">{html.escape(c) if c != " " else "&nbsp;"}</span>' for i, c in enumerate(text))
+def tag(id_, text, x, y, size=40, rot=-1.5, extra="", attrs=""):
+    """Typed label. attrs = per-glyph layout declarations (HyperFrames flags are not inherited)."""
+    chars = "".join(f'<span class="ch" id="{id_}_{i}" {attrs}>{html.escape(c) if c != " " else "&nbsp;"}</span>' for i, c in enumerate(text))
     return f'<div id="{id_}" class="tag" style="left:{x}px;top:{y}px;font-size:{size}px;transform:rotate({rot}deg);{extra}">{chars}</div>'
 
 def type_anim(id_, text, t0):
@@ -57,15 +58,18 @@ def type_anim(id_, text, t0):
 
 def stamp(id_, lines, x, y, rot, size=90, color=RED):
     inner = "<br>".join(html.escape(l) for l in lines)
-    return (f'<div id="{id_}" class="stamp" style="left:{x}px;top:{y}px;font-size:{size}px;color:{color};border-color:{color};'
+    return (f'<div id="{id_}" class="stamp" data-layout-allow-occlusion="true" data-layout-allow-overlap="true" style="left:{x}px;top:{y}px;font-size:{size}px;color:{color};border-color:{color};'
             f'--rot:{rot}deg;transform:rotate({rot}deg)">{inner}</div>')
 
 def stamp_anim(id_, t, rot):
     J(f"tl.fromTo('#{id_}',{{autoAlpha:0,scale:2.3,rotation:{rot-6}}},{{autoAlpha:0.93,scale:1,rotation:{rot},duration:0.13,ease:'power4.in',immediateRender:false}},{f(t-0.13)});")
 
+# Platform safe area (see reelkit/textqa.py DEAD zones): top UI bar ends at y=210 (IG/TikTok/Shorts),
+# bottom UI starts at y=1600, right action column x>960 below y=640. Nothing readable goes outside.
+SAFE_TOP = 230
 TYPED = {i: (t, txt) for t, txt, i in TL["typed"]}
-def typed(id_, x, y, size=40, rot=-1.5, extra=""):
-    t, txt = TYPED[id_]; type_anim(id_, txt, t); return tag(id_, txt, x, y, size, rot, extra)
+def typed(id_, x, y, size=40, rot=-1.5, extra="", attrs=""):
+    t, txt = TYPED[id_]; type_anim(id_, txt, t); return tag(id_, txt, x, y, size, rot, extra, attrs)
 
 def tear(t):          # torn-paper wipe covering the cut at time t
     J(f"tl.fromTo('#tear',{{x:1120,autoAlpha:1}},{{x:-260,autoAlpha:1,duration:0.30,ease:'power3.in',immediateRender:false}},{f(t-0.30)});")
@@ -78,15 +82,15 @@ clip("bg", 0, TOTAL, '<img src="assets/bg_paper.jpg" style="width:100%;height:10
 # ======================= S1 — bunker (hook) =======================
 s = SC["s01"]
 title = ('<div id="title" class="title" data-layout-allow-overlap="true">'
-         f'<div class="strip ink" id="tl1">THE MAN WHO</div><div class="strip red" id="tl2">DID NOTHING</div>'
+         f'<div class="strip ink" id="tl1" data-layout-allow-overlap="true">THE MAN WHO</div><div class="strip red" id="tl2" data-layout-allow-overlap="true">DID NOTHING</div>'
          '<div class="kicker" id="tl3">— and why the world is still here</div></div>')
 redwash = '<div id="redwash" class="wash" style="opacity:0;background:radial-gradient(ellipse at 50% 45%, rgba(200,16,46,0.15), rgba(200,16,46,0.75));"></div>'
 clip("sc01", 0, s["end"], kb("kb01", "s01_bunker") + redwash + title +
-     typed("t_date", 56, 190, 40, -1.2) + typed("t_place", 56, 262, 40, 0.8))
+     typed("t_date", 56, SAFE_TOP + 70, 40, -1.2) + typed("t_place", 56, SAFE_TOP + 142, 40, 0.8))
 kb_move("#kb01", 0, 1.1, 1.0, 0.88, 0, 0, -40, 0, "expo.out")
 kb_move("#kb01", 1.1, s["end"], 0.88, 0.97, 0, 0, 0, 30)
 J("tl.fromTo('#title',{scale:1.08},{scale:1,duration:0.5,ease:'power3.out',immediateRender:false},0);")
-J("tl.fromTo('#tl3',{autoAlpha:0,y:10},{autoAlpha:1,y:0,duration:0.4,immediateRender:false},0.5);")
+J("tl.fromTo('#tl3',{autoAlpha:0,y:10},{autoAlpha:1,y:0,duration:0.35,immediateRender:false},0.05);")
 J("tl.to('#title',{autoAlpha:0,y:-60,duration:0.35,ease:'power2.in'},2.75);")
 J(f"tl.fromTo('#redwash',{{opacity:0}},{{opacity:0.9,duration:0.08,immediateRender:false}},{f(C['nuclear'])});")
 J(f"tl.to('#redwash',{{opacity:0.35,duration:0.9,ease:'power2.out'}},{f(C['nuclear']+0.1)});")
@@ -94,12 +98,12 @@ shake("#sc01", C["nuclear"], 0.6, 26)
 
 # ======================= S2 — KAL 007 card =======================
 s = SC["s02"]
-card2 = ('<div id="card2" class="card" style="left:150px;top:230px;width:780px;--r:-3deg">'
+card2 = ('<div id="card2" class="card" style="left:150px;top:330px;width:780px;--r:-3deg">'
          '<img src="assets/s02_jet.jpg" style="width:740px;height:1326px" alt="">'
          '<div class="tape" style="left:-40px;top:-14px;transform:rotate(-28deg)"></div>'
          '<div class="tape" style="right:-40px;top:-14px;transform:rotate(30deg)"></div></div>')
 st269 = stamp("st269", ["269 DEAD"], 430, 1020, -9, 112)
-clip("sc02", s["start"], s["end"], card2 + st269 + typed("t_kal", 56, 150, 42, -1.0))
+clip("sc02", s["start"], s["end"], card2 + st269 + typed("t_kal", 56, SAFE_TOP + 70, 42, -1.0))
 J(f"tl.fromTo('#card2',{{y:-1500,rotation:-14}},{{y:0,rotation:-3,duration:0.55,ease:'back.out(1.1)',immediateRender:false}},{f(s['start'])});")
 J(f"tl.to('#card2',{{y:-24,rotation:-1.6,scale:1.03,duration:{f(C['paranoid']-0.42-s['start']-0.55)},ease:'none'}},{f(s['start']+0.55)});")
 stamp_anim("st269", C["died269"] + 0.1, -9)
@@ -108,7 +112,7 @@ J(f"tl.to('#card2',{{scale:1.09,duration:1.1,ease:'power2.in'}},{f(C['paranoid']
 
 # ======================= S3 — console -> globe, 5 missiles =======================
 s = SC["s03"]
-start_glow = ('<div id="start" class="startglow" style="left:18.2%;top:20.0%;width:65.5%;height:24.7%">'
+start_glow = ('<div id="start" class="startglow" data-tq-dwell="off" style="left:18.2%;top:20.0%;width:65.5%;height:24.7%">'
               '<span>СТАРТ</span></div>')
 arcs = "".join(
     f'<path id="arc{i}" d="M {x0} {y0} Q {cx} {cy} {x1} {y1}" stroke="{RED}" stroke-width="9" fill="none" stroke-linecap="round" '
@@ -118,7 +122,7 @@ arcs = "".join(
         (340, 1330, 620, 560, 960, 1120), (260, 1220, 300, 420, 700, 640)], start=1))
 globe = (kb("kb04g", "s04_globe") + f'<svg class="arcs" viewBox="0 0 1080 1920" width="1080" height="1920">{arcs}</svg>')
 counter = ('<div id="counter" class="counter" data-layout-allow-overlap="true">' +
-           "".join(f'<div class="num" id="n{i}">{i}</div>' for i in range(1, 6)) +
+           "".join(f'<div class="num" id="n{i}" data-layout-allow-overlap="true" data-tq-dwell="off">{i}</div>' for i in range(1, 6)) +
            '<div class="clabel">MISSILES DETECTED</div></div>')
 flash = '<div id="flash3" class="wash" style="background:#fff;opacity:0"></div>'
 clip("sc03", s["start"], s["end"],
@@ -148,7 +152,7 @@ for i, key in enumerate(["launch", "m2", "m3", "m4", "m5"], start=1):
 s = SC["s04"]
 nodes = [("DUTY OFFICER", 1170), ("COMMAND POST", 900), ("GENERAL STAFF", 630), ("LEADERSHIP", 360)]
 node_html = "".join(
-    f'<div class="node" id="nd{i}" style="top:{y}px;left:{300 if i % 2 == 0 else 360}px">'
+    f'<div class="node" id="nd{i}" data-layout-allow-occlusion="true" style="top:{y}px;left:{300 if i % 2 == 0 else 360}px">'
     f'<div class="pin"></div>{html.escape(n)}</div>' for i, (n, y) in enumerate(nodes))
 pts = [(330 if i % 2 == 0 else 390, y + 40) for i, (_, y) in enumerate(nodes)]
 dpath = "M " + " L ".join(f"{x} {y}" for x, y in pts)
@@ -180,7 +184,7 @@ qwords = [w for w in WORDS if w["scene"] == "s05" and w["s"] >= C["quote"] - 0.0
 qwords = [w for w in qwords if w["w"].lower() not in ("he", "said,")]
 quote_html = "".join(f'<span class="qw" id="qw{i}">{html.escape(w["w"])}</span> ' for i, w in enumerate(qwords))
 quote = (f'<div id="qdim" class="wash" style="background:rgba(12,10,8,0.86);opacity:0"></div>'
-         f'<div id="quote" class="quote" data-layout-allow-overlap="true"><div class="qmark">“</div>{quote_html}'
+         f'<div id="quote" class="quote" data-tq-spoken="true"><div class="qmark" data-layout-allow-overlap="true" data-layout-allow-occlusion="true">“</div>{quote_html}'
          f'<div class="qby">— Stanislav Petrov</div></div>')
 clip("sc05", s["start"], s["end"], kb("kb05", "s05_officer") + typed("t_name", 56, 1190, 40, -1.0) + quote)
 kb_move("#kb05", s["start"], C["quote"], 0.88, 0.98, 0, -30, 0, 50)
@@ -191,7 +195,7 @@ J(f"tl.to('#qdim',{{opacity:1,duration:0.5}},{f(C['quote']-0.35)});")
 J(f"tl.fromTo('#quote .qmark',{{autoAlpha:0,scale:0.4}},{{autoAlpha:1,scale:1,duration:0.4,ease:'back.out(2)',immediateRender:false}},{f(C['quote']-0.3)});")
 for i, w in enumerate(qwords):
     J(f"tl.fromTo('#qw{i}',{{autoAlpha:0,y:18,filter:'blur(8px)'}},{{autoAlpha:1,y:0,filter:'blur(0px)',duration:0.32,ease:'power2.out',immediateRender:false}},{f(w['s']-0.04)});")
-J(f"tl.fromTo('#quote .qby',{{autoAlpha:0}},{{autoAlpha:1,duration:0.4,immediateRender:false}},{f(qwords[-1]['e']+0.1)});")
+J(f"tl.fromTo('#quote .qby',{{autoAlpha:0}},{{autoAlpha:1,duration:0.4,immediateRender:false}},{f(C['quote']+0.5)});")
 for i, w in enumerate(qwords):
     if w["w"].lower().startswith(("five", "missiles")):
         J(f"tl.to('#qw{i}',{{color:'{MUSTARD}',duration:0.2}},{f(w['s'])});")
@@ -199,8 +203,8 @@ for i, w in enumerate(qwords):
 # ======================= S6 — false alarm + the wait =======================
 s = SC["s06"]
 fa = stamp("stfa", ["ЛОЖНАЯ ТРЕВОГА", "FALSE ALARM"], 150, 830, -8, 80)
-mins = "".join(f'<div class="dg" id="dg{m}">{m:02d}:00</div>' for m in range(0, 24))
-wait = (f'<div id="waitbox" class="waitbox"><div class="wlabel">WAITING FOR IMPACT</div><div class="digits">{mins}</div>'
+mins = "".join(f'<div class="dg" id="dg{m}" data-layout-allow-overlap="true">{m:02d}:00</div>' for m in range(0, 24))
+wait = (f'<div id="waitbox" class="waitbox"><div class="wlabel" data-layout-allow-overlap="true">WAITING FOR IMPACT</div><div class="digits">{mins}</div>'
         f'<div class="wlabel" style="font-size:30px;opacity:.8">MINUTES</div></div>')
 dim6 = '<div id="dim6" class="wash" style="background:rgba(10,8,6,0.62);opacity:0"></div>'
 clip("sc06", s["start"], s["end"], kb("kb06", "s06_phone") + dim6 + fa + wait)
@@ -230,7 +234,7 @@ glints = "".join(f'<div class="glint" id="gl{i}" style="left:{x}%;top:{y}%"></di
                  for i, (x, y) in enumerate([(24, 67), (44, 64), (57, 56), (72, 64), (82, 58)], start=1))
 flash7 = '<div id="flash7" class="wash" style="background:#fffbe8;opacity:0"></div>'
 five = '<div id="five" class="fivelabel">THE 5 “MISSILES”</div>'
-clip("sc07", s["start"], s["end"], kb("kb07", "s07_sunlight", glints) + flash7 + five + typed("t_cause", 56, 180, 42, -1.0))
+clip("sc07", s["start"], s["end"], kb("kb07", "s07_sunlight", glints) + flash7 + five + typed("t_cause", 56, SAFE_TOP + 70, 42, -1.0))
 kb_move("#kb07", s["start"], s["end"], 1.0, 0.88, 0, 0, -60, 20, "power1.out")
 J(f"tl.fromTo('#flash7',{{opacity:1}},{{opacity:0,duration:0.9,ease:'power2.out',immediateRender:false}},{f(s['start'])});")
 for i in range(1, 6):
@@ -241,12 +245,12 @@ J(f"tl.fromTo('#five',{{autoAlpha:0,y:20,xPercent:-50,rotation:-2}},{{autoAlpha:
 
 # ======================= S8 — the logbook (reprimand) =======================
 s = SC["s08"]
-card8 = ('<div id="card8" class="card" style="left:150px;top:200px;width:780px;--r:2deg">'
+card8 = ('<div id="card8" class="card" style="left:150px;top:310px;width:780px;--r:2deg">'
          '<img src="assets/s08_logbook.jpg" style="width:740px;height:1326px" alt="">'
          '<div class="tape" style="left:300px;top:-22px;transform:rotate(-4deg)"></div></div>')
 st_rep = stamp("strep", ["ВЫГОВОР", "REPRIMAND"], 120, 420, -10, 84)
 st_sec = stamp("stsec", ["СЕКРЕТНО", "CLASSIFIED 1983–1998"], 230, 880, 6, 64)
-nomedal = '<div id="nomedal" class="tag" style="left:620px;top:150px;font-size:40px;transform:rotate(3deg)">MEDAL: <s style="color:#A50B25">NONE</s></div>'
+nomedal = '<div id="nomedal" class="tag" style="left:620px;top:282px;font-size:40px;transform:rotate(3deg)">MEDAL: <s style="color:#A50B25">NONE</s></div>'
 clip("sc08", s["start"], s["end"], card8 + nomedal + st_rep + st_sec)
 J(f"tl.fromTo('#card8',{{y:1700,rotation:9}},{{y:0,rotation:2,duration:0.5,ease:'power3.out',immediateRender:false}},{f(s['start']-0.02)});")
 J(f"tl.to('#card8',{{scale:1.04,y:-20,duration:{f(s['end']-s['start']-0.5)},ease:'none'}},{f(s['start']+0.5)});")
@@ -258,8 +262,8 @@ stamp_anim("stsec", C["secret"] + 0.1, 6); shake("#sc08", C["secret"] + 0.1, 0.2
 s = SC["s09"]
 n9 = [w for w in WORDS if w["scene"] == "s09" and w["s"] >= C["nothing1"] - 0.01]
 serif9 = ('<div id="dim9" class="wash" style="background:linear-gradient(rgba(14,10,6,0.55) 0%,rgba(14,10,6,0.86) 26%,rgba(14,10,6,0.86) 62%,rgba(14,10,6,0.60) 100%);opacity:0"></div>'
-          '<div id="nothing" class="bigserif" data-layout-allow-overlap="true">'
-          f'<div id="nl1">{html.escape(n9[0]["w"])}</div>'
+          '<div id="nothing" class="bigserif" data-tq-spoken="true">'
+          f'<div id="nl1" data-layout-allow-overlap="true">{html.escape(n9[0]["w"])}</div>'
           '<div id="nl2">' + " ".join(f'<span id="nw{i}">{html.escape(w["w"])}</span>' for i, w in enumerate(n9[1:])) + '</div></div>')
 clip("sc09", s["start"], s["end"], kb("kb09", "s09_kitchen", style="filter:sepia(0.28) saturate(0.95) brightness(1.02)") + serif9)
 kb_move("#kb09", s["start"], s["end"], 0.88, 1.0, 0, 20, 0, 40)
@@ -270,11 +274,11 @@ for i, w in enumerate(n9[1:]):
 
 # ======================= S10 — memorial -> Earth -> end card =======================
 s = SC["s10"]
-mem = ('<div id="mem" class="card" style="left:150px;top:250px;width:780px;padding:0;background:none;box-shadow:none;--r:-3deg">'
-       '<img src="assets/memorial_print.jpg" style="width:780px;display:block;box-shadow:0 18px 40px rgba(0,0,0,.35)" alt="">'
-       '<div class="credit">Memorial stone, Warsaw · Photo: Brandmeister / Togrul Safarov · Public Domain</div>'
-       '<div class="tape" style="left:300px;top:-20px;transform:rotate(3deg)"></div></div>')
-reported = '<div id="reported" class="tag" style="left:600px;top:178px;font-size:36px;transform:rotate(2deg)">REPORTED: SEPT 2017</div>'
+mem = ('<div id="mem" class="card" style="left:220px;top:300px;width:640px;padding:0;background:none;box-shadow:none;--r:-3deg">'
+       '<img src="assets/memorial_print.jpg" style="width:640px;display:block;box-shadow:0 18px 40px rgba(0,0,0,.35)" alt="">'
+       '<div class="credit" data-tq-dwell="off" data-layout-allow-occlusion="true">Memorial stone, Warsaw · Photo: Brandmeister / Togrul Safarov · Public Domain</div>'
+       '<div class="tape" style="left:230px;top:-20px;transform:rotate(3deg)"></div></div>')
+reported = '<div id="reported" class="tag" data-layout-allow-occlusion="true" style="left:600px;top:292px;font-size:36px;transform:rotate(2deg)">REPORTED: SEPT 2017</div>'
 lines10 = [("survived", "survived by", "l10a"), ("two", "two children,", "l10b"), ("grandchildren", "two grandchildren,", "l10c"),
            ("and", "and the entire", "l10d"), ("human", "human race.", "l10e")]
 w10 = [w for w in WORDS if w["scene"] == "s10"]
@@ -284,19 +288,19 @@ def wt(word, after=0):
 lt, after = [], C["survived"] - 0.01
 for key, txt, i in lines10:
     t = wt(key, after); lt.append((t, txt, i)); after = t + 0.01
-earth_txt = ('<div id="humanrace" class="hr" data-layout-allow-overlap="true">' +
-             "".join(f'<div id="{i}" class="{ "hrbig" if i == "l10e" else ""}">{html.escape(txt)}</div>' for _, txt, i in lt) + '</div>')
+earth_txt = ('<div id="humanrace" class="hr" data-tq-spoken="true">' +
+             "".join(f'<div id="{i}" class="{ "hrbig" if i == "l10e" else ""}" data-layout-allow-overlap="true">{html.escape(txt)}</div>' for _, txt, i in lt) + '</div>')
 earth = (f'<div id="earth" class="wash" style="opacity:0">{kb("kb10", "s10_earth")}'
          '<div class="wash" style="background:linear-gradient(rgba(240,232,212,0.97) 0%,rgba(240,232,212,0.97) 29%,rgba(240,232,212,0) 37%)"></div>'
          f'{earth_txt}</div>')
 endcard = ('<div id="endcard" class="wash endcard" style="opacity:0" data-layout-allow-overlap="true">'
            '<div class="eklogo">PAPER TRAIL</div>'
-           '<div class="strip ink big" id="e1">THE MAN WHO</div><div class="strip red big" id="e2">DID NOTHING</div>'
+           '<div class="strip ink big" id="e1" data-layout-allow-overlap="true" data-layout-allow-overflow="true">THE MAN WHO</div><div class="strip red big" id="e2" data-layout-allow-overlap="true" data-layout-allow-overflow="true">DID NOTHING</div>'
            '<div class="ename">Stanislav Petrov · 1939–2017</div>'
            + tag("t_closed", TYPED["t_closed"][1], 330, 1180, 44, -1.0) +
-           '<div class="efollow" id="efollow">FOLLOW FOR FILE 02 →</div></div>')
+           '<div class="efollow" id="efollow" data-layout-allow-caption-zone="true">FOLLOW FOR FILE 02 →</div></div>')
 type_anim("t_closed", TYPED["t_closed"][1], TYPED["t_closed"][0])
-clip("sc10", s["start"], s["end"], mem + typed("t_died", 90, 170, 54, -2.0) + reported + earth + endcard)
+clip("sc10", s["start"], s["end"], mem + typed("t_died", 90, SAFE_TOP + 60, 54, -2.0, attrs='data-layout-allow-occlusion="true"') + reported + earth + endcard)
 J(f"tl.fromTo('#mem',{{y:-1600,rotation:-12}},{{y:0,rotation:-3,duration:0.6,ease:'back.out(1.05)',immediateRender:false}},{f(s['start']-0.05)});")
 J(f"tl.to('#mem',{{scale:1.05,duration:{f(C['survived']-s['start'])},ease:'none'}},{f(s['start']+0.55)});")
 J(f"tl.fromTo('#reported',{{autoAlpha:0,scale:0.8}},{{autoAlpha:1,scale:1,duration:0.2,ease:'back.out(2)',immediateRender:false}},{f(C['months'])});")
@@ -310,7 +314,7 @@ J(f"tl.to('#endcard',{{opacity:1,duration:0.6}},{f(et)});")
 J(f"tl.to('#humanrace',{{opacity:0,duration:0.5}},{f(et)});")
 J(f"tl.fromTo('#e1',{{autoAlpha:0,x:-200}},{{autoAlpha:1,x:0,duration:0.4,ease:'power4.out',immediateRender:false}},{f(et+0.25)});")
 J(f"tl.fromTo('#e2',{{autoAlpha:0,x:200}},{{autoAlpha:1,x:0,duration:0.4,ease:'power4.out',immediateRender:false}},{f(et+0.4)});")
-J(f"tl.fromTo('#efollow',{{autoAlpha:0,y:20}},{{autoAlpha:1,y:0,duration:0.4,immediateRender:false}},{f(et+1.6)});")
+J(f"tl.fromTo('#efollow',{{autoAlpha:0,y:20}},{{autoAlpha:1,y:0,duration:0.4,immediateRender:false}},{f(et+1.0)});")
 
 # ======================= transitions =======================
 body.append(f'<div id="tearwrap" class="clip" data-start="0" data-duration="{f(TOTAL)}" data-track-index="4" style="z-index:40;pointer-events:none">'
@@ -342,9 +346,10 @@ cap_html = []
 for ci, ch in enumerate(chunks):
     rot = (-1.6, 1.2, -0.8, 1.6)[ci % 4]
     spans = "".join(
-        f'<span class="cw{" key" if re.sub(r"[^a-z-]", "", w["w"].lower()) in KEY else ""}" id="c{ci}_{wi}">{html.escape(w["w"].upper())}</span>'
+        f'<span class="cw{" key" if re.sub(r"[^a-z-]", "", w["w"].lower()) in KEY else ""}" id="c{ci}_{wi}" data-layout-allow-overlap="true">{html.escape(w["w"].upper())}</span>'
         for wi, w in enumerate(ch))
-    cap_html.append(f'<div class="cap" id="cap{ci}"><div class="capstrip" style="transform:rotate({rot}deg)">{spans}</div></div>')
+    # caption words of one strip = one text block (Oswald's 1.48em glyph box always "touches" the next line)
+    cap_html.append(f'<div class="cap" id="cap{ci}" data-layout-allow-caption-zone="true"><div class="capstrip" style="transform:rotate({rot}deg)">{spans}</div></div>')
     t_on = ch[0]["s"] - 0.06
     nxt_t = chunks[ci + 1][0]["s"] - 0.06 if ci + 1 < len(chunks) else TOTAL
     t_off = min(nxt_t, ch[-1]["e"] + 0.45)
@@ -408,13 +413,13 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:{CREAM}}}
 .card{{position:absolute;background:#FBF7EE;padding:20px;box-shadow:0 24px 50px rgba(0,0,0,.40);transform:rotate(var(--r))}}
 .card img{{display:block}}
 .tape{{position:absolute;width:180px;height:54px;background:rgba(227,201,120,.62);box-shadow:0 2px 4px rgba(0,0,0,.15)}}
-.credit{{font-family:'Elite',monospace;font-size:22px;color:{INK};text-align:center;position:relative;width:max-content;max-width:740px;margin:14px auto 0;
+.credit{{font-family:'Elite',monospace;font-size:22px;color:{INK};text-align:center;position:relative;width:max-content;max-width:620px;margin:14px auto 0;
   background:#F3EAD3;padding:8px 16px 6px;box-shadow:0 4px 10px rgba(0,0,0,.3)}}
 .startglow{{position:absolute;display:flex;align-items:center;justify-content:center;opacity:0;background:radial-gradient(ellipse at 50% 50%,rgba(40,0,6,.82) 0%,rgba(40,0,6,.62) 70%,rgba(40,0,6,.35) 100%);border-radius:18px}}
 .startglow span{{font-family:'Oswald';font-weight:700;font-size:180px;color:#FFF1EA;letter-spacing:.04em;
   text-shadow:0 0 18px #ff3b3b,0 0 50px #ff1a1a,0 0 110px #ff0000}}
 .arcs{{position:absolute;left:0;top:0;filter:drop-shadow(0 0 10px rgba(255,40,40,.8))}}
-.counter{{position:absolute;left:0;top:150px;width:1080px;height:420px;text-align:center;visibility:hidden;opacity:0}}
+.counter{{position:absolute;left:0;top:300px;width:1080px;height:420px;text-align:center;visibility:hidden;opacity:0}}
 .num{{position:absolute;left:0;top:0;width:1080px;font-family:'Anton';font-size:300px;line-height:1;color:{RED};
   -webkit-text-stroke:6px {CREAM};text-shadow:0 10px 30px rgba(0,0,0,.6);visibility:hidden;opacity:0}}
 .clabel{{position:absolute;left:50%;top:315px;transform:translateX(-50%);background:{CREAM};color:{INK};font-weight:700;
@@ -443,7 +448,7 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:{CREAM}}}
 #nl1{{font-size:150px;line-height:1.1;visibility:hidden;opacity:0}}
 #nl2{{font-size:118px;line-height:1.1}}
 #nl2 span{{display:inline-block;visibility:hidden;opacity:0}}
-.hr{{position:absolute;left:0;top:96px;width:1080px;text-align:center;font-family:'DM Serif';font-size:60px;line-height:1.12;color:{INK}}}
+.hr{{position:absolute;left:0;top:{SAFE_TOP}px;width:1080px;text-align:center;font-family:'DM Serif';font-size:60px;line-height:1.12;color:{INK}}}
 .hr>div{{visibility:hidden;opacity:0}}
 .hrbig{{font-style:italic;font-size:110px;color:{RED_ON_LIGHT};line-height:1.05;margin-top:6px}}
 .endcard{{background:rgba(16,13,10,.95);text-align:center;padding-top:520px}}
@@ -452,12 +457,12 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:{CREAM}}}
 .ename{{font-family:'DM Serif';font-style:italic;font-size:56px;color:{CREAM};margin-top:48px}}
 .efollow{{position:absolute;left:0;width:1080px;top:1380px;font-weight:600;font-size:50px;letter-spacing:.14em;color:{MUSTARD};visibility:hidden;opacity:0}}
 .cap{{position:absolute;left:0;top:1350px;width:1080px;text-align:center;visibility:hidden;opacity:0}}
-.capstrip{{display:inline-block;background:#F6EEDC;padding:12px 18px 8px;box-shadow:0 8px 0 rgba(0,0,0,.28),0 14px 28px rgba(0,0,0,.25);max-width:960px}}
+.capstrip{{display:inline-block;background:#F6EEDC;padding:12px 18px 8px;box-shadow:0 8px 0 rgba(0,0,0,.28),0 14px 28px rgba(0,0,0,.25);max-width:840px}}
 .cw{{display:inline-block;font-family:'Oswald';font-weight:600;font-size:76px;line-height:1.1;color:{INK};padding:0 8px;border-radius:6px}}
 .cw.key{{color:{RED_ON_LIGHT}}}
 .cw.on{{background:{MUSTARD};color:{INK}}}
 .cw.on.key{{background:{RED};color:{CREAM}}}
-.bug{{position:absolute;right:40px;top:96px;font-weight:600;font-size:28px;letter-spacing:.22em;color:{CREAM};background:{INK};padding:8px 16px 6px}}
+.bug{{position:absolute;right:60px;top:{SAFE_TOP - 8}px;font-weight:600;font-size:28px;letter-spacing:.22em;color:{CREAM};background:{INK};padding:8px 16px 6px}}
 .bug b{{color:{RED}}}
 .progress{{position:absolute;left:0;bottom:0;width:1080px;height:8px;background:rgba(20,20,20,.35)}}
 #prog{{width:1080px;height:8px;background:{RED};transform-origin:0 50%}}

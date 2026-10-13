@@ -80,11 +80,11 @@ class FX:
                 f'<div id="{id_}_k" class="filmflick"></div></div>'
                 f'<div class="sprk l"></div><div class="sprk r"></div></div>'
                 f'<div id="{id_}_l" class="filmlabel" style="top:{top - 92}px">{label}</div>'
-                + (f'<div class="filmcredit" style="top:{top + H + 70}px">{credit}</div>' if credit else ""))
+                + (f'<div class="filmcredit" data-tq-dwell="off" style="top:{top + H + 70}px">{credit}</div>' if credit else ""))
         J = self.J
         J(f"tl.fromTo('#{id_}_f',{{scale:1.12,rotation:-2.2,autoAlpha:0}},{{scale:1,rotation:-0.8,autoAlpha:1,duration:0.22,ease:'power3.out',immediateRender:false}},{f(t0)});")
         J(f"tl.to('#{id_}_f',{{scale:1.035,duration:{f(max(0.1, d - 0.22))},ease:'none'}},{f(t0 + 0.22)});")
-        J(f"tl.fromTo('#{id_}_l',{{autoAlpha:0,x:-30}},{{autoAlpha:1,x:0,duration:0.2,ease:'power2.out',immediateRender:false}},{f(t0 + 0.18)});")
+        J(f"tl.fromTo('#{id_}_l',{{autoAlpha:0,x:-30}},{{autoAlpha:1,x:0,duration:0.2,ease:'power2.out',immediateRender:false}},{f(t0 + 0.06)});")
         t = t0                                  # gate weave + flicker at ~12 Hz (film is never perfectly still)
         while t < t1 - 0.05:
             J(f"tl.set('#{id_}_w',{{x:{f((self.rng() - .5) * 3)},y:{f((self.rng() - .5) * 5)}}},{f(t)});")
@@ -134,5 +134,5 @@ CSS = """
 .sprk.l{left:6px}.sprk.r{right:6px}
 .filmlabel{position:absolute;left:70px;font-family:'Elite',monospace;font-size:38px;color:#141414;background:#F3EAD3;padding:10px 20px 8px;
   transform:rotate(-1.2deg);box-shadow:0 6px 14px rgba(0,0,0,.45);white-space:nowrap;visibility:hidden;opacity:0}
-.filmcredit{position:absolute;left:0;width:1080px;text-align:center;font-family:'Elite',monospace;font-size:25px;color:#EFE6D2;text-shadow:0 2px 6px #000}
+.filmcredit{position:absolute;left:120px;width:840px;text-align:center;font-family:'Elite',monospace;font-size:25px;color:#EFE6D2;text-shadow:0 2px 6px #000}
 """
