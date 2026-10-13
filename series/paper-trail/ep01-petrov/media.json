@@ -56,6 +56,10 @@
    "sha256": "56873541eeed683ae15a312481f534c6566f894d6ec4f31f15dc8b49d77f2e4d",
    "size": 2032386
   },
+  "vo/orig/v10.mp3": {
+   "sha256": "60c9a3f8aff2c88d7bea1bb2fe4ca22b68984c6ee87f4c62ffe649189940de62",
+   "size": 94058
+  },
   "vo/v01.mp3": {
    "sha256": "9156909adf6230af88784e7ce8519a6660b98983e2e6e87c2ddd1847de47814e",
    "size": 68772
@@ -92,9 +96,9 @@
    "sha256": "130841642af19ed6c5f68b65be63b0a78a3b07d11bbd16d589459b574f2a23dd",
    "size": 60204
   },
-  "vo/v10.mp3": {
-   "sha256": "60c9a3f8aff2c88d7bea1bb2fe4ca22b68984c6ee87f4c62ffe649189940de62",
-   "size": 94058
+  "vo/v10.wav": {
+   "sha256": "5b1e25b52fd7ae6ef1edb8fb071c9e25e134d66e0a373413ca1a9fef63a46418",
+   "size": 1143370
   }
  },
  "release": "media-ep01-petrov",

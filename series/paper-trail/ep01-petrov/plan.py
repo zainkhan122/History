@@ -6,11 +6,12 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 W = json.load(open(HERE / "words.json"))
 
-# (scene id, vo clip, gap BEFORE the clip in seconds) — gaps are dramatic beats, tuned by ear/story
-ORDER = [("s01", "v01", 0.35), ("s02", "v02", 0.45), ("s03", "v03", 0.50), ("s04", "v04", 0.45),
-         ("s05", "v05", 0.60), ("s06", "v06", 0.50), ("s07", "v07", 1.00), ("s08", "v08", 0.65),
-         ("s09", "v09", 1.10), ("s10", "v10", 1.20)]
-END_HOLD = 3.6
+# (scene id, vo clip, gap BEFORE the clip) + end hold come from the voice performance plan (voice.json):
+# pauses are part of the performance, so they live with tone/energy and are gated by reelkit/voice.py.
+import sys
+sys.path.insert(0, str(HERE.parents[2] / "reelkit"))
+import voice as VOICE
+ORDER, END_HOLD = VOICE.gaps(HERE)
 
 # The script owns the words (whisper only gives timing) — fix ASR spellings/number formatting
 FIX = {"26,": "26TH,", "1983,": "1983,", "-nine": "NINE", "23": "TWENTY-THREE", "15": "FIFTEEN", "10": "TEN"}

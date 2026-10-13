@@ -21,3 +21,9 @@ jobs:
           for t in $(git ls-files 'series/*/*/timeline.json'); do
             ep=$(dirname "$t"); echo "== $ep"; python3 reelkit/factcheck.py "$ep" --hf /nonexistent
           done
+      - name: Voice performance plans (tones, pauses, arc; timeline uses the plan's pauses)
+        run: |
+          set -e
+          for v in $(git ls-files 'series/*/*/voice.json'); do
+            ep=$(dirname "$v"); echo "== $ep"; python3 reelkit/voice.py check "$ep" --plan-only
+          done

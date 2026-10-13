@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # One-command episode pipeline — identical in the sandbox and on GitHub Actions.
 #   bash reelkit/episode.sh <episode_dir> [stage...]
-# stages (default: all): pull trim plan score assets build facts check textqa snap render encode qa   ('lint' = alias of check)
+# stages (default: all): pull trim plan voice score assets build facts check textqa snap render encode qa   ('lint' = alias of check)
 # out/ is SCRATCH (snapshot-excluded): finished files live only in GitHub Releases (cloud.py render --tag …).
 # Build dir: $BUILD (default ~/.cache/build/<episode-name>) — never inside the repo.
 set -euo pipefail
@@ -9,7 +9,7 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 EP="$(cd "$1" && pwd)"; shift || true
 NAME="$(basename "$EP")"
 BUILD="${BUILD:-$HOME/.cache/build/$NAME}"; HF="$BUILD/hf"
-STAGES="${*:-pull trim plan score assets build facts check textqa render encode qa}"
+STAGES="${*:-pull trim plan voice score assets build facts check textqa render encode qa}"
 STAGES=" ${STAGES//lint/check} "
 FPS="${FPS:-30}"; CRF="${CRF:-18}"; WORKERS="${WORKERS:-auto}"
 export HYPERFRAMES_NO_TELEMETRY=1 HYPERFRAMES_NO_UPDATE_CHECK=1 DO_NOT_TRACK=1 HYPERFRAMES_SKIP_SKILLS=1
@@ -21,6 +21,7 @@ has() { [[ " $STAGES " == *" $1 "* ]]; }
 has pull   && { log "pull media (release assets -> $EP)"; python3 "$REPO/reelkit/media.py" pull "$EP"; }
 has trim   && { log "trim VO"; python3 "$REPO/reelkit/trim_vo.py" "$EP/vo" "$BUILD" --check "$EP/words.json"; }
 has plan   && { log "timeline"; python3 "$EP/plan.py" >/dev/null; }
+has voice  && { log "voice gate (takes vs performance plan: fidelity, pace, pauses, pitch, peaks)"; mkdir -p "$EP/out"; python3 "$REPO/reelkit/voice.py" check "$EP" --report "$EP/out/voice.json"; }
 has score  && { log "score + SFX + mix (-14 LUFS)"; python3 "$EP/score.py" "$BUILD" "$BUILD"; mkdir -p "$EP/out"; cp "$BUILD/mix_report.json" "$EP/out/" 2>/dev/null || true; }
 has assets && { log "visual assets"; python3 "$EP/make_assets.py" "$HF"; [ -f "$EP/clips.json" ] && python3 "$REPO/reelkit/clips.py" prep "$EP" "$HF" || true; }
 has build  && { log "composition"; python3 "$EP/build.py" "$HF"; cp "$BUILD/mix.wav" "$HF/assets/mix.wav"; }

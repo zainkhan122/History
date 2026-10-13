@@ -1,0 +1,125 @@
+{
+ "version": 1,
+ "episode": "ep01-petrov",
+ "backend": "arena",
+ "voice": "Arena TTS voice-01 (en, masculine, narration)",
+ "kokoro_fallback": {
+  "voice": "am_michael",
+  "speed": 1.0
+ },
+ "intent": "Quiet documentary dread that turns into tenderness: the audience should feel the weight of a decision nobody thanked him for.",
+ "pacing_profile": "slow-burn: hushed tense open, urgent peak at the launch count (v03), suspended silence after the decision (v06), then slower and warmer to a reverent close",
+ "pause_policy": "Pauses carry the story: a held breath after the false-alarm report, longer silences once the story turns personal (v08-v10), and the longest hold at the very end. Never pause mid-phrase except at marked ellipses.",
+ "start_hold": 0.35,
+ "end_hold": 3.6,
+ "sample_line": "v10",
+ "lines": [
+  {
+   "id": "v01",
+   "scene": "s01",
+   "tone": "tense",
+   "energy": 3,
+   "pause_after": 0.45,
+   "text": "Just after midnight, on September 26th, 1983… a computer told one man that America had launched a nuclear missile.",
+   "direction": "Low and close, as if telling a secret. Let the date land, breathe, then a level, almost flat 'nuclear missile'."
+  },
+  {
+   "id": "v02",
+   "scene": "s02",
+   "tone": "tense",
+   "energy": 3,
+   "pause_after": 0.5,
+   "text": "Weeks earlier, Soviet jets had shot down a passenger plane. Two hundred and sixty-nine people died. The Cold War was at its most paranoid.",
+   "direction": "Matter-of-fact context; a small weight on 'two hundred and sixty-nine'. No drama on 'paranoid'."
+  },
+  {
+   "id": "v03",
+   "scene": "s03",
+   "tone": "urgent",
+   "energy": 5,
+   "pause_after": 0.45,
+   "text": "The screen lit up: LAUNCH. Then a second missile. A third. A fourth. A fifth.",
+   "direction": "The only fast line. Each count a notch tighter, like an alarm repeating."
+  },
+  {
+   "id": "v04",
+   "scene": "s04",
+   "tone": "tense",
+   "energy": 4,
+   "pause_after": 0.6,
+   "text": "His job was to pass it up the chain… to leaders who might have only minutes to decide whether to strike back.",
+   "direction": "Explain the stakes plainly; the pause after 'chain' lets the viewer picture the ladder."
+  },
+  {
+   "id": "v05",
+   "scene": "s05",
+   "tone": "resolute",
+   "energy": 3,
+   "pause_after": 0.5,
+   "text": "But Lieutenant Colonel Stanislav Petrov had a funny feeling in his gut. \"When people start a war,\" he said, \"they don't start it with only five missiles.\"",
+   "direction": "Introduce him with respect. The quote is calm logic, not heroics."
+  },
+  {
+   "id": "v06",
+   "scene": "s06",
+   "tone": "suspense",
+   "energy": 2,
+   "pause_after": 1.0,
+   "text": "So he reported a false alarm. And then… he waited. Twenty-three minutes. Nothing came.",
+   "direction": "Slow down. The ellipsis is a held breath; 'Twenty-three minutes' stretched; 'Nothing came' almost whispered, then silence.",
+   "pauses": {
+    "then": 0.35
+   }
+  },
+  {
+   "id": "v07",
+   "scene": "s07",
+   "tone": "revelatory",
+   "energy": 3,
+   "pause_after": 0.65,
+   "text": "It was sunlight. Reflecting off high clouds, at a rare angle, fooling a satellite.",
+   "direction": "The reveal: a beat after 'sunlight', then an almost wondering tone."
+  },
+  {
+   "id": "v08",
+   "scene": "s08",
+   "tone": "somber",
+   "energy": 2,
+   "pause_after": 1.1,
+   "text": "There was no medal. He was reprimanded for incomplete paperwork. And the story stayed secret for fifteen years.",
+   "direction": "Dry irony on 'paperwork', no sarcasm. Let 'fifteen years' sit."
+  },
+  {
+   "id": "v09",
+   "scene": "s09",
+   "tone": "tender",
+   "energy": 1,
+   "pause_after": 1.2,
+   "text": "For ten years, his own wife knew nothing. When she asked what he'd done, he said: \"Nothing. I did nothing.\"",
+   "direction": "Warm and quiet, like remembering someone. A gentle half-smile on 'I did nothing'.",
+   "pauses": {
+    "said": 0.4
+   }
+  },
+  {
+   "id": "v10",
+   "scene": "s10",
+   "tone": "reverent",
+   "energy": 2,
+   "pause_after": 0,
+   "text": "He died in 2017, so quietly the world only found out months later. One obituary said he was survived by two children, two grandchildren… and the entire human race.",
+   "direction": "The emotional peak. Unhurried. A real held beat before 'and the entire human race', delivered softly with a lift of wonder, not volume.",
+   "climax": true,
+   "pauses": {
+    "grandchildren": 0.6
+   },
+   "shaped": {
+    "grandchildren": {
+     "from": 0.37,
+     "to": 0.6,
+     "original": "vo/orig/v10.mp3"
+    }
+   }
+  }
+ ]
+}
