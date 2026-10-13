@@ -1,7 +1,8 @@
 {
- "now": "ep01 v2.1 readability fix (all text passes textqa gate); CONTENT_STRATEGY.md written. LOCAL COMMITS NOT PUSHED until owner re-supplies token",
+ "now": "OpenMontage study done -> docs/OPENMONTAGE_LESSONS.md (P0/P1/P2 adoption plan, awaiting owner pick). Local v2.1 final.mp4 lost (out/ is snapshot-excluded) -> regenerate via cloud render. LOCAL COMMITS NOT PUSHED until owner re-supplies token",
  "next": [
   "Owner re-supplies GitHub token -> bash tools/sync.sh -> cloud render tag ep01-petrov-v2.1 (or publish local render)",
+  "Owner picks lessons to implement from docs/OPENMONTAGE_LESSONS.md §D (P0: bitrate 12M master, safe zones+textqa check, limiter -1.5 dBTP, hyperframes validate, claims ledger/factcheck, voice performance plan)",
   "Owner review of v2.1 + strategy answers; then pre-launch: bank 6 episodes (docs/CONTENT_STRATEGY.md §1)",
   "Build tools/factcheck.py (fact-sheet gate: claim->2 sources, URL live, Wayback archive)",
   "With HF_TOKEN: 4 pending ep01 clips -> v3",

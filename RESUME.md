@@ -3,6 +3,7 @@
 _Last updated: 2026-10-11 ~09:10 PKT by the Arena agent. Short form: `python3 tools/state.py show`._
 
 ## Where we are
+- **2026-10-13: OpenMontage study** → `docs/OPENMONTAGE_LESSONS.md`. Self-found issues: upload bitrate 3.8 Mbps (too low, target 12M master), channel bug and caption width inside platform UI dead zones, and `out/` excluded from snapshots (local v2.1 final lost; regenerate via cloud). The owner chooses which items to implement.
 - **2026-10-11 (later): v2.1 readability pass.** Owner: "text must be readable wherever it appears". Fixes:
   - kicker on a paper strip; stronger scrims on the quote, "Nothing" and "survived by" lines;
   - readable reds (`#A50B25` on paper, `#FF4D4D` on dark); dark CRT backing behind СТАРТ;
@@ -53,6 +54,7 @@ python3 reelkit/media.py pull series/paper-trail/ep01-petrov   # only if you nee
 5. Later (owner asked to wait): Buffer / YouTube auto-publish from the render workflow.
 
 ## Known gotchas
+- Workspace snapshots EXCLUDE dirs named `out`, `build`, `dist`, etc. Episode `out/` is scratch, and finals live only in Releases.
 - **Arena snapshots drop `.git/config`.** `bootstrap.sh` restores the remote, identity and auth; the slug lives in `.repo`.
 - `/tmp` is a ~1 GB RAM disk. Builds go to `~/.cache/build`; `episode.sh` sets TMPDIR on disk.
 - Sandbox restarts wipe `~/.cache` and pip user packages. Re-run `source bootstrap.sh`.
