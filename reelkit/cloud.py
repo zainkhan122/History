@@ -13,8 +13,27 @@ def runs(slug, n=5):
     r = req("GET", f"{API}/repos/{slug}/actions/workflows/render.yml/runs?per_page={n}") or {"workflow_runs": []}
     return r["workflow_runs"]
 
+def git(*args):
+    import subprocess
+    return subprocess.run(["git", *args], capture_output=True, text=True, cwd=Path(__file__).resolve().parents[1]).stdout.strip()
+
+
+def wait_remote_head(slug, head, timeout=90):
+    """The runner checks out `main` at dispatch time: refuse to render anything but the local HEAD."""
+    t0 = time.time()
+    while True:
+        ref = req("GET", f"{API}/repos/{slug}/git/ref/heads/main") or {}
+        if ref.get("object", {}).get("sha") == head: return
+        if time.time() - t0 > timeout:
+            sys.exit(f"origin/main is {ref.get('object', {}).get('sha', '?')[:7]}, local HEAD is {head[:7]} — push first (tools/sync.sh)")
+        time.sleep(5)
+
+
 def render(a):
-    slug = repo_slug(); before = {r["id"] for r in runs(slug, 10)}
+    slug = repo_slug(); head = git("rev-parse", "HEAD")
+    if git("status", "--porcelain", "--untracked-files=no"): print("! uncommitted changes are NOT rendered (runner uses origin/main)")
+    wait_remote_head(slug, head)
+    before = {r["id"] for r in runs(slug, 10)}
     eps = " ".join(a.episodes)
     req("POST", f"{API}/repos/{slug}/actions/workflows/render.yml/dispatches",
         {"ref": "main", "inputs": {"episodes": eps, "tag": a.tag or "", "crf": str(a.crf)}})
@@ -24,7 +43,10 @@ def render(a):
         new = [r for r in runs(slug, 10) if r["id"] not in before]
         if new: run = new[0]; break
     if not run: sys.exit("dispatched, but no run appeared yet — check Actions tab")
-    print(f"run #{run['run_number']}  {run['html_url']}")
+    print(f"run #{run['run_number']}  {run['html_url']}  @ {run['head_sha'][:7]}")
+    if run["head_sha"] != head:
+        req("POST", f"{API}/repos/{slug}/actions/runs/{run['id']}/cancel")
+        sys.exit(f"run is on {run['head_sha'][:7]}, not HEAD {head[:7]} — cancelled; re-run cloud.py render")
     if not a.wait: return
     t0 = time.time()
     while run["status"] != "completed":
