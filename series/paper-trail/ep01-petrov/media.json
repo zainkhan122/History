@@ -1,104 +1,341 @@
 {
  "files": {
   "assets/memorial_stone.jpg": {
+   "ai": false,
+   "credit": "Memorial stone to Stanislav Petrov, Warsaw. Photo: User:Brandmeister (Togrul Safarov), Wikimedia Commons, 30 Oct 2021",
+   "credit_authors": [
+    "Brandmeister",
+    "Togrul Safarov"
+   ],
+   "kind": "photo",
+   "licence": "PD",
+   "provider": "Wikimedia Commons",
+   "screen_credit": "Memorial stone, Warsaw \u00b7 Photo: Brandmeister / Togrul Safarov \u00b7 Public Domain",
    "sha256": "819883abb1ad4ad13665a1708f0dd28bc66921452a93fcafa066a55a89ce7a7e",
-   "size": 526696
+   "size": 526696,
+   "source": "https://commons.wikimedia.org/wiki/File:Stanislav_Petrov_memorial_stone.jpg"
   },
   "assets/s01_bunker.jpg": {
+   "ai": true,
+   "kind": "plate",
+   "legacy": "prompt not recorded (generated 2026-10-10, before provenance tracking)",
+   "licence": "own-ai",
+   "provider": "Arena generate_image",
+   "realistic": false,
    "sha256": "e542a31fdd583976bcaf7fc2dccecf9d320659f99032c3f59f2e40c22f59a679",
-   "size": 684187
+   "size": 684187,
+   "source": "generated for ep01 (illustrated cut-paper collage, series bible style)"
   },
   "assets/s02_jet.jpg": {
+   "ai": true,
+   "kind": "plate",
+   "legacy": "prompt not recorded (generated 2026-10-10, before provenance tracking)",
+   "licence": "own-ai",
+   "provider": "Arena generate_image",
+   "realistic": false,
    "sha256": "f7bbf98675691c33d4ae3664d4cf698d3f5b37bce9ad3348b147cb2aff3b9b4e",
-   "size": 559345
+   "size": 559345,
+   "source": "generated for ep01 (illustrated cut-paper collage, series bible style)"
   },
   "assets/s03_console.jpg": {
+   "ai": true,
+   "kind": "plate",
+   "legacy": "prompt not recorded (generated 2026-10-10, before provenance tracking)",
+   "licence": "own-ai",
+   "provider": "Arena generate_image",
+   "realistic": false,
    "sha256": "f481952122bb5fa15fb24e1666d6637b0a4dabb89e621fec7733e38f0d388745",
-   "size": 747462
+   "size": 747462,
+   "source": "generated for ep01 (illustrated cut-paper collage, series bible style)"
   },
   "assets/s04_globe.jpg": {
+   "ai": true,
+   "kind": "plate",
+   "legacy": "prompt not recorded (generated 2026-10-10, before provenance tracking)",
+   "licence": "own-ai",
+   "provider": "Arena generate_image",
+   "realistic": false,
    "sha256": "e843a54ce2ff21dc085e694390230b15de3d579876a3478a50ad682c0ac15669",
-   "size": 627206
+   "size": 627206,
+   "source": "generated for ep01 (illustrated cut-paper collage, series bible style)"
   },
   "assets/s05_officer.jpg": {
+   "ai": true,
+   "kind": "plate",
+   "legacy": "prompt not recorded (generated 2026-10-10, before provenance tracking)",
+   "licence": "own-ai",
+   "provider": "Arena generate_image",
+   "realistic": false,
    "sha256": "4a17d55277dbc76760b39725f12b6d23b0b7ffff8814579618ba1be31205195d",
-   "size": 776947
+   "size": 776947,
+   "source": "generated for ep01 (illustrated cut-paper collage, series bible style)"
   },
   "assets/s06_phone.jpg": {
+   "ai": true,
+   "kind": "plate",
+   "legacy": "prompt not recorded (generated 2026-10-10, before provenance tracking)",
+   "licence": "own-ai",
+   "provider": "Arena generate_image",
+   "realistic": false,
    "sha256": "d4360a7ef0c486f9694cdc2e1ce428d79c4dafd93fe9170f643c29fa2fd5e47b",
-   "size": 734424
+   "size": 734424,
+   "source": "generated for ep01 (illustrated cut-paper collage, series bible style)"
   },
   "assets/s07_sunlight.jpg": {
+   "ai": true,
+   "kind": "plate",
+   "legacy": "prompt not recorded (generated 2026-10-10, before provenance tracking)",
+   "licence": "own-ai",
+   "provider": "Arena generate_image",
+   "realistic": false,
    "sha256": "f5a7adcae7178ce0acb198debfb9318a44d3c1266a03cb0d732cb95485de2e88",
-   "size": 743414
+   "size": 743414,
+   "source": "generated for ep01 (illustrated cut-paper collage, series bible style)"
   },
   "assets/s08_logbook.jpg": {
+   "ai": true,
+   "kind": "plate",
+   "legacy": "prompt not recorded (generated 2026-10-10, before provenance tracking)",
+   "licence": "own-ai",
+   "provider": "Arena generate_image",
+   "realistic": false,
    "sha256": "0cf86755b53618a6daff0abda14465acf0317e4f2e2266a0a59b028c727fd7de",
-   "size": 630585
+   "size": 630585,
+   "source": "generated for ep01 (illustrated cut-paper collage, series bible style)"
   },
   "assets/s09_kitchen.jpg": {
+   "ai": true,
+   "kind": "plate",
+   "legacy": "prompt not recorded (generated 2026-10-10, before provenance tracking)",
+   "licence": "own-ai",
+   "provider": "Arena generate_image",
+   "realistic": false,
    "sha256": "b83a8ab95c1e85918b6185b4cdd7ca704b142ab70d63e92348f36fd6f8796a5a",
-   "size": 740362
+   "size": 740362,
+   "source": "generated for ep01 (illustrated cut-paper collage, series bible style)"
   },
   "assets/s10_earth.jpg": {
+   "ai": true,
+   "kind": "plate",
+   "legacy": "prompt not recorded (generated 2026-10-10, before provenance tracking)",
+   "licence": "own-ai",
+   "provider": "Arena generate_image",
+   "realistic": false,
    "sha256": "1a0a068a16937a3ad8d517436f64d76a0a107be020fc9a6dae1e8c6cb3b01124",
-   "size": 535813
+   "size": 535813,
+   "source": "generated for ep01 (illustrated cut-paper collage, series bible style)"
   },
   "clips/arch_minuteman.mp4": {
+   "ai": false,
+   "credit": "Minuteman III GT 245 test launch, Vandenberg SFB, 9 Feb 2023. SSgt Draeke Layman, Space Launch Delta 30 Public Affairs. Shown as illustrative footage, not 1983",
+   "credit_authors": [
+    "Draeke Layman"
+   ],
+   "derived_from": "https://upload.wikimedia.org/wikipedia/commons/0/00/Minuteman_GT_245_Operational_Test_Launch_-_LF-10_Vandenberg_Space_Force_Base_CA_-_9_Feb_2023.webm",
+   "kind": "archive",
+   "licence": "PD-USGov",
+   "op": "trim 14.5\u201317.0 s, film grade (clips.py prep)",
+   "provider": "Wikimedia Commons (U.S. Space Force / USAF)",
+   "screen_credit": "Illustrative: Minuteman III test launch \u00b7 USAF film \u00b7 public domain",
    "sha256": "3a0e10e64617b957defaae96c76e02b0849bded2c8a7658762b51dd3a9d388a8",
-   "size": 594777
+   "size": 594777,
+   "source": "https://commons.wikimedia.org/wiki/File:Minuteman_GT_245_Operational_Test_Launch_-_LF-10_Vandenberg_Space_Force_Base_CA_-_9_Feb_2023.webm",
+   "spec": "clips.json#arch_minuteman"
   },
   "clips/s03_console.mp4": {
+   "ai": true,
+   "derived_from": "assets/s03_console.jpg",
+   "kind": "clip",
+   "licence": "own-ai",
+   "op": "image-to-video, style preserved",
+   "prompt_sha1": "7721072efca363d02fa827d91cfda97e15bfc941",
+   "provider": "Wan 2.2 image-to-video (Apache-2.0 weights) via HF Space zerogpu-aoti/wan2-2-fp8da-aoti-faster",
+   "realistic": false,
+   "seed": 7,
    "sha256": "5ceb3380b0092c37ab0805bbd30af79d3e61830cf92745c17e554eb5458f0f2b",
-   "size": 1247006
+   "size": 1247006,
+   "source": "generated 2026-10-11 from assets/s03_console.jpg",
+   "spec": "clips.json#s03_console"
   },
   "clips/s07_sunlight.mp4": {
+   "ai": true,
+   "derived_from": "assets/s07_sunlight.jpg",
+   "kind": "clip",
+   "licence": "own-ai",
+   "op": "image-to-video, style preserved",
+   "prompt_sha1": "43824c7744d4fa85e0a643f7cddc7e2f21af1997",
+   "provider": "Wan 2.2 image-to-video (Apache-2.0 weights) via HF Space zerogpu-aoti/wan2-2-fp8da-aoti-faster",
+   "realistic": false,
+   "seed": 7,
    "sha256": "56873541eeed683ae15a312481f534c6566f894d6ec4f31f15dc8b49d77f2e4d",
-   "size": 2032386
+   "size": 2032386,
+   "source": "generated 2026-10-11 from assets/s07_sunlight.jpg",
+   "spec": "clips.json#s07_sunlight"
   },
   "vo/orig/v10.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-01 (en, masculine, narration)",
+   "realistic": false,
    "sha256": "60c9a3f8aff2c88d7bea1bb2fe4ca22b68984c6ee87f4c62ffe649189940de62",
-   "size": 94058
+   "size": 94058,
+   "source": "generated 2026-10-10 for ep01",
+   "spec": "voice.json#v10"
   },
   "vo/v01.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-01 (en, masculine, narration)",
+   "realistic": false,
    "sha256": "9156909adf6230af88784e7ce8519a6660b98983e2e6e87c2ddd1847de47814e",
-   "size": 68772
+   "size": 68772,
+   "source": "generated 2026-10-10 for ep01",
+   "spec": "voice.json#v01"
   },
   "vo/v02.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-01 (en, masculine, narration)",
+   "realistic": false,
    "sha256": "e4a987ad588de992fc01a7cc81cabe5c9299b9af094d8ccb5d9b4a635d0773f8",
-   "size": 72533
+   "size": 72533,
+   "source": "generated 2026-10-10 for ep01",
+   "spec": "voice.json#v02"
   },
   "vo/v03.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-01 (en, masculine, narration)",
+   "realistic": false,
    "sha256": "888e33fe68ee3fce685b670110b6902be7d0de8a84f33e51fa77c3733d28bdae",
-   "size": 48292
+   "size": 48292,
+   "source": "generated 2026-10-10 for ep01",
+   "spec": "voice.json#v03"
   },
   "vo/v04.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-01 (en, masculine, narration)",
+   "realistic": false,
    "sha256": "2f333ad90808e4d2e31231dc40ac9a1f1daef1f5132d05167a5ae19c42abc29b",
-   "size": 53725
+   "size": 53725,
+   "source": "generated 2026-10-10 for ep01",
+   "spec": "voice.json#v04"
   },
   "vo/v05.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-01 (en, masculine, narration)",
+   "realistic": false,
    "sha256": "006189ea972abe5afa956bad7e6cbc2ef882abdf07b1931d89f7f8e27843ad59",
-   "size": 77549
+   "size": 77549,
+   "source": "generated 2026-10-10 for ep01",
+   "spec": "voice.json#v05"
   },
   "vo/v06.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-01 (en, masculine, narration)",
+   "realistic": false,
    "sha256": "9b00abc45a6b68d24ec7569ddc24f73c687349693cbda5b988a5ead0b34fc7b2",
-   "size": 65010
+   "size": 65010,
+   "source": "generated 2026-10-10 for ep01",
+   "spec": "voice.json#v06"
   },
   "vo/v07.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-01 (en, masculine, narration)",
+   "realistic": false,
    "sha256": "7939ffadacc4f0befaec502a718cafa92a20894825c9a868e0d8a85704cc8d7d",
-   "size": 47247
+   "size": 47247,
+   "source": "generated 2026-10-10 for ep01",
+   "spec": "voice.json#v07"
   },
   "vo/v08.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-01 (en, masculine, narration)",
+   "realistic": false,
    "sha256": "bcb1255949d654b09bd7ab85f42882768f257a5d40b7dab7c24c175ca3751e22",
-   "size": 49964
+   "size": 49964,
+   "source": "generated 2026-10-10 for ep01",
+   "spec": "voice.json#v08"
   },
   "vo/v09.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-01 (en, masculine, narration)",
+   "realistic": false,
    "sha256": "130841642af19ed6c5f68b65be63b0a78a3b07d11bbd16d589459b574f2a23dd",
-   "size": 60204
+   "size": 60204,
+   "source": "generated 2026-10-10 for ep01",
+   "spec": "voice.json#v09"
   },
   "vo/v10.wav": {
+   "ai": true,
+   "derived_from": "vo/orig/v10.mp3",
+   "kind": "vo",
+   "licence": "own-tts",
+   "op": "climax pause 0.37 \u2192 0.6 s, silence only (voice.py shape)",
+   "provider": "Arena generate_speech, voice-01 (en, masculine, narration)",
+   "realistic": false,
    "sha256": "5b1e25b52fd7ae6ef1edb8fb071c9e25e134d66e0a373413ca1a9fef63a46418",
-   "size": 1143370
+   "size": 1143370,
+   "source": "voice.py shape",
+   "spec": "voice.json#v10"
+  }
+ },
+ "generated": {
+  "bg_paper.jpg": {
+   "by": "make_assets.py (procedural)",
+   "kind": "texture",
+   "licence": "own"
+  },
+  "grain.png": {
+   "by": "make_assets.py (procedural)",
+   "kind": "texture",
+   "licence": "own"
+  },
+  "memorial_print.jpg": {
+   "by": "make_assets.py",
+   "credit": "Memorial stone to Stanislav Petrov, Warsaw. Photo: User:Brandmeister (Togrul Safarov), Wikimedia Commons, 30 Oct 2021",
+   "derived_from": "assets/memorial_stone.jpg",
+   "kind": "photo",
+   "licence": "PD",
+   "op": "print border + grade",
+   "source": "https://commons.wikimedia.org/wiki/File:Stanislav_Petrov_memorial_stone.jpg"
+  },
+  "mix.wav": {
+   "by": "score.py (procedural score + SFX) + voice takes",
+   "derived_from": "procedural score.py + vo/*",
+   "kind": "mix",
+   "licence": "own"
+  },
+  "paper_dark.jpg": {
+   "by": "make_assets.py (procedural)",
+   "kind": "texture",
+   "licence": "own"
+  },
+  "stampmask.png": {
+   "by": "make_assets.py (procedural)",
+   "kind": "texture",
+   "licence": "own"
+  },
+  "tear.png": {
+   "by": "make_assets.py (procedural)",
+   "kind": "texture",
+   "licence": "own"
   }
  },
  "release": "media-ep01-petrov",

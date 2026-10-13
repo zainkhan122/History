@@ -23,6 +23,14 @@ Update `RESUME.md` (and `STATE.json` via `tools/state.py set`) **before** syncin
 - **Quality gates** (all in `episode.sh`; a FAIL blocks the render):
   - `facts` → `reelkit/factcheck.py`: every narrated sentence with a number/date/name/quote, and every on-screen label, must map to a claim in the episode's `research.json`. Evidence tiers: core ≥2 publishers incl. ≥1 primary/scholarly; record ≥2 incl. a fact-checked reference; detail ≥2; framing ≥1; quotes trace to their first publication. Guardrail phrases are checked in VO, on screen and in `POST_KIT.md`. Also writes `out/sources.md` (paste-ready description citations). `--online --archive` checks links and stores Wayback snapshots in the ledger.
   - `voice` → `reelkit/voice.py check`: every take measured against the performance plan `voice.json`. It checks fidelity (skipped words, wrong numbers), pace per tone band (syllables per second of phonation), marked pauses as real waveform silences, pitch range and clipping. `plan.py` takes its pauses from the plan.
+  - `provenance` → `reelkit/provenance.py`: every file the build ships traces to a `media.json` entry with kind, licence (allow-list; SA/NC/ND/unknown are refused), provider, source and credit. AI media carries a prompt/spec and a realistic flag. Photo and archive credits must be visible on screen and in `POST_KIT.md`. Writes `out/credits.md`.
+  - `planlint` → `reelkit/planlint.py`: checks `shots.json` (subject, shot size, motion, information role, reason) against reality:
+    - the motion promise in `episode.json`, measured;
+    - a declared clip shown as a still is a silent fallback and FAILs without an approved `clip_fallback` decision;
+    - static holds measured from the build, limited by each scene's tone;
+    - slideshow risk;
+    - cross-episode fingerprint drift. The format, hook and opening must rotate.
+  - **Exceptions live in `decisions.jsonl`** (`reelkit/decide.py add …`): append-only, with an approver and an expiry. Never edit old lines; supersede them.
   - `check` → `reelkit/hfcheck.py`: `hyperframes check` (lint + runtime + layout collisions, sampled at transitions) + the caption-zone audit. Intentional overlaps need explicit `data-layout-allow-*` on the text element itself (not inherited).
   - `textqa` → `reelkit/textqa.py`: contrast ≥3:1 (target 4.5), platform UI dead zones (top 230 / bottom 320 / right 120 px), reading time.
   - `qa` → `reelkit/qa.py`: loudness −14 LUFS, true peak ≤ −1.5 dBTP, bitrate ≥ 8 Mbps, no silence gaps.

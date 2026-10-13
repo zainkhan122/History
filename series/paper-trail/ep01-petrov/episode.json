@@ -8,5 +8,11 @@
  "voice": "Arena TTS voice-01 (en, masculine, narration); performance plan voice.json; v10 climax pause shaped 0.37→0.6 s (original vo/orig/v10.mp3)",
  "release": "ep01-petrov-v2",
  "media_release": "media-ep01-petrov",
- "updated": "2026-10-13"
+ "updated": "2026-10-13",
+ "promise": {
+  "type": "motion_led",
+  "min_motion": 0.5,
+  "locked": "2026-10-13",
+  "means": "At least half the runtime (weighted: clips/film 1, animated graphics 0.5, Ken Burns 0) is real motion. A shortfall needs an approved promise_exception in decisions.jsonl; missing clips are never swapped for stills silently."
+ }
 }

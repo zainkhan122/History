@@ -4,8 +4,9 @@ _Last updated: 2026-10-13 PKT by the Arena agent. Short form: `python3 tools/sta
 
 ## Where we are
 - **2026-10-13: implementing OpenMontage P0 + P1 in phases** (owner request; progress table in `docs/OPENMONTAGE_LESSONS.md` §D).
-  - Phase 1 delivery gates ✅ · Phase 2 claims ledger + `factcheck.py` ✅ · Phase 3 voice plan + `voice.py` gate ✅ (ep01 climax pause shaped 0.37→0.6 s; media pushed) · next: **Phase 4** planlint (+cross-episode), promise lock + decisions.jsonl, provenance; then P5 (clip cache, Wan template); then cloud render `ep01-petrov-v2.2` (87.6 s).
-  - All gates for ep01 currently pass: voice 0/0, facts 0 FAIL (3 caveat WARNs), hyperframes check 0 errors, textqa 0 FAIL.
+  - Phase 1 delivery gates ✅ · Phase 2 claims ledger + `factcheck.py` ✅ · Phase 3 voice plan + `voice.py` gate ✅ (ep01 climax pause shaped 0.37→0.6 s; media pushed) · Phase 4 planlint + promise lock + decisions.jsonl + provenance ✅ · next: **Phase 5** content-addressed clip cache + Wan 5-slot prompt template; then cloud render `ep01-petrov-v2.2` (87.6 s).
+  - All gates for ep01 currently pass: voice 0/0, facts 0 FAIL (3 caveats), provenance 0 FAIL (10 legacy plates), planlint 0 FAIL (motion 20 % under approved exception until 2026-12-31), hyperframes check 0 errors, textqa 0 FAIL.
+  - New-episode order: research.json → voice.json (+ sample gate) → shots.json (fingerprint must differ from previous episodes) → clips with recorded prompts → media.json provenance on push.
 - **2026-10-13: OpenMontage study** → `docs/OPENMONTAGE_LESSONS.md`. Self-found issues: upload bitrate 3.8 Mbps (too low, target 12M master), channel bug and caption width inside platform UI dead zones, and `out/` excluded from snapshots (local v2.1 final lost; regenerate via cloud). The owner chooses which items to implement.
 - **2026-10-11 (later): v2.1 readability pass.** Owner: "text must be readable wherever it appears". Fixes:
   - kicker on a paper strip; stronger scrims on the quote, "Nothing" and "survived by" lines;

@@ -27,3 +27,11 @@ jobs:
           for v in $(git ls-files 'series/*/*/voice.json'); do
             ep=$(dirname "$v"); echo "== $ep"; python3 reelkit/voice.py check "$ep" --plan-only
           done
+      - name: Provenance + plan lint (licences, credits, promise/exceptions, series template drift)
+        run: |
+          set -e
+          for sh in $(git ls-files 'series/*/*/shots.json'); do
+            ep=$(dirname "$sh"); echo "== $ep"
+            python3 reelkit/provenance.py "$ep" --hf /nonexistent
+            python3 reelkit/planlint.py "$ep" --hf /nonexistent
+          done

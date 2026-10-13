@@ -110,8 +110,10 @@ def cmd_push(a):
         if old and old["sha256"] == h and flat(f) in existing:
             new[f] = old; continue
         print(f"  ↑ {f} ({sz/1e6:.2f} MB)"); upload(slug, rel, d / f, flat(f), existing)
-        new[f] = {"sha256": h, "size": sz}
-    man = {"release": tag, "repo": slug, "files": new}
+        # keep provenance (kind/licence/credit/source/…) across re-uploads; provenance.py re-verifies it
+        new[f] = {**{k: v for k, v in (old or {}).items() if k not in ("sha256", "size")}, "sha256": h, "size": sz}
+    # top-level extras (e.g. "generated": build-time assets) survive a push
+    man = {**{k: v for k, v in man.items() if k not in ("release", "repo", "files")}, "release": tag, "repo": slug, "files": new}
     man_p.write_text(json.dumps(man, indent=1, sort_keys=True) + "\n")
     print(f"media.json: {len(new)} files, {sum(v['size'] for v in new.values())/1e6:.1f} MB in release '{tag}'")
 

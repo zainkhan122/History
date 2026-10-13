@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # One-command episode pipeline — identical in the sandbox and on GitHub Actions.
 #   bash reelkit/episode.sh <episode_dir> [stage...]
-# stages (default: all): pull trim plan voice score assets build facts check textqa snap render encode qa   ('lint' = alias of check)
+# stages (default: all): pull trim plan voice score assets build facts provenance planlint check textqa snap render encode qa   ('lint' = alias of check)
 # out/ is SCRATCH (snapshot-excluded): finished files live only in GitHub Releases (cloud.py render --tag …).
 # Build dir: $BUILD (default ~/.cache/build/<episode-name>) — never inside the repo.
 set -euo pipefail
@@ -9,8 +9,10 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 EP="$(cd "$1" && pwd)"; shift || true
 NAME="$(basename "$EP")"
 BUILD="${BUILD:-$HOME/.cache/build/$NAME}"; HF="$BUILD/hf"
-STAGES="${*:-pull trim plan voice score assets build facts check textqa render encode qa}"
-STAGES=" ${STAGES//lint/check} "
+STAGES="${*:-pull trim plan voice score assets build facts provenance planlint check textqa render encode qa}"
+_st=""; for _w in $STAGES; do [ "$_w" = lint ] && _w=check; _st="$_st $_w"; done; STAGES="$_st "   # whole-word alias only
+KNOWN="pull trim plan voice score assets build facts provenance planlint check textqa snap render encode qa"
+for _w in $STAGES; do [[ " $KNOWN " == *" $_w "* ]] || { echo "episode.sh: unknown stage '$_w' (known: $KNOWN)" >&2; exit 2; }; done
 FPS="${FPS:-30}"; CRF="${CRF:-18}"; WORKERS="${WORKERS:-auto}"
 export HYPERFRAMES_NO_TELEMETRY=1 HYPERFRAMES_NO_UPDATE_CHECK=1 DO_NOT_TRACK=1 HYPERFRAMES_SKIP_SKILLS=1
 export PATH="$HOME/.cache/bin:$HOME/.cache/node/bin:$HOME/.cache/npm-global/bin:/usr/local/bin:$PATH"
@@ -26,6 +28,8 @@ has score  && { log "score + SFX + mix (-14 LUFS)"; python3 "$EP/score.py" "$BUI
 has assets && { log "visual assets"; python3 "$EP/make_assets.py" "$HF"; [ -f "$EP/clips.json" ] && python3 "$REPO/reelkit/clips.py" prep "$EP" "$HF" || true; }
 has build  && { log "composition"; python3 "$EP/build.py" "$HF"; cp "$BUILD/mix.wav" "$HF/assets/mix.wav"; }
 has facts  && { log "fact gate (claims ledger ↔ narration + on-screen text, guardrails)"; mkdir -p "$EP/out"; python3 "$REPO/reelkit/factcheck.py" "$EP" --hf "$HF" --report "$EP/out/factcheck.json" --sources-md "$EP/out/sources.md"; }
+has provenance && { log "provenance gate (origin + licence of every shipped file, on-screen credits, AI disclosure)"; mkdir -p "$EP/out"; python3 "$REPO/reelkit/provenance.py" "$EP" --hf "$HF" --report "$EP/out/provenance.json" --credits-md "$EP/out/credits.md"; }
+has planlint && { log "plan lint (shots, motion promise, silent fallbacks, static holds, slideshow risk, series drift)"; mkdir -p "$EP/out"; python3 "$REPO/reelkit/planlint.py" "$EP" --hf "$HF" --report "$EP/out/planlint.json"; }
 has check  && { log "composition check (lint + runtime + layout collisions)"; mkdir -p "$EP/out"; python3 "$REPO/reelkit/hfcheck.py" "$HF" --report "$EP/out/check.json"; }
 has textqa && { log "readability gate (every on-screen text ≥ 3:1, target 4.5:1)"; mkdir -p "$EP/out"; python3 "$REPO/reelkit/textqa.py" "$HF" --report "$EP/out/textqa.json" --sheet "$BUILD/textqa_fails.jpg"; }
 has snap   && { log "snapshots"; (cd "$HF" && hyperframes snapshot --at "${SNAP_AT:-1,20,47,71,86}" --no-end --timeout 30000 -o "$BUILD/snaps" >/dev/null 2>&1); ls "$BUILD/snaps"; }

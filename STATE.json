@@ -1,11 +1,10 @@
 {
- "now": "OpenMontage P0+P1 in phases: Phase 1 delivery gates, Phase 2 claims ledger (factcheck.py), Phase 3 voice performance plan (voice.json + voice.py check/sample/shape, stage voice) DONE. Next Phase 4: planlint, promise lock, provenance.",
+ "now": "OpenMontage P0+P1 in phases: Phases 1-4 DONE (delivery gates; claims ledger; voice plan; planlint + promise lock + decisions.jsonl + provenance). Next Phase 5: clip cache + Wan prompt template, then cloud render v2.2.",
  "next": [
-  "Phase 4: planlint (+cross-episode), promise lock + decisions.jsonl, provenance on every asset",
-  "Phase 5: content-addressed clip cache + Wan 5-slot prompt template",
+  "Phase 5: content-addressed clip cache (key = engine+model+seed+prompt+input sha; JSONL manifest, atomic, locked) + Wan 5-slot prompt template (200-400 words, no overlays in prompt) wired into clips.py + planlint prompt checks",
   "cloud.py render ep01-petrov --tag ep01-petrov-v2.2 --wait, fetch, verify, present (v10 climax pause now 0.6 s)",
-  "With HF_TOKEN: 4 pending ep01 clips -> v3",
-  "Ep02-06: research.json -> voice.json -> sample gate -> full VO"
+  "With HF_TOKEN: 4 pending ep01 clips -> v3 (motion ~61 %, retires the promise exception)",
+  "Ep02-06: research.json -> voice.json -> sample gate -> shots.json (rotate format/hook) -> clips -> provenance"
  ],
  "owner_rules": [
   "Repo zainkhan122/History is the SSOT; sync every change (tools/sync.sh) so a new session resumes exactly",
@@ -26,7 +25,7 @@
   "huggingface": "not provided (optional: raises ZeroGPU quota)",
   "cloudflare": "not provided (optional: Workers AI images 10k neurons/day)"
  },
- "updated_at": "2026-10-13T13:28:04Z",
+ "updated_at": "2026-10-13T14:06:05Z",
  "episodes": {
   "series/paper-trail/ep01-petrov": {
    "title": "The Man Who Did Nothing",

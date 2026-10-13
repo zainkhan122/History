@@ -164,7 +164,8 @@ Implementation progress (owner asked for P0 + P1, in phases):
 - **Phase 1 — delivery (done, e2d01a3):** 12 Mbps master; `master.py` (−2.0 dBTP pre-AAC → ≤ −1.5 after); `hfcheck.py` (`hyperframes check`, since `validate` is deprecated); textqa dead zones + reading time; ep01 safe-area layout.
 - **Phase 2 — claims ledger (done):** `series/<s>/<ep>/research.json` + `reelkit/factcheck.py` (stage `facts`, CI on every push). Ep01: 18 claims, 18 sources (6 primary/scholarly), 0 FAIL.
 - **Phase 3 — voice performance (done):** `voice.json` plan (tone, energy, direction, pauses, climax, sample line) is the SSOT for narration + pauses (`plan.py` reads it); `reelkit/voice.py` check/sample/lines/kokoro/shape; stage `voice` + CI plan check. Ep01: 10/10 takes pass; climax pause shaped 0.37 → 0.6 s. Kokoro fallback measured at about half the pitch range of the Arena voice (8.8 vs 16.8 st), so it stays a fallback only.
-- **Phase 4** planlint, promise lock, provenance · **Phase 5** clip cache, Wan template — pending.
+- **Phase 4 — plan integrity (done):** `shots.json` + `reelkit/planlint.py` (truth-checked motion, promise lock, silent-fallback detection, tone-aware static holds measured from the build, slideshow_risk, cross-episode fingerprint); `decisions.jsonl` + `reelkit/decide.py` (append-only, approver + expiry); `reelkit/provenance.py` (licence allow-list, build-output audit, on-screen + post-kit credits, AI disclosure, `out/credits.md`). Ep01: motion 20 % vs 50 % promise under an approved exception (expires 2026-12-31; ~61 % once the 4 HF_TOKEN clips exist); 10 legacy plates without recorded prompts (WARN).
+- **Phase 5** clip cache, Wan template — pending.
 
 | Pri | Item | Effort | Why now |
 |---|---|---|---|
