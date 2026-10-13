@@ -14,6 +14,9 @@ npm i -g --silent "hyperframes@$HFV" >/dev/null 2>&1
 hyperframes browser ensure >/dev/null 2>&1 || true
 echo "== python deps"
 python3 -m pip install -q --upgrade pip >/dev/null 2>&1 || true
-python3 -m pip install -q numpy scipy soundfile pillow faster-whisper 2>/dev/null || \
-  python3 -m pip install -q --break-system-packages numpy scipy soundfile pillow faster-whisper
+# every Python dependency of the pipeline gates (voice: librosa; provenance: fontTools; qa/voice: faster-whisper)
+PYDEPS="numpy scipy soundfile pillow faster-whisper librosa fonttools"
+python3 -m pip install -q $PYDEPS 2>/dev/null || python3 -m pip install -q --break-system-packages $PYDEPS
+# preflight: fail in seconds with a clear message, not 10 minutes into a render
+python3 -c "import numpy, scipy, soundfile, PIL, faster_whisper, librosa, fontTools" || { echo "ci_setup: Python gate dependencies missing" >&2; exit 1; }
 echo "CI_SETUP_DONE nproc=$(nproc) mem=$(free -g | awk '/Mem/{print $2}')G node=$(node -v) hf=$(hyperframes --version 2>/dev/null | tail -1)"
