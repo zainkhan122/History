@@ -1,9 +1,9 @@
 {
- "now": "OpenMontage P0+P1 DONE (Phases 1-5). Phase 5: clip cache (reelkit/clipcache.py, release cache-clips) + Wan 5-slot template (clips.py compose/lint/status/gen/adopt). Ep01: s01+s06 clips generated 2026-10-13 -> motion 40%. Now: cloud render v2.2.",
+ "now": "OpenMontage P0+P1 DONE (Phases 1-5). Ep01 v2.2 DELIVERED (release ep01-petrov-v2.2, cloud run #5 @2e0fee4, QA pass). Awaiting owner review + min_motion exception confirmation.",
  "next": [
-  "cloud.py render ep01-petrov --tag ep01-petrov-v2.2 --wait, fetch, verify, present (s01+s06 clips, v10 pause 0.6 s)",
-  "Owner to confirm the min_motion promise_exception (expires 2026-12-31) or provide HF_TOKEN",
-  "s05_officer + s09_kitchen: clips.py gen when the ZeroGPU quota resets (~24 h rolling) or with HF_TOKEN; review frames; shots.json; v3 (~61% motion)",
+  "Owner review of v2.2; confirm the min_motion promise_exception (expires 2026-12-31) or provide HF_TOKEN",
+  "s05_officer + s09_kitchen: clips.py gen after the ZeroGPU quota resets (rolling 24 h from 2026-10-13 ~14:20 UTC) or with HF_TOKEN; review frames; shots.json; v3 (~61% motion, retire exception)",
+  "Optional polish for v3: s06 counter panel overlaps the lifted receiver (move panel lower or re-seed s06); s01 cap tint drifts olive->beige",
   "Ep02-06: research.json -> voice.json -> sample gate -> shots.json (rotate format/hook) -> clips.json shot slots -> clips.py status/gen -> provenance"
  ],
  "owner_rules": [
@@ -25,7 +25,7 @@
   "huggingface": "not provided (optional: raises ZeroGPU quota)",
   "cloudflare": "not provided (optional: Workers AI images 10k neurons/day)"
  },
- "updated_at": "2026-10-13T14:34:37Z",
+ "updated_at": "2026-10-13T14:48:59Z",
  "episodes": {
   "series/paper-trail/ep01-petrov": {
    "title": "The Man Who Did Nothing",
@@ -38,6 +38,7 @@
   "cloud_render": "run #1 success 2026-10-11, 10 min, QA pass (release ep01-petrov-cloud-test)",
   "media_roundtrip": "fresh clone + media pull: 21/21 sha256 verified",
   "cloud_render_v2": "run #2 success, QA pass: -14.08 LUFS, TP -1.22, ASR 0.963",
-  "clip_cache": "2026-10-13: local/remote tiers byte-identical, corrupt/tampered blobs rejected, 8 concurrent writers -> 1 line; 15/15 lint sabotage caught"
+  "clip_cache": "2026-10-13: local/remote tiers byte-identical, corrupt/tampered blobs rejected, 8 concurrent writers -> 1 line; 15/15 lint sabotage caught",
+  "cloud_render_v2_2": "run #5 success 13 min @2e0fee4: QA pass -14.07 LUFS, TP -1.9 dBTP, 12.09 Mbps, ASR 0.963, no freezes/black/silence"
  }
 }

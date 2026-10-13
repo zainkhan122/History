@@ -22,6 +22,7 @@ _Last updated: 2026-10-13 PKT by the Arena agent. Short form: `python3 tools/sta
   - `ep01-petrov-v1`: delivered v1 (final.mp4, cover, POST_KIT, qa.json);
   - `ep01-petrov-cloud-test`: cloud render proof. Run #1: 10 min, QA pass, identical to local.
   - `ep01-petrov-v2`: **v2 delivered** (cloud run #2: QA pass, −14.08 LUFS, ASR 0.963).
+  - `ep01-petrov-v2.2`: **v2.2 delivered 2026-10-13** (cloud run #5: QA pass, −14.07 LUFS, TP −1.9, 12.1 Mbps, ASR 0.963) — +s01/s06 Wan clips, motion 40 %.
 - **Ep01 v2 engine upgrade (done, in git):**
   - Wan 2.2 motion clips on s03 (console) and s07 (sunlight / satellite);
   - archival **Minuteman launch film insert** on "strike back" (projected frame, gate weave, flicker, label, credit, projector SFX, flash in, film burn out);
@@ -51,7 +52,7 @@ python3 reelkit/media.py pull series/paper-trail/ep01-petrov   # only if you nee
 ```
 
 ## Next
-1. Owner review of v2 (delivered 2026-10-11).
+1. Owner review of v2.2 (delivered 2026-10-13) + confirm the min_motion exception.
 2. Generate s05 + s09 (daily quota reset or owner HF token) → review → shots.json → render v3 in the cloud.
 3. Ep02 (Paper Trail): subject from `docs/NICHE_RESEARCH.md`. Build `clips.json` from day one:
    - 4–6 Wan clips;
