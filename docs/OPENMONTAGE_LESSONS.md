@@ -165,7 +165,18 @@ Implementation progress (owner asked for P0 + P1, in phases):
 - **Phase 2 — claims ledger (done):** `series/<s>/<ep>/research.json` + `reelkit/factcheck.py` (stage `facts`, CI on every push). Ep01: 18 claims, 18 sources (6 primary/scholarly), 0 FAIL.
 - **Phase 3 — voice performance (done):** `voice.json` plan (tone, energy, direction, pauses, climax, sample line) is the SSOT for narration + pauses (`plan.py` reads it); `reelkit/voice.py` check/sample/lines/kokoro/shape; stage `voice` + CI plan check. Ep01: 10/10 takes pass; climax pause shaped 0.37 → 0.6 s. Kokoro fallback measured at about half the pitch range of the Arena voice (8.8 vs 16.8 st), so it stays a fallback only.
 - **Phase 4 — plan integrity (done):** `shots.json` + `reelkit/planlint.py` (truth-checked motion, promise lock, silent-fallback detection, tone-aware static holds measured from the build, slideshow_risk, cross-episode fingerprint); `decisions.jsonl` + `reelkit/decide.py` (append-only, approver + expiry); `reelkit/provenance.py` (licence allow-list, build-output audit, on-screen + post-kit credits, AI disclosure, `out/credits.md`). Ep01: motion 20 % vs 50 % promise under an approved exception (expires 2026-12-31; ~61 % once the 4 HF_TOKEN clips exist); 10 legacy plates without recorded prompts (WARN).
-- **Phase 5** clip cache, Wan template — pending.
+- **Phase 5 — clip cache + Wan template (done):** `reelkit/clipcache.py` (key = sha256 of the exact call: engine, Space, every
+  parameter incl. negative prompt, seed, prompt, input-image sha256; tiers local blob → release `cache-clips` → generate; index
+  `reelkit/cache/clips.jsonl`, append-only, flock + dedup, sha-verified on every read; `clipcache.py ls|verify --remote|sync|key`).
+  `clips.py` gained `compose` (5-slot `shot` → prompt, deterministic), `lint` (200–400 words, ≥ 2 ordered motion steps, one camera
+  move, no on-screen-text words, positive phrasing, prompt == compose, seed pinned), `status` (media / cache / key drift / GPU runs
+  needed), cache-first `gen` (`--cache-only`, `--dry-run`; stops at the first quota hit) and `adopt`. planlint runs the clip lint;
+  provenance flags `cache_key` drift; CI lints clips + verifies every cached release asset; `episode.sh assets` materialises cached
+  clips (never spends GPU). Finding: the Space's default negative prompt (Chinese) includes "style, artwork, painting" — it pushes
+  away from our illustrated look — and at guidance 1 negatives barely act, so the style lock lives in the positive prompt and our
+  avoid-list replaces the default. Sabotage: 15/15 lint/gate faults + 7 cache-integrity cases caught. Ep01: s03/s07/arch adopted
+  (frozen legacy prompts); s01 + s06 generated with the template on 2026-10-13 (anonymous quota then exhausted) → motion 20 → 40 %,
+  slideshow_risk 0.84 → 0.67; s05/s09 composed and waiting (`clips.py gen` when quota resets or with HF_TOKEN).
 
 | Pri | Item | Effort | Why now |
 |---|---|---|---|

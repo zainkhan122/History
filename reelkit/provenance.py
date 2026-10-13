@@ -17,7 +17,8 @@ FAIL
   - photo/archive whose screen_credit is not visible in the composition
   - POST_KIT.md missing a credited author, or missing the AI disclosure while AI media is used
 WARN
-  - legacy AI media (prompt not recorded), a generated clip whose clips.json prompt changed since generation
+  - legacy AI media (prompt not recorded), a generated clip whose clips.json prompt changed since generation,
+    a clip not registered in the clip cache or whose cache_key no longer matches its clips.json spec (drift)
 Writes a paste-ready credits block (--credits-md).
 """
 import argparse, hashlib, html, json, re, sys
@@ -104,6 +105,14 @@ def main():
                 W.append(f"{name}: clips.json prompt for {cid} changed after generation (file no longer matches its spec)")
             elif c.get("engine") == "url" and c.get("source") and e.get("source") != c["source"]:
                 F.append(f"{name}: source differs from clips.json ({c['source']})")
+            if c and name.startswith("clips/"):          # clip cache: the file must be the output of today's spec
+                sys.path.insert(0, str(Path(__file__).resolve().parent)); import clips as _clips, clipcache as _cc
+                try:
+                    k = _cc.make_key(_clips.call_spec(c, ep))
+                    if not e.get("cache_key"): W.append(f"{name}: not registered in the clip cache (clips.py adopt)")
+                    elif e["cache_key"] != k: W.append(f"{name}: cache_key drift — clips.json/plate changed since this clip was made (regenerate or revert)")
+                except (ValueError, FileNotFoundError) as x:
+                    W.append(f"{name}: cache key not computable ({x})")
         d = e.get("derived_from")
         if d and not (d in files or str(d).startswith("http") or d.startswith("procedural")):
             F.append(f"{name}: derived_from {d} not found")

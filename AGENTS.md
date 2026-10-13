@@ -30,6 +30,12 @@ Update `RESUME.md` (and `STATE.json` via `tools/state.py set`) **before** syncin
     - static holds measured from the build, limited by each scene's tone;
     - slideshow risk;
     - cross-episode fingerprint drift. The format, hook and opening must rotate.
+  - `clips` (inside planlint, also `reelkit/clips.py lint`): pending Wan clips use the 5-slot `shot` template in `clips.json`
+    (subject · ordered motion steps · scene · spatial · ONE camera move; series style lock + avoid-list in `template`), 200–400
+    words, positive phrasing, no on-screen-text words; `prompt` is written by `clips.py compose` — never by hand. Clips without
+    `shot` are frozen legacy (their prompt is part of their cache key).
+  - **Generation goes through the cache only:** `clips.py status <ep>` → `clips.py gen <ep>` (local → release `cache-clips` → GPU).
+    Every call pins a seed; a clip is generated once, ever. Review frames before putting a new clip in `shots.json`.
   - **Exceptions live in `decisions.jsonl`** (`reelkit/decide.py add …`): append-only, with an approver and an expiry. Never edit old lines; supersede them.
   - `check` → `reelkit/hfcheck.py`: `hyperframes check` (lint + runtime + layout collisions, sampled at transitions) + the caption-zone audit. Intentional overlaps need explicit `data-layout-allow-*` on the text element itself (not inherited).
   - `textqa` → `reelkit/textqa.py`: contrast ≥3:1 (target 4.5), platform UI dead zones (top 230 / bottom 320 / right 120 px), reading time.

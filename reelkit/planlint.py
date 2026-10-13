@@ -17,6 +17,8 @@ FAIL
              promise_exception (motion weights: clip/film 1, graphic/parallax 0.5, kenburns/still/text 0)
   text       text-only scenes > 35 % of runtime
   prompts    generic words in generator prompts (stunning, cinematic, modern, "a person", …)
+             + clips.py lint: pending Wan clips need the 5-slot `shot` template (200–400 words, ≥ 2 motion steps,
+             one camera move, no on-screen-text words, prompt == compose(shot)); AI clips must pin a seed
   holds      a still visual static for > 1.75× its tone's limit (urgent 2.5 s … tender/reverent 7 s; voice.json),
              measured from the build (no tween starts on non-caption elements)
   series     same format 3 episodes running; a fingerprint ≥ 70 % identical to one of the last 3 episodes;
@@ -177,6 +179,12 @@ def main():
         bad = [g for g in GENERIC if re.search(r"(?<![a-z])" + re.escape(g) + r"(?![a-z])", p)]
         if bad:
             F.append(f"clips.json {c['id']}: generic prompt words {bad} — describe what is in frame instead")
+    # Wan 5-slot template, seeds, overlay words, single camera move (rules live in clips.py so gen and lint agree)
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import clips as _clips
+    for lv, m in _clips.lint_episode(ep):
+        if lv == "FAIL": F.append(f"clips.json {m}")
+        elif lv == "WARN": W.append(f"clips.json {m}")
 
     # ---------- static holds from the build ----------
     holds = {}

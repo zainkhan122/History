@@ -1,10 +1,10 @@
 {
- "now": "OpenMontage P0+P1 in phases: Phases 1-4 DONE (delivery gates; claims ledger; voice plan; planlint + promise lock + decisions.jsonl + provenance). Next Phase 5: clip cache + Wan prompt template, then cloud render v2.2.",
+ "now": "OpenMontage P0+P1 DONE (Phases 1-5). Phase 5: clip cache (reelkit/clipcache.py, release cache-clips) + Wan 5-slot template (clips.py compose/lint/status/gen/adopt). Ep01: s01+s06 clips generated 2026-10-13 -> motion 40%. Now: cloud render v2.2.",
  "next": [
-  "Phase 5: content-addressed clip cache (key = engine+model+seed+prompt+input sha; JSONL manifest, atomic, locked) + Wan 5-slot prompt template (200-400 words, no overlays in prompt) wired into clips.py + planlint prompt checks",
-  "cloud.py render ep01-petrov --tag ep01-petrov-v2.2 --wait, fetch, verify, present (v10 climax pause now 0.6 s)",
-  "With HF_TOKEN: 4 pending ep01 clips -> v3 (motion ~61 %, retires the promise exception)",
-  "Ep02-06: research.json -> voice.json -> sample gate -> shots.json (rotate format/hook) -> clips -> provenance"
+  "cloud.py render ep01-petrov --tag ep01-petrov-v2.2 --wait, fetch, verify, present (s01+s06 clips, v10 pause 0.6 s)",
+  "Owner to confirm the min_motion promise_exception (expires 2026-12-31) or provide HF_TOKEN",
+  "s05_officer + s09_kitchen: clips.py gen when the ZeroGPU quota resets (~24 h rolling) or with HF_TOKEN; review frames; shots.json; v3 (~61% motion)",
+  "Ep02-06: research.json -> voice.json -> sample gate -> shots.json (rotate format/hook) -> clips.json shot slots -> clips.py status/gen -> provenance"
  ],
  "owner_rules": [
   "Repo zainkhan122/History is the SSOT; sync every change (tools/sync.sh) so a new session resumes exactly",
@@ -25,7 +25,7 @@
   "huggingface": "not provided (optional: raises ZeroGPU quota)",
   "cloudflare": "not provided (optional: Workers AI images 10k neurons/day)"
  },
- "updated_at": "2026-10-13T14:06:05Z",
+ "updated_at": "2026-10-13T14:29:19Z",
  "episodes": {
   "series/paper-trail/ep01-petrov": {
    "title": "The Man Who Did Nothing",
@@ -37,6 +37,7 @@
  "proven": {
   "cloud_render": "run #1 success 2026-10-11, 10 min, QA pass (release ep01-petrov-cloud-test)",
   "media_roundtrip": "fresh clone + media pull: 21/21 sha256 verified",
-  "cloud_render_v2": "run #2 success, QA pass: -14.08 LUFS, TP -1.22, ASR 0.963"
+  "cloud_render_v2": "run #2 success, QA pass: -14.08 LUFS, TP -1.22, ASR 0.963",
+  "clip_cache": "2026-10-13: local/remote tiers byte-identical, corrupt/tampered blobs rejected, 8 concurrent writers -> 1 line; 15/15 lint sabotage caught"
  }
 }

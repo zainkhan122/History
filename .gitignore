@@ -37,3 +37,6 @@ node_modules/
 *.token
 *token*.txt
 secrets/
+
+# clip cache index lock (reelkit/clipcache.py)
+reelkit/cache/*.lock

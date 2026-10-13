@@ -35,3 +35,10 @@ jobs:
             python3 reelkit/provenance.py "$ep" --hf /nonexistent
             python3 reelkit/planlint.py "$ep" --hf /nonexistent
           done
+      - name: Motion clips (5-slot Wan template, seeds, cache index ↔ release assets)
+        run: |
+          set -e
+          for c in $(git ls-files 'series/*/*/clips.json'); do
+            ep=$(dirname "$c"); echo "== $ep"; python3 reelkit/clips.py lint "$ep"
+          done
+          python3 reelkit/clipcache.py verify --remote

@@ -26,8 +26,10 @@ _Last updated: 2026-10-13 PKT by the Arena agent. Short form: `python3 tools/sta
   - Wan 2.2 motion clips on s03 (console) and s07 (sunlight / satellite);
   - archival **Minuteman launch film insert** on "strike back" (projected frame, gate weave, flicker, label, credit, projector SFX, flash in, film burn out);
   - organic light leaks on the sunlight reveal, the wife memory and "survived by".
-- **Pending clips** (HF ZeroGPU anonymous quota hit after 3 clips): s01_bunker, s05_officer, s06_phone, s09_kitchen.
-  Prompts are ready in `clips.json`. Run `python3 reelkit/clips.py gen series/paper-trail/ep01-petrov` with `HF_TOKEN` set, then `media.py push` and a cloud render → v3.
+- **Clips (Phase 5, 2026-10-13):** s01_bunker + s06_phone generated with the 5-slot template and in the edit (motion 40 %).
+  **Pending:** s05_officer, s09_kitchen — composed, linted, keyed. Anonymous ZeroGPU ≈ 240 GPU-s/day (2 runs of 105 s).
+  `python3 reelkit/clips.py status series/paper-trail/ep01-petrov` → `clips.py gen …` (cache-first) → review frames →
+  `shots.json` motion "clip" → `media.py push` → cloud render. With both: motion ≈ 61 %, the promise exception can retire.
 - **Lightpanda vs Chrome:** tested, and Lightpanda can't paint (`--dump png` is text-only). Chrome-headless-shell stays for frames; Lightpanda is for scraping only. Speed comes from cloud rendering.
 
 ## Owner rules (standing)
@@ -50,7 +52,7 @@ python3 reelkit/media.py pull series/paper-trail/ep01-petrov   # only if you nee
 
 ## Next
 1. Owner review of v2 (delivered 2026-10-11).
-2. Get a free HF token from the owner → generate the 4 pending clips → render v3 in the cloud.
+2. Generate s05 + s09 (daily quota reset or owner HF token) → review → shots.json → render v3 in the cloud.
 3. Ep02 (Paper Trail): subject from `docs/NICHE_RESEARCH.md`. Build `clips.json` from day one:
    - 4–6 Wan clips;
    - 1–2 archive inserts (Commons / IA / NASA PD).

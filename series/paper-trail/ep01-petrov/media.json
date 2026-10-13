@@ -127,6 +127,7 @@
   },
   "clips/arch_minuteman.mp4": {
    "ai": false,
+   "cache_key": "76ff5f0b59b57d80fd5d3113b043388873620cc2afef3d2706ab5d89aa1e06d6",
    "credit": "Minuteman III GT 245 test launch, Vandenberg SFB, 9 Feb 2023. SSgt Draeke Layman, Space Launch Delta 30 Public Affairs. Shown as illustrative footage, not 1983",
    "credit_authors": [
     "Draeke Layman"
@@ -142,8 +143,25 @@
    "source": "https://commons.wikimedia.org/wiki/File:Minuteman_GT_245_Operational_Test_Launch_-_LF-10_Vandenberg_Space_Force_Base_CA_-_9_Feb_2023.webm",
    "spec": "clips.json#arch_minuteman"
   },
+  "clips/s01_bunker.mp4": {
+   "ai": true,
+   "cache_key": "b4a5e8afb93ac1ba2323c054d6e1cebc3daaeda915d9d27a55c1216c79d67dd0",
+   "derived_from": "assets/s01_bunker.jpg",
+   "kind": "clip",
+   "licence": "own-ai",
+   "op": "image-to-video, style preserved",
+   "prompt_sha1": "d4e7df091bd5e1cce5440a468bf02b0f3b04a100",
+   "provider": "Wan 2.2 image-to-video (Apache-2.0 weights) via HF Space zerogpu-aoti/wan2-2-fp8da-aoti-faster",
+   "realistic": false,
+   "seed": 11,
+   "sha256": "b9c792b3d3fb807c02c9d6d639b7be38d5b70d414ad1278cf18a1ae9df5c562a",
+   "size": 1551230,
+   "source": "generated 2026-10-13 from assets/s01_bunker.jpg",
+   "spec": "clips.json#s01_bunker"
+  },
   "clips/s03_console.mp4": {
    "ai": true,
+   "cache_key": "f6d85f6559c84ac0e865fabc6b584551db0ff3ce73c598cc69f60dbe7d14ab2f",
    "derived_from": "assets/s03_console.jpg",
    "kind": "clip",
    "licence": "own-ai",
@@ -157,8 +175,25 @@
    "source": "generated 2026-10-11 from assets/s03_console.jpg",
    "spec": "clips.json#s03_console"
   },
+  "clips/s06_phone.mp4": {
+   "ai": true,
+   "cache_key": "2601aa19a5942bf29290b51d28817db2ceea0e438d8ad407c51e6ce845f3eb83",
+   "derived_from": "assets/s06_phone.jpg",
+   "kind": "clip",
+   "licence": "own-ai",
+   "op": "image-to-video, style preserved",
+   "prompt_sha1": "ca473a4491b2506ef2715b67f4fda5fb1cc44b18",
+   "provider": "Wan 2.2 image-to-video (Apache-2.0 weights) via HF Space zerogpu-aoti/wan2-2-fp8da-aoti-faster",
+   "realistic": false,
+   "seed": 3,
+   "sha256": "810f8811cd9534da4e24b6c9bbee3c713e676b2fbaa5dd10817004b897c8db81",
+   "size": 1091437,
+   "source": "generated 2026-10-13 from assets/s06_phone.jpg",
+   "spec": "clips.json#s06_phone"
+  },
   "clips/s07_sunlight.mp4": {
    "ai": true,
+   "cache_key": "30438fb3feef738adfec7b0e098ee64f661d3112c706cb8bfffe87bebb262c21",
    "derived_from": "assets/s07_sunlight.jpg",
    "kind": "clip",
    "licence": "own-ai",
