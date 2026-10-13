@@ -66,7 +66,7 @@ jobs:
           key: tools-hf0.8.137-${{ runner.os }}-${{ hashFiles('reelkit/ci_setup.sh') }}
       - name: Toolchain
         run: bash reelkit/ci_setup.sh
-      - name: Render pipeline (pull → trim → plan → score → assets → build → check → textqa → render → encode → QA)
+      - name: Render pipeline (pull → trim → plan → score → assets → build → facts → check → textqa → render → encode → QA)
         run: bash reelkit/episode.sh "${{ matrix.ep }}"
       - name: Publish release
         run: |

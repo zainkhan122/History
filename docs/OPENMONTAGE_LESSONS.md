@@ -160,6 +160,11 @@ credits and the description's credit block are generated from it.
 - **Any code:** AGPL.
 
 ## D. Prioritised plan
+Implementation progress (owner asked for P0 + P1, in phases):
+- **Phase 1 — delivery (done, e2d01a3):** 12 Mbps master; `master.py` (−2.0 dBTP pre-AAC → ≤ −1.5 after); `hfcheck.py` (`hyperframes check`, since `validate` is deprecated); textqa dead zones + reading time; ep01 safe-area layout.
+- **Phase 2 — claims ledger (done):** `series/<s>/<ep>/research.json` + `reelkit/factcheck.py` (stage `facts`, CI on every push). Ep01: 18 claims, 18 sources (6 primary/scholarly), 0 FAIL.
+- **Phase 3** voice performance plan + sample gate · **Phase 4** planlint, promise lock, provenance · **Phase 5** clip cache, Wan template — pending.
+
 | Pri | Item | Effort | Why now |
 |---|---|---|---|
 | **P0** | A1 bitrate, A2 safe zones (+ textqa check), B9 limiter −1.5 dBTP, B10 `hyperframes validate` | ~1 h | Visible quality on every upload; cheap |

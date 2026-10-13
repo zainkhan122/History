@@ -1,8 +1,11 @@
 # RESUME: living handoff (update before every sync)
 
-_Last updated: 2026-10-11 ~09:10 PKT by the Arena agent. Short form: `python3 tools/state.py show`._
+_Last updated: 2026-10-13 PKT by the Arena agent. Short form: `python3 tools/state.py show`._
 
 ## Where we are
+- **2026-10-13: implementing OpenMontage P0 + P1 in phases** (owner request; progress table in `docs/OPENMONTAGE_LESSONS.md` §D).
+  - Phase 1 delivery gates ✅ · Phase 2 claims ledger + `factcheck.py` ✅ · next: **Phase 3 voice performance plan + sample gate**, then P4 (planlint, promise lock, provenance), P5 (clip cache, Wan template), then cloud render `ep01-petrov-v2.2`.
+  - All gates for ep01 currently pass: facts 0 FAIL (3 caveat WARNs), hyperframes check 0 errors, textqa 0 FAIL.
 - **2026-10-13: OpenMontage study** → `docs/OPENMONTAGE_LESSONS.md`. Self-found issues: upload bitrate 3.8 Mbps (too low, target 12M master), channel bug and caption width inside platform UI dead zones, and `out/` excluded from snapshots (local v2.1 final lost; regenerate via cloud). The owner chooses which items to implement.
 - **2026-10-11 (later): v2.1 readability pass.** Owner: "text must be readable wherever it appears". Fixes:
   - kicker on a paper strip; stronger scrims on the quote, "Nothing" and "survived by" lines;

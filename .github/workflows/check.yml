@@ -15,3 +15,9 @@ jobs:
         run: for f in $(git ls-files '*.sh'); do bash -n "$f"; done
       - name: Size guard
         run: python3 tools/repo_guard.py
+      - name: Claims ledgers (every episode's narration ↔ research.json, guardrails, evidence tiers)
+        run: |
+          set -e
+          for t in $(git ls-files 'series/*/*/timeline.json'); do
+            ep=$(dirname "$t"); echo "== $ep"; python3 reelkit/factcheck.py "$ep" --hf /nonexistent
+          done

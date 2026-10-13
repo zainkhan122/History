@@ -1,12 +1,12 @@
 {
- "now": "OpenMontage study done -> docs/OPENMONTAGE_LESSONS.md (P0/P1/P2 adoption plan, awaiting owner pick). Local v2.1 final.mp4 lost (out/ is snapshot-excluded) -> regenerate via cloud render. LOCAL COMMITS NOT PUSHED until owner re-supplies token",
+ "now": "OpenMontage P0+P1 in phases: Phase 1 (delivery gates) + Phase 2 (claims ledger research.json + reelkit/factcheck.py, stage facts, CI) DONE. Next Phase 3: voice performance plan + sample gate.",
  "next": [
-  "Owner re-supplies GitHub token -> bash tools/sync.sh -> cloud render tag ep01-petrov-v2.1 (or publish local render)",
-  "Owner picks lessons to implement from docs/OPENMONTAGE_LESSONS.md §D (P0: bitrate 12M master, safe zones+textqa check, limiter -1.5 dBTP, hyperframes validate, claims ledger/factcheck, voice performance plan)",
-  "Owner review of v2.1 + strategy answers; then pre-launch: bank 6 episodes (docs/CONTENT_STRATEGY.md §1)",
-  "Build tools/factcheck.py (fact-sheet gate: claim->2 sources, URL live, Wayback archive)",
+  "Phase 3: voice performance plan (delivery_cues per VO line, tone holds) + sample gate (render most emotional line first)",
+  "Phase 4: planlint (+cross-episode), promise lock + decisions.jsonl, provenance on every asset",
+  "Phase 5: content-addressed clip cache + Wan 5-slot prompt template",
+  "cloud.py render ep01-petrov --tag ep01-petrov-v2.2 --wait, fetch, verify, present",
   "With HF_TOKEN: 4 pending ep01 clips -> v3",
-  "Ep02-06 production (rotate formats: File / Close Call / Myth vs Record / One Document)"
+  "Ep02-06 production: write research.json FIRST, then script"
  ],
  "owner_rules": [
   "Repo zainkhan122/History is the SSOT; sync every change (tools/sync.sh) so a new session resumes exactly",
@@ -27,7 +27,7 @@
   "huggingface": "not provided (optional: raises ZeroGPU quota)",
   "cloudflare": "not provided (optional: Workers AI images 10k neurons/day)"
  },
- "updated_at": "2026-10-13T12:44:59Z",
+ "updated_at": "2026-10-13T12:51:39Z",
  "episodes": {
   "series/paper-trail/ep01-petrov": {
    "title": "The Man Who Did Nothing",

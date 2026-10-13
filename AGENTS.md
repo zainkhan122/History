@@ -20,8 +20,13 @@ Update `RESUME.md` (and `STATE.json` via `tools/state.py set`) **before** syncin
 - **Workspace budget:** the Arena save limit is ~128 MB / 10k files. Keep only `~/History` in the workspace. Caches and models go in `~/.cache`.
 - **Renders:** short drafts or snapshots run locally. Full renders run in the cloud: `python3 reelkit/cloud.py render <episode_dir> --wait`.
 - **Lightpanda can't render frames.** Tested 2026-10-11: `--dump png` is text-only, with no CSS, images or SVG. It's used for fast research scraping only. Frame capture uses chrome-headless-shell (via HyperFrames).
-- **Readability:** every on-screen text must pass `reelkit/textqa.py`, which runs in `episode.sh`. FAIL (< 3:1) blocks the render. Owner rule: free-floating white text over imagery is poor editing and loses viewers. See `series/paper-trail/SERIES.md`.
-- **Accuracy:** every narrated fact needs 2 independent sources in the episode's `script.md` fact sheet (protocol in `docs/CONTENT_STRATEGY.md` §3). Follow the guardrails listed there.
+- **Quality gates** (all in `episode.sh`; a FAIL blocks the render):
+  - `facts` → `reelkit/factcheck.py`: every narrated sentence with a number/date/name/quote, and every on-screen label, must map to a claim in the episode's `research.json`. Evidence tiers: core ≥2 publishers incl. ≥1 primary/scholarly; record ≥2 incl. a fact-checked reference; detail ≥2; framing ≥1; quotes trace to their first publication. Guardrail phrases are checked in VO, on screen and in `POST_KIT.md`. Also writes `out/sources.md` (paste-ready description citations). `--online --archive` checks links and stores Wayback snapshots in the ledger.
+  - `check` → `reelkit/hfcheck.py`: `hyperframes check` (lint + runtime + layout collisions, sampled at transitions) + the caption-zone audit. Intentional overlaps need explicit `data-layout-allow-*` on the text element itself (not inherited).
+  - `textqa` → `reelkit/textqa.py`: contrast ≥3:1 (target 4.5), platform UI dead zones (top 230 / bottom 320 / right 120 px), reading time.
+  - `qa` → `reelkit/qa.py`: loudness −14 LUFS, true peak ≤ −1.5 dBTP, bitrate ≥ 8 Mbps, no silence gaps.
+  - Owner rule: free-floating white text over imagery is poor editing and loses viewers. See `series/paper-trail/SERIES.md`.
+- **Accuracy:** no fact goes in a script before it is in `research.json` with sources (protocol in `docs/CONTENT_STRATEGY.md` §3). Record conflicts between sources as a `caveat` instead of picking silently.
 - **Licensing:** commercial-safe assets only (PD / CC0 / CC BY with credit / own-generated). Avoid CC BY-SA for monetised video. Credit everything in `POST_KIT.md`.
 - Auto-posting (Buffer / YouTube API) is **not wanted yet**. Do not build or trigger it until the owner asks.
 

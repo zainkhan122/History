@@ -1,0 +1,552 @@
+{
+ "version": 1,
+ "episode": "ep01-petrov",
+ "topic": "Stanislav Petrov and the 26 September 1983 Soviet nuclear false alarm",
+ "researched": "2026-10-13",
+ "policy_note": "Every narrated or on-screen fact maps to a claim. Weights: core (load-bearing) needs >=2 independent publishers incl. >=1 primary/scholarly; record (uncontested public record: dates, deaths, disclosures) needs >=2 incl. a fact-checked reference or stronger; detail needs >=2; framing needs >=1. A quote's quote_origin (first publication of the words) counts as primary evidence for that quote. Checked by reelkit/factcheck.py.",
+ "sources": {
+  "bbc2013": {
+   "title": "Stanislav Petrov: The man who may have saved the world (interview, Pavel Aksenov)",
+   "publisher": "BBC News",
+   "url": "https://www.bbc.com/news/world-europe-24280831",
+   "date": "2013-09-26",
+   "type": "primary",
+   "archived": "http://web.archive.org/web/20261002195046/https://www.bbc.com/news/world-europe-24280831"
+  },
+  "wapo1999": {
+   "title": "'I Had A Funny Feeling in My Gut' (David Hoffman)",
+   "publisher": "The Washington Post",
+   "url": "https://www.washingtonpost.com/wp-srv/inatl/longterm/coldwar/shatter021099b.htm",
+   "date": "1999-02-10",
+   "type": "primary",
+   "archived": "http://web.archive.org/web/20260415213036/https://www.washingtonpost.com/wp-srv/inatl/longterm/coldwar/shatter021099b.htm"
+  },
+  "bbc2017": {
+   "title": "Stanislav Petrov, who averted possible nuclear war, dies at 77",
+   "publisher": "BBC News",
+   "url": "https://www.bbc.com/news/world-europe-41314948",
+   "date": "2017-09-18",
+   "type": "press",
+   "archived": "http://web.archive.org/web/20260808200807/https://www.bbc.com/news/world-europe-41314948"
+  },
+  "latimes2017": {
+   "title": "Stanislav Petrov, 'the man who saved the world' from nuclear war, dies at 77",
+   "publisher": "Los Angeles Times",
+   "url": "https://www.latimes.com/local/obituaries/la-me-stanislavsky-petrov-20170921-story.html",
+   "date": "2017-09-21",
+   "type": "press",
+   "archived": "http://web.archive.org/web/20260521213732/https://www.latimes.com/local/obituaries/la-me-stanislavsky-petrov-20170921-story.html"
+  },
+  "npr2017": {
+   "title": "Stanislav Petrov, 'The Man Who Saved The World,' Dies At 77",
+   "publisher": "NPR",
+   "url": "https://www.npr.org/sections/thetwo-way/2017/09/18/551792129/stanislav-petrov-the-man-who-saved-the-world-dies-at-77",
+   "date": "2017-09-18",
+   "type": "press",
+   "archived": "http://web.archive.org/web/20260926120138/https://www.npr.org/sections/thetwo-way/2017/09/18/551792129/stanislav-petrov-the-man-who-saved-the-world-dies-at-77"
+  },
+  "indep2017": {
+   "title": "Stanislav Petrov dead: The Soviet officer who 'saved the world' by averting nuclear war dies aged 77",
+   "publisher": "The Independent",
+   "url": "https://www.independent.co.uk/news/world/europe/stanislav-petrov-dead-soviet-officer-nuclear-war-1983-saved-world-dies-died-77-robert-de-niro-a7952361.html",
+   "date": "2017-09-18",
+   "type": "press"
+  },
+  "natpost2017": {
+   "title": "Stanislav Petrov, Soviet officer who saved the world from nuclear annihilation, dies at 77 (Washington Post obituary syndication)",
+   "publisher": "National Post",
+   "url": "https://nationalpost.com/news/world/stanislav-petrov-soviet-officer-credited-with-averting-nuclear-war-dies-at-77",
+   "date": "2017-09-19",
+   "type": "press"
+  },
+  "forces2017": {
+   "title": "Man Who 'Saved The World' Dies At 77 (quotes Petrov's interview for The Man Who Saved the World)",
+   "publisher": "Forces News",
+   "url": "https://www.forcesnews.com/news/man-who-saved-world-dies-77",
+   "date": "2017-09-18",
+   "type": "press",
+   "archived": "http://web.archive.org/web/20251107050718/https://www.forcesnews.com/news/man-who-saved-world-dies-77"
+  },
+  "britannica": {
+   "title": "Stanislav Petrov (biography; fact-checked by Britannica Editors)",
+   "publisher": "Encyclopaedia Britannica",
+   "url": "https://www.britannica.com/biography/Stanislav-Petrov",
+   "date": "2026-09-03",
+   "type": "reference",
+   "archived": "http://web.archive.org/web/20260927013915/https://www.britannica.com/biography/Stanislav-Petrov"
+  },
+  "brit_kal": {
+   "title": "Korean Air Lines flight 007",
+   "publisher": "Encyclopaedia Britannica",
+   "url": "https://www.britannica.com/event/Korean-Air-Lines-flight-007",
+   "date": "2026-08-25",
+   "type": "reference",
+   "archived": "http://web.archive.org/web/20260824101706/https://www.britannica.com/event/Korean-Air-Lines-flight-007"
+  },
+  "koreaherald": {
+   "title": "[Korean History] How KAL007 tragedy gave civilians access to GPS (with the 2 Sept 1983 front page)",
+   "publisher": "The Korea Herald",
+   "url": "https://www.koreaherald.com/article/3162458",
+   "date": "2025-04-16",
+   "type": "press",
+   "archived": "http://web.archive.org/web/20250612004342/https://www.koreaherald.com/article/3162458"
+  },
+  "wiki_petrov": {
+   "title": "Stanislav Petrov",
+   "publisher": "Wikipedia",
+   "url": "https://en.wikipedia.org/wiki/Stanislav_Petrov",
+   "date": "2026-10-13",
+   "type": "reference",
+   "archived": "http://web.archive.org/web/20261012205307/https://en.wikipedia.org/wiki/Stanislav_Petrov"
+  },
+  "wiki_incident": {
+   "title": "1983 Soviet nuclear false alarm incident",
+   "publisher": "Wikipedia",
+   "url": "https://en.wikipedia.org/wiki/1983_Soviet_nuclear_false_alarm_incident",
+   "date": "2026-10-13",
+   "type": "reference",
+   "archived": "http://web.archive.org/web/20260929034609/https://en.wikipedia.org/wiki/1983_Soviet_nuclear_false_alarm_incident"
+  },
+  "podvig2022": {
+   "title": "Did Stanislav Petrov save the world in 1983? It's complicated (Pavel Podvig)",
+   "publisher": "Russian Strategic Nuclear Forces (Podvig)",
+   "url": "https://russianforces.org/blog/2022/10/did_stanislav_petrov_save_the_.shtml",
+   "date": "2022-10-22",
+   "type": "scholarly",
+   "archived": "http://web.archive.org/web/20260513012142/https://russianforces.org/blog/2022/10/did_stanislav_petrov_save_the_.shtml"
+  },
+  "forden_nova": {
+   "title": "False Alarms on the Nuclear Front (Geoffrey Forden; after Forden, Podvig & Postol, IEEE Spectrum 2000)",
+   "publisher": "PBS NOVA",
+   "url": "https://www.pbs.org/wgbh/nova/missileers/falsealarms.html",
+   "date": "2001-11-06",
+   "type": "scholarly",
+   "archived": "http://web.archive.org/web/20260926231632/https://www.pbs.org/wgbh/nova/missileers/falsealarms.html"
+  },
+  "vbc2025": {
+   "title": "The Other Close Call of 1983 (Todd DePastino)",
+   "publisher": "Veterans Breakfast Club",
+   "url": "https://veteransbreakfastclub.org/the-other-close-call-of-1983/",
+   "date": "2025-10-06",
+   "type": "press",
+   "archived": "http://web.archive.org/web/20260929001929/https://veteransbreakfastclub.org/the-other-close-call-of-1983/"
+  },
+  "commons_mem": {
+   "title": "Stanislav Petrov memorial stone (photo: User:Brandmeister / Togrul Safarov; Public domain per Commons metadata)",
+   "publisher": "Wikimedia Commons",
+   "url": "https://commons.wikimedia.org/wiki/File:Stanislav_Petrov_memorial_stone.jpg",
+   "date": "2021-10-30",
+   "type": "primary",
+   "archived": "http://web.archive.org/web/20250608132909/https://commons.wikimedia.org/wiki/File:Stanislav_Petrov_memorial_stone.jpg"
+  },
+  "reagan1983": {
+   "title": "Address to the Nation on the Soviet Attack on a Korean Civilian Airliner (5 Sept 1983)",
+   "publisher": "Ronald Reagan Presidential Library (NARA)",
+   "url": "https://www.reaganlibrary.gov/archives/speech/address-nation-soviet-attack-korean-civilian-airliner",
+   "date": "1983-09-05",
+   "type": "primary"
+  }
+ },
+ "claims": [
+  {
+   "id": "C01",
+   "weight": "core",
+   "text": "The alarm came shortly after midnight on 26 September 1983.",
+   "sources": [
+    "bbc2013",
+    "indep2017",
+    "wiki_incident",
+    "wapo1999"
+   ],
+   "vo": [
+    "just after midnight on september 26th 1983"
+   ],
+   "screen": [
+    "26.09.1983 — SHORTLY AFTER MIDNIGHT"
+   ]
+  },
+  {
+   "id": "C02",
+   "weight": "core",
+   "text": "The early-warning computer reported a US missile launch to Petrov, the duty officer.",
+   "sources": [
+    "bbc2013",
+    "npr2017",
+    "wiki_incident"
+   ],
+   "vo": [
+    "a computer told one man that america had launched a nuclear missile"
+   ],
+   "screen": []
+  },
+  {
+   "id": "C03",
+   "weight": "core",
+   "text": "The command centre was the Serpukhov-15 early-warning bunker near Moscow.",
+   "sources": [
+    "wiki_incident",
+    "vbc2025",
+    "wapo1999"
+   ],
+   "vo": [],
+   "screen": [
+    "SERPUKHOV-15 · EARLY-WARNING BUNKER"
+   ]
+  },
+  {
+   "id": "C04",
+   "weight": "core",
+   "text": "Weeks earlier (1 Sept 1983) the Soviet Union shot down KAL 007; all 269 aboard died.",
+   "sources": [
+    "brit_kal",
+    "koreaherald",
+    "reagan1983"
+   ],
+   "caveat": "Reagan (5 Sept 1983): 'the Soviets scrambled jet interceptors', one pilot fired the missiles — so 'Soviet jets had shot down' is accurate shorthand. Prefer 'a Soviet fighter' in future scripts.",
+   "vo": [
+    "weeks earlier soviet jets had shot down a passenger plane",
+    "two hundred and sixty nine people died"
+   ],
+   "screen": [
+    "01.09.1983 · KAL 007 SHOT DOWN",
+    "269 DEAD"
+   ]
+  },
+  {
+   "id": "C05",
+   "weight": "framing",
+   "text": "1983 was one of the most tense periods of the Cold War (Hoffman 1999); KAL 007 had been shot down 25 days earlier.",
+   "sources": [
+    "vbc2025",
+    "wiki_incident",
+    "wapo1999"
+   ],
+   "vo": [
+    "the cold war was at its most paranoid"
+   ],
+   "screen": []
+  },
+  {
+   "id": "C06",
+   "weight": "core",
+   "text": "The screen showed 'launch'; the system then reported a second, third, fourth and fifth missile.",
+   "sources": [
+    "bbc2013",
+    "npr2017",
+    "britannica",
+    "wapo1999"
+   ],
+   "vo": [
+    "the screen lit up launch then a second missile a third a fourth a fifth"
+   ],
+   "screen": [
+    "СТАРТ",
+    "MISSILES DETECTED",
+    "THE 5 “MISSILES”"
+   ]
+  },
+  {
+   "id": "C07",
+   "weight": "core",
+   "text": "His job was to report strikes up the chain to the military and political leadership, who would have had very little time to decide.",
+   "sources": [
+    "bbc2013",
+    "wiki_incident",
+    "podvig2022",
+    "wapo1999"
+   ],
+   "caveat": "Simplified chain (Hoffman 1999: warning-system HQ → general staff → Andropov). Podvig: at least three assessment layers sat above Petrov and missiles would not have been launched on satellite warning alone — hence 'might have only minutes', never 'he alone decided'.",
+   "vo": [
+    "his job was to pass it up the chain",
+    "to leaders who might have only minutes to decide whether to strike back"
+   ],
+   "screen": [
+    "ONLY MINUTES TO DECIDE",
+    "DUTY OFFICER",
+    "COMMAND POST",
+    "GENERAL STAFF",
+    "LEADERSHIP"
+   ]
+  },
+  {
+   "id": "C08",
+   "weight": "core",
+   "text": "Lieutenant Colonel Stanislav Petrov, born 7 Sept 1939, was 44 on 26 Sept 1983.",
+   "sources": [
+    "britannica",
+    "wiki_petrov",
+    "bbc2013",
+    "wapo1999"
+   ],
+   "derived": "age = 1983-09-26 minus 1939-09-07 = 44",
+   "vo": [
+    "lieutenant colonel stanislav petrov"
+   ],
+   "screen": [
+    "LT. COL. STANISLAV PETROV · AGE 44"
+   ]
+  },
+  {
+   "id": "Q01",
+   "weight": "core",
+   "type": "quote",
+   "text": "Petrov: a funny feeling in his gut; 'when people start a war, they don't start it with only five missiles.'",
+   "quote": "When people start a war, they don't start it with only five missiles.",
+   "quote_origin": "wapo1999",
+   "sources": [
+    "wapo1999",
+    "britannica",
+    "natpost2017"
+   ],
+   "vo": [
+    "had a funny feeling in his gut",
+    "when people start a war he said they don't start it with only five missiles"
+   ],
+   "screen": [
+    "“When people start a war, they don't start it with only five missiles."
+   ]
+  },
+  {
+   "id": "C09",
+   "weight": "core",
+   "text": "He reported a system malfunction (a false alarm) instead of an attack.",
+   "sources": [
+    "bbc2013",
+    "bbc2017",
+    "britannica"
+   ],
+   "vo": [
+    "so he reported a false alarm"
+   ],
+   "screen": [
+    "ЛОЖНАЯ ТРЕВОГА FALSE ALARM"
+   ]
+  },
+  {
+   "id": "C10",
+   "weight": "core",
+   "text": "'Twenty-three minutes later I realised that nothing had happened.'",
+   "type": "quote",
+   "quote": "Twenty-three minutes later I realised that nothing had happened.",
+   "quote_origin": "bbc2013",
+   "sources": [
+    "bbc2013",
+    "bbc2017",
+    "indep2017"
+   ],
+   "vo": [
+    "and then he waited twenty three minutes nothing came"
+   ],
+   "screen": [
+    "WAITING FOR IMPACT",
+    "23:00",
+    "MINUTES"
+   ]
+  },
+  {
+   "id": "C11",
+   "weight": "core",
+   "text": "Cause: sunlight reflecting off high-altitude clouds in a rare sun–satellite geometry fooled the Oko satellites.",
+   "sources": [
+    "forden_nova",
+    "britannica",
+    "wiki_incident",
+    "wapo1999"
+   ],
+   "vo": [
+    "it was sunlight reflecting off high clouds at a rare angle fooling a satellite"
+   ],
+   "screen": [
+    "CAUSE: SUNLIGHT ON HIGH CLOUDS"
+   ]
+  },
+  {
+   "id": "C12",
+   "weight": "core",
+   "text": "No reward or medal; he was officially reprimanded for mistakes in the logbook (paperwork).",
+   "sources": [
+    "bbc2013",
+    "npr2017",
+    "indep2017",
+    "forces2017",
+    "wapo1999"
+   ],
+   "vo": [
+    "there was no medal",
+    "he was reprimanded for incomplete paperwork"
+   ],
+   "screen": [
+    "MEDAL: NONE",
+    "ВЫГОВОР REPRIMAND"
+   ],
+   "caveat": "Accounts differ: Hoffman (1999) says he was 'neither punished nor rewarded' after being pressed on why he hadn't written everything down; Petrov told the BBC (2013) he got an official reprimand for logbook mistakes. Narration follows his 2013 account — keep the word 'paperwork'."
+  },
+  {
+   "id": "C13",
+   "weight": "record",
+   "text": "The incident became public only in 1998 (Gen. Yury Votintsev's memoirs): about fifteen years of secrecy.",
+   "sources": [
+    "latimes2017",
+    "natpost2017",
+    "wiki_petrov"
+   ],
+   "derived": "1998 - 1983 = 15",
+   "vo": [
+    "and the story stayed secret for fifteen years"
+   ],
+   "screen": [
+    "СЕКРЕТНО CLASSIFIED 1983–1998"
+   ]
+  },
+  {
+   "id": "Q02",
+   "weight": "core",
+   "type": "quote",
+   "text": "His wife knew nothing for ten years; 'Nothing. I did nothing.'",
+   "quote": "My late wife for 10 years knew nothing about it. 'So what did you do?' she asked me. 'Nothing. I did nothing.'",
+   "quote_origin": "forces2017",
+   "sources": [
+    "forces2017",
+    "wiki_petrov"
+   ],
+   "vo": [
+    "for ten years his own wife knew nothing",
+    "when she asked what he'd done he said nothing i did nothing"
+   ],
+   "screen": [
+    "Nothing.",
+    "I did nothing."
+   ]
+  },
+  {
+   "id": "C14",
+   "weight": "record",
+   "text": "He died 19 May 2017; his death became widely known only in September 2017.",
+   "sources": [
+    "bbc2017",
+    "latimes2017",
+    "britannica"
+   ],
+   "vo": [
+    "he died in 2017 so quietly the world only found out months later"
+   ],
+   "screen": [
+    "19.05.2017",
+    "REPORTED: SEPT 2017",
+    "Stanislav Petrov · 1939–2017"
+   ]
+  },
+  {
+   "id": "Q03",
+   "weight": "core",
+   "type": "quote",
+   "text": "Britannica: 'He is survived by his two children, two grandchildren, and the entire human race.'",
+   "quote": "He is survived by his two children, two grandchildren, and the entire human race.",
+   "quote_origin": "britannica",
+   "sources": [
+    "britannica",
+    "wiki_petrov"
+   ],
+   "vo": [
+    "one obituary said he was survived by two children two grandchildren and the entire human race"
+   ],
+   "screen": [
+    "survived by",
+    "two children,",
+    "two grandchildren,",
+    "and the entire",
+    "human race."
+   ]
+  },
+  {
+   "id": "M01",
+   "weight": "detail",
+   "text": "Memorial stone to Petrov in Warsaw; the photo is public domain (Brandmeister / Togrul Safarov).",
+   "sources": [
+    "commons_mem",
+    "wiki_petrov"
+   ],
+   "vo": [],
+   "screen": [
+    "Memorial stone, Warsaw · Photo: Brandmeister / Togrul Safarov · Public Domain"
+   ]
+  }
+ ],
+ "myths": [
+  {
+   "myth": "Petrov refused to launch missiles.",
+   "reality": "He had no launch authority; he judged the alert false and reported a malfunction.",
+   "sources": [
+    "bbc2013",
+    "podvig2022"
+   ]
+  },
+  {
+   "myth": "Petrov alone stood between the world and nuclear war.",
+   "reality": "At least three assessment layers sat above him (Podvig). His call still mattered: the system was built to trust its computers.",
+   "sources": [
+    "podvig2022",
+    "wiki_incident"
+   ]
+  }
+ ],
+ "guardrails": [
+  {
+   "never": "refused to launch",
+   "why": "He could not launch anything (see myths)."
+  },
+  {
+   "never": "malmstrom|montana|north dakota|grand forks",
+   "why": "Sources conflict on which US base the false launches appeared to come from."
+  },
+  {
+   "never": "ill colleague|sick colleague|covering for",
+   "why": "Single-sourced anecdote."
+  },
+  {
+   "never": "single-handedly",
+   "why": "Overclaims his role (Podvig)."
+  }
+ ],
+ "screen_exempt": [
+  "^PAPER TRAIL",
+  "^THE MAN WHO$",
+  "^DID NOTHING$",
+  "^— and why the world is still here$",
+  "^FOLLOW FOR FILE",
+  "^FILE 01",
+  "^U\\.S\\. ICBM LAUNCH · ARCHIVE FILM$",
+  "^Illustrative: ",
+  "^— Stanislav Petrov$",
+  "^[0-9]$",
+  "^[0-9]{2}:00$",
+  "^“$"
+ ],
+ "landscape": {
+  "existing": [
+   {
+    "url": "https://www.youtube.com/watch?v=8TNdihbV5go",
+    "title": "The Man Who Saved the World (2014 feature documentary, 1h45)",
+    "angle": "Docudrama: Petrov's later life, UN award trip, reenactment",
+    "misses": "Far too long for Shorts; little on the cause (sun glint) or the punishment"
+   },
+   {
+    "url": "https://www.youtube.com/watch?v=gGn_PfRNRZI",
+    "title": "The Man Who Saved the World: The Story of Stanislav Petrov (Short)",
+    "angle": "Generic 'hero saves world' retelling with stock visuals",
+    "misses": "Overclaims ('single-handedly'), no sources, no nuance about the chain of command"
+   },
+   {
+    "url": "https://www.reddit.com/r/Documentaries/comments/jh803w/the_man_who_saved_the_world_2015_on_26_september/",
+    "title": "EmpLemon essay (~40 min), widely recommended on r/Documentaries",
+    "angle": "Long comedic-essay deep dive",
+    "misses": "Long-form only; no vertical, sourced 90-second version"
+   }
+  ],
+  "saturated_angles": [
+   "The man who saved the world",
+   "Single-handedly prevented WW3"
+  ],
+  "our_gap": "Told as a paper trail: the reprimand for paperwork, 15 years of secrecy, a wife who didn't know, and the obituary line. Honest that he 'reported a false alarm' (not 'refused to launch'), with Podvig's caveat built into the wording ('might have'). Every claim is cited in the description."
+ }
+}
