@@ -329,7 +329,7 @@ end_txt = ('<div id="wires" class="wires" data-tq-spoken="true">'
            f'<div id="l10b" class="w2 tu">{html.escape(lines10[1][1])}</div></div>'
            f'<div id="l10c" class="w3 tu" data-tq-spoken="true" data-layout-allow-caption-zone="true">it will find a world built on <span class="wr">wires.</span></div>')
 riley = tag("t_riley", "12% CHANCE PER DECADE", 300, 1250, 34, -1.2)
-nl_credit = f'<div id="crN">{credit(sc("arch_nightlights"), 120, 1548, dark=True)}</div>' 
+nl_credit = f'<div id="crN">{credit(sc("arch_nightlights"), 120, 1540, dark=True)}</div>' 
 endcard = ('<div id="endcard" class="wash endcard" style="opacity:0" data-layout-allow-overlap="true">'
            '<div class="eklogo">PAPER TRAIL</div>'
            '<div class="strip ink big" id="e1" data-layout-allow-overlap="true" data-layout-allow-overflow="true">THE DAY THE SKY</div>'
@@ -476,9 +476,9 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:{CREAM}}}
 .link{{position:absolute;left:0;top:1040px}}
 .qmk{{position:absolute;left:490px;top:1080px;width:100px;height:100px;border-radius:50%;background:{RED};color:{CREAM};font-family:'Anton';font-size:76px;line-height:104px;text-align:center;visibility:hidden;opacity:0}}
 .swl{{position:absolute;left:0;top:700px;visibility:hidden;opacity:0}}
-.q8{{position:absolute;left:70px;top:1050px;width:940px;text-align:center;visibility:hidden;opacity:0}}
+.q8{{position:absolute;left:90px;top:1050px;width:860px;text-align:center;visibility:hidden;opacity:0}}
 .q8t{{background:{INK};color:{CREAM};font-family:'DM Serif';font-style:italic;font-size:60px;line-height:1.12;padding:18px 30px 20px;box-shadow:0 14px 30px rgba(0,0,0,.45)}}
-.q8by{{display:inline-block;margin-top:16px;background:#F3EAD3;color:{INK};font-weight:600;font-size:28px;letter-spacing:.1em;padding:6px 16px 4px}}
+.q8by{{display:inline-block;margin-top:16px;background:#F3EAD3;color:{INK};font-weight:600;font-size:26px;letter-spacing:.06em;padding:6px 16px 4px}}
 .olabel{{position:absolute;width:240px;text-align:center;font-family:'Oswald';font-weight:700;font-size:40px;letter-spacing:.08em;color:{INK};background:{CREAM};padding:4px 0 2px}}
 .cme path{{fill:rgba(255,150,60,.55);stroke:#FFC27A;stroke-width:3}}
 .cme{{opacity:0;visibility:hidden}}
@@ -490,7 +490,7 @@ html,body{{width:1080px;height:1920px;overflow:hidden;background:{CREAM}}}
 .endcard{{background:rgba(16,13,10,.96);text-align:center;padding-top:520px}}
 .eklogo{{font-family:'Oswald';font-weight:700;font-size:40px;letter-spacing:.5em;color:{RED_ON_DARK};margin-bottom:34px;padding-left:.5em}}
 .strip.big{{display:block;width:max-content;margin:10px auto;font-size:112px}}
-.ename{{font-family:'DM Serif';font-style:italic;font-size:48px;color:{CREAM};margin-top:48px}}
+.ename{{font-family:'DM Serif';font-style:italic;font-size:40px;color:{CREAM};margin-top:48px}}
 .esrc{{position:absolute;left:0;width:1080px;top:1290px;font-family:'Oswald';font-weight:600;font-size:30px;letter-spacing:.2em;color:#CFC6B4}}
 .efollow{{position:absolute;left:0;width:1080px;top:1380px;font-weight:600;font-size:50px;letter-spacing:.14em;color:{MUSTARD};visibility:hidden;opacity:0}}
 .cap{{position:absolute;left:0;top:1350px;width:1080px;text-align:center;visibility:hidden;opacity:0}}
