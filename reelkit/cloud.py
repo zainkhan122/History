@@ -28,7 +28,7 @@ def token_expiry_warning(slug):
         r = urllib.request.Request(f"{API}/repos/{slug}", headers={"Authorization": f"Bearer {tk}", "Accept": "application/vnd.github+json"})
         with urllib.request.urlopen(r, timeout=20) as resp: exp = resp.headers.get("github-authentication-token-expiration")
         if not exp: return
-        when = datetime.datetime.strptime(exp[:19], "%Y-%m-%d %H:%M:%S"); days = (when - datetime.datetime.utcnow()).days
+        when = datetime.datetime.strptime(exp[:19], "%Y-%m-%d %H:%M:%S"); days = (when - datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None)).days
         if days <= 7: print(f"! GitHub token expires {exp} ({days} d): ask the owner for a new one (AGENTS.md → secrets)")
     except Exception: pass
 
