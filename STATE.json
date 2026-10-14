@@ -1,44 +1,56 @@
 {
- "now": "OpenMontage P0+P1 DONE (Phases 1-5). Ep01 v2.2 DELIVERED (release ep01-petrov-v2.2, cloud run #5 @2e0fee4, QA pass). Awaiting owner review + min_motion exception confirmation.",
+ "now": "Ep02 (Carrington Event 1859) in production: research/voice plan/VO 8/10/plates/clips.json done; old versions deleted (owner); operator model adopted (sandbox = operator, GitHub = infra). Ep01 v2.2 delivered; min_motion exception confirmed by owner until 2026-12-31.",
  "next": [
-  "Owner review of v2.2; confirm the min_motion promise_exception (expires 2026-12-31) or provide HF_TOKEN",
-  "s05_officer + s09_kitchen: clips.py gen after the ZeroGPU quota resets (rolling 24 h from 2026-10-13 ~14:20 UTC) or with HF_TOKEN; review frames; shots.json; v3 (~61% motion, retire exception)",
-  "Optional polish for v3: s06 counter panel overlaps the lifted receiver (move panel lower or re-seed s06); s01 cap tint drifts olive->beige",
-  "Ep02-06: research.json -> voice.json -> sample gate -> shots.json (rotate format/hook) -> clips.json shot slots -> clips.py status/gen -> provenance"
+  "Ep02: TTS v08, v09 + retake v06 \u2192 voice gate",
+  "Ep02: plan.py, shots.json, episode.json (promise), build.py/score.py/make_assets.py, POST_KIT.md",
+  "Ep02: 2 Wan clips (s01_telegraph, s05_campers) after the ZeroGPU quota resets (~14:20 UTC 2026-10-14)",
+  "Ep02: media push \u2192 cloud render ep02-carrington-v1 \u2192 QA \u2192 deliver",
+  "Ep01 v3 (optional): s05/s09 clips with HF_TOKEN; retire exception"
  ],
  "owner_rules": [
   "Repo zainkhan122/History is the SSOT; sync every change (tools/sync.sh) so a new session resumes exactly",
   "Keep the workspace clean (only ~/History); keep the repo small (media -> Release assets)",
-  "Premium editing: real motion (video clips, parallax), professional transitions/effects — not static images with light animation",
+  "Premium editing: real motion (video clips, parallax), professional transitions/effects \u2014 not static images with light animation",
   "Deep-research feel: sourced facts, archival details; emotional TTS",
-  "Lightpanda requested instead of Chrome: tested — cannot paint frames; used for scraping only",
+  "Lightpanda requested instead of Chrome: tested \u2014 cannot paint frames; used for scraping only",
   "Buffer / YouTube auto-sharing: NOT now (later)",
   "Ideas must run inside the agent; give real inputs (prompts, scripts, beat maps), not generic advice",
-  "Text must be readable wherever it appears (plates/scrims/outlines; textqa gate ≥3:1, target 4.5:1) — casual-looking text = viewers leave"
+  "Text must be readable wherever it appears (plates/scrims/outlines; textqa gate \u22653:1, target 4.5:1) \u2014 casual-looking text = viewers leave"
  ],
  "blockers": [
-  "GitHub token missing after sandbox restart (needed to push + cloud render)",
-  "HF token optional for more Wan clips"
+  "HF token optional (more Wan clips/day)"
  ],
  "secrets": {
   "github": "fine-grained PAT, expires 2026-11-10, stored only at ~/.cache/secrets/gh_token (ask owner each new session)",
   "huggingface": "not provided (optional: raises ZeroGPU quota)",
   "cloudflare": "not provided (optional: Workers AI images 10k neurons/day)"
  },
- "updated_at": "2026-10-13T14:48:59Z",
+ "updated_at": "2026-10-14T08:40:00Z",
  "episodes": {
   "series/paper-trail/ep01-petrov": {
    "title": "The Man Who Did Nothing",
-   "status": "v2 delivered (cloud render #2, QA pass): 2 Wan motion clips + archival Minuteman insert + light leaks/film FX; v3 = 4 more clips once HF token available",
-   "release": "ep01-petrov-v2",
-   "updated": "2026-10-13"
+   "status": "v2.2 delivered (cloud run #5, QA pass); 40 % motion under owner-confirmed exception until 2026-12-31",
+   "release": "ep01-petrov-v2.2",
+   "updated": "2026-10-14"
+  },
+  "series/paper-trail/ep02-carrington": {
+   "title": "The Day the Sky Ran the Telegraph",
+   "status": "in production",
+   "release": "ep02-carrington-v1 (planned)",
+   "updated": "2026-10-14"
   }
  },
  "proven": {
-  "cloud_render": "run #1 success 2026-10-11, 10 min, QA pass (release ep01-petrov-cloud-test)",
+  "cloud_render": "run #1 success 2026-10-11, 10 min, QA pass (proof release deleted 2026-10-14)",
   "media_roundtrip": "fresh clone + media pull: 21/21 sha256 verified",
   "cloud_render_v2": "run #2 success, QA pass: -14.08 LUFS, TP -1.22, ASR 0.963",
   "clip_cache": "2026-10-13: local/remote tiers byte-identical, corrupt/tampered blobs rejected, 8 concurrent writers -> 1 line; 15/15 lint sabotage caught",
   "cloud_render_v2_2": "run #5 success 13 min @2e0fee4: QA pass -14.07 LUFS, TP -1.9 dBTP, 12.09 Mbps, ASR 0.963, no freezes/black/silence"
- }
+ },
+ "releases": [
+  "ep01-petrov-v2.2",
+  "media-ep01-petrov",
+  "cache-clips",
+  "archive-research"
+ ]
 }

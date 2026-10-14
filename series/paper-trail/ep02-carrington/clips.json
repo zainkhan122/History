@@ -86,7 +86,13 @@
    "url": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Alaskan_Aurora_Time_Lapse_%28SVS15077%29.webm",
    "source": "https://commons.wikimedia.org/wiki/File:Alaskan_Aurora_Time_Lapse_(SVS15077).webm",
    "credit": "Aurora over Alaska, time-lapse. NASA Scientific Visualization Studio (SVS 15077), public domain. Modern footage, shown as illustration of an aurora; not 1859.",
-   "max_h": 1440
+   "max_h": 1440,
+   "licence": "PD-USGov",
+   "provider": "Wikimedia Commons (NASA Scientific Visualization Studio)",
+   "screen_credit": "Illustrative: aurora over Alaska · NASA SVS · Public Domain",
+   "credit_authors": [
+    "NASA Scientific Visualization Studio"
+   ]
   },
   {
    "id": "arch_flare",
@@ -98,7 +104,13 @@
    "url": "https://upload.wikimedia.org/wikipedia/commons/8/88/Largest_Flare_yet_from_Solar_Cycle_25_%28SVS14592_SDO_X8pt7_flare_May_14_2024_ProRes_Outro%29.webm",
    "source": "https://commons.wikimedia.org/wiki/File:Largest_Flare_yet_from_Solar_Cycle_25_(SVS14592_SDO_X8pt7_flare_May_14_2024_ProRes_Outro).webm",
    "credit": "X8.7 solar flare, 14 May 2024. NASA Solar Dynamics Observatory / Scientific Visualization Studio (SVS 14592), public domain. Modern footage, shown as illustration of a solar flare; not the 1859 flare.",
-   "max_h": 1440
+   "max_h": 1440,
+   "licence": "PD-USGov",
+   "provider": "Wikimedia Commons (NASA SDO / Scientific Visualization Studio)",
+   "screen_credit": "Illustrative: X8.7 solar flare, 2024 · NASA SDO · Public Domain",
+   "credit_authors": [
+    "NASA Solar Dynamics Observatory"
+   ]
   },
   {
    "id": "arch_iss_aurora",
@@ -113,7 +125,13 @@
    ],
    "url": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Aurora_Australis_from_ISS_2011_-_1.ogv",
    "source": "https://commons.wikimedia.org/wiki/File:Aurora_Australis_from_ISS_2011_-_1.ogv",
-   "credit": "Aurora seen from the International Space Station, 17 Sept 2011. Crew Earth Observations, NASA Johnson Space Center, public domain. Modern footage, shown as illustration; the red upper glow is the same oxygen emission seen in 1859."
+   "credit": "Aurora seen from the International Space Station, 17 Sept 2011. Crew Earth Observations, NASA Johnson Space Center, public domain. Modern footage, shown as illustration; the red upper glow is the same oxygen emission seen in 1859.",
+   "licence": "PD-USGov",
+   "provider": "Wikimedia Commons (NASA Johnson Space Center)",
+   "screen_credit": "Illustrative: aurora from the ISS, 2011 · NASA JSC · Public Domain",
+   "credit_authors": [
+    "NASA Johnson Space Center"
+   ]
   },
   {
    "id": "arch_cme2012",
@@ -128,7 +146,13 @@
    ],
    "url": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Fastest_cme_20120723a_combo.mpg",
    "source": "https://commons.wikimedia.org/wiki/File:Fastest_cme_20120723a_combo.mpg",
-   "credit": "The coronal mass ejection of 23 July 2012 as seen by NASA's STEREO-Ahead (coronagraphs COR1/COR2 with EUVI), public domain. Actual footage of the event."
+   "credit": "The coronal mass ejection of 23 July 2012 as seen by NASA's STEREO-Ahead (coronagraphs COR1/COR2 with EUVI), public domain. Actual footage of the event.",
+   "licence": "PD-USGov",
+   "provider": "Wikimedia Commons (NASA STEREO)",
+   "screen_credit": "Archive: the 23 July 2012 eruption · NASA STEREO-A · Public Domain",
+   "credit_authors": [
+    "NASA STEREO"
+   ]
   }
  ]
 }

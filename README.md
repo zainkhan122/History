@@ -24,6 +24,7 @@ composition) → lint → render → delivery encode → QA gate (spec, loudness
 ## Episodes
 | Episode | Status | Release |
 |---|---|---|
-| Paper Trail 01: *The Man Who Did Nothing* (Petrov, 1983) | v1 delivered | `ep01-petrov-v1` |
+| Paper Trail 01: *The Man Who Did Nothing* (Petrov, 1983) | v2.2 delivered | `ep01-petrov-v2.2` |
+| Paper Trail 02: *The Day the Sky Ran the Telegraph* (Carrington Event, 1859) | in production | `ep02-carrington-v1` (planned) |
 
 Agents: start at **[AGENTS.md](AGENTS.md)**, then **[RESUME.md](RESUME.md)**.

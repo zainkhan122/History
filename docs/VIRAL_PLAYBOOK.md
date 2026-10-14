@@ -1,6 +1,8 @@
 # Viral animated reels made inside the agent: Hypit + vox-director + Lightpanda
 
 **Prepared for:** a senior viral content lead (YouTube Shorts, IG Reels, TikTok, FB, WhatsApp Status)
+> **Note (2026-10-14):** the Hamilton proof reel and its media were retired on the owner's instruction (old videos deleted). The paths below are historical; the live pipeline is `reelkit/` + `series/`.
+
 **Date:** 11 Oct 2026 · **Workspace:** `~/repos` (the 3 cloned repos), `~/reelkit` (the engine I built), `~/viral_playbook/inputs` (ready-to-render reels), `~/reel_hamilton` (the finished proof reel)
 
 ---

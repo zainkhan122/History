@@ -101,7 +101,7 @@ Total = D + V + E + M + R (max 25).
 Each follows the vox-director rules: hook ≤3 s, a cut every 3–5 s, 6–8 beats per 30 s, and a loop close.
 
 ### 4.1 "Paper Trail": micro-history (EN, 30–45 s Shorts + 8–10 min monthly long-form)
-**Look:** the Hamilton collage block (navy/cream/red/mustard). **VO:** Kokoro `bm_george` or `am_michael`.
+**Look:** the Paper Trail collage look (cream/ink/red/mustard; see `series/paper-trail/ep01-petrov`). **VO:** Kokoro `bm_george` or `am_michael`.
 
 | Reel | Hook (first 3 s, on screen + spoken) | Payoff / loop |
 |---|---|---|

@@ -1,28 +1,210 @@
 {
  "files": {
+  "assets/s01_telegraph.jpg": {
+   "ai": true,
+   "kind": "plate",
+   "licence": "own-ai",
+   "prompt": "Extreme close-up of a Victorian brass telegraph key on a scarred dark wooden desk in 1859, a man's hand in a white shirt cuff hovering just above the key, small blue-white electric sparks arcing from the key's brass contacts, cloth-covered wires coiling away, a strip of paper tape, a dark telegraph office behind, a window glowing with deep red aurora light. Vintage editorial collage illustration: layered torn paper, halftone dot shading, visible paper grain, aged cream paper border, limited palette of deep red, ink black, mustard yellow and cream, bold graphic shapes, dramatic lighting. Vertical 9:16 composition, no text, no letters, no logos.",
+   "provider": "Arena generate_image",
+   "realistic": false,
+   "sha256": "8461926b45bac705e03e4460993588073dcea7ad0521a42308623c1084664316",
+   "size": 387616,
+   "source": "generated 2026-10-14 for ep02 (Paper Trail collage style)"
+  },
+  "assets/s02_sketch.jpg": {
+   "ai": true,
+   "kind": "plate",
+   "licence": "own-ai",
+   "prompt": "1859 astronomer's observatory interior: a large brass refracting telescope projects a bright 11-inch image of the sun onto a pale straw-coloured screen; in the foreground a gentleman's hand holds a pencil, sketching dark sunspot groups on paper beside the projected disk, a brass chronometer on the desk, a tall window with morning light. Only hands visible, no face. Vintage editorial collage illustration: layered torn paper, halftone dot shading, visible paper grain, aged cream paper border, limited palette of deep red, ink black, mustard yellow and cream, bold graphic shapes. Vertical 9:16 composition, no text, no letters, no logos.",
+   "provider": "Arena generate_image",
+   "realistic": false,
+   "sha256": "fd56b594c6ee9fbd2b0fbc5ca153dfdf1ba5fe517f7f50f517481fc1e4289985",
+   "size": 313029,
+   "source": "generated 2026-10-14 for ep02 (Paper Trail collage style)"
+  },
+  "assets/s05_campers.jpg": {
+   "ai": true,
+   "kind": "plate",
+   "licence": "own-ai",
+   "prompt": "Two 1850s campers in wool coats and hats sitting up in their bedrolls beside a glowing campfire on a Rocky Mountain slope at night, one lifting a tin coffee pot onto the embers, pine trees and jagged peaks behind, the whole sky filled with towering curtains of deep crimson and pale green aurora, so bright the scene is lit like dawn. Seen from a medium-wide angle. Vintage editorial collage illustration: layered torn paper, halftone dot shading, visible paper grain, aged cream paper border, limited palette of deep red, ink black, mustard yellow and cream, bold graphic shapes, dramatic lighting. Vertical 9:16 composition, no text, no letters, no logos.",
+   "provider": "Arena generate_image",
+   "realistic": false,
+   "sha256": "ab62fef4353de10116185679e065e50d1bc638b6559712ca49f136b40e1f68a1",
+   "size": 372323,
+   "source": "generated 2026-10-14 for ep02 (Paper Trail collage style)"
+  },
+  "assets/s06_office.jpg": {
+   "ai": true,
+   "kind": "plate",
+   "licence": "own-ai",
+   "prompt": "1859 telegraph office interior at night: a long wooden desk lined with brass sounders and relays, bright white sparks jumping from the instruments, a strip of paper tape curling and smouldering with a small orange flame, a telegraph operator in a waistcoat recoiling with his hand raised from a shock, glass battery jars under the desk, deep red aurora light pouring through the window. Vintage editorial collage illustration: layered torn paper, halftone dot shading, visible paper grain, aged cream paper border, limited palette of deep red, ink black, mustard yellow and cream, bold graphic shapes, dramatic lighting. Vertical 9:16 composition, no text, no letters, no logos.",
+   "provider": "Arena generate_image",
+   "realistic": false,
+   "sha256": "a2c2654d341d4eb862ef64f0eaa1a631ce4a8548cb08bbec44622bbb82d9fad7",
+   "size": 305335,
+   "source": "generated 2026-10-14 for ep02 (Paper Trail collage style)"
+  },
   "clips/arch_aurora.mp4": {
+   "ai": false,
    "cache_key": "e7370fb6394144b0b0e13a24e0de16cd0a92149c5a3c216729f95a6e0275e5d1",
+   "credit": "Aurora over Alaska, time-lapse. NASA Scientific Visualization Studio (SVS 15077), public domain. Modern footage, shown as illustration of an aurora; not 1859.",
+   "credit_authors": [
+    "NASA Scientific Visualization Studio"
+   ],
+   "derived_from": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Alaskan_Aurora_Time_Lapse_%28SVS15077%29.webm",
+   "kind": "archive",
+   "licence": "PD-USGov",
+   "op": "trim 4.0\u20139.0 s, height \u2264 1440 px (clips.py gen); grade/fit in clips.py prep",
+   "provider": "Wikimedia Commons (NASA Scientific Visualization Studio)",
+   "screen_credit": "Illustrative: aurora over Alaska \u00b7 NASA SVS \u00b7 Public Domain",
    "sha256": "2476d05454d11094c80244b834aaa590e0113ca6ec8466e2a7dc9f3f677d78b7",
    "size": 6431477,
+   "source": "https://commons.wikimedia.org/wiki/File:Alaskan_Aurora_Time_Lapse_(SVS15077).webm",
    "spec": "clips.json#arch_aurora"
   },
   "clips/arch_cme2012.mp4": {
+   "ai": false,
    "cache_key": "1e80da77964b2f97ce03d1b6b2848fafd877ebd971992c47e6ead25043f3c336",
+   "credit": "The coronal mass ejection of 23 July 2012 as seen by NASA's STEREO-Ahead (coronagraphs COR1/COR2 with EUVI), public domain. Actual footage of the event.",
+   "credit_authors": [
+    "NASA STEREO"
+   ],
+   "derived_from": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Fastest_cme_20120723a_combo.mpg",
+   "kind": "archive",
+   "licence": "PD-USGov",
+   "op": "trim 1.0\u20136.0 s (clips.py gen); grade/fit in clips.py prep",
+   "provider": "Wikimedia Commons (NASA STEREO)",
+   "screen_credit": "Archive: the 23 July 2012 eruption \u00b7 NASA STEREO-A \u00b7 Public Domain",
    "sha256": "0031e6bf3f77aaa414d7f9983712ab2aa3b72211df30ed6b89688898b73dd42c",
    "size": 4228132,
+   "source": "https://commons.wikimedia.org/wiki/File:Fastest_cme_20120723a_combo.mpg",
    "spec": "clips.json#arch_cme2012"
   },
   "clips/arch_flare.mp4": {
+   "ai": false,
    "cache_key": "50a16b66865a262933cef665955f74ea2e5580a06ad3008272f70e437c4cd191",
+   "credit": "X8.7 solar flare, 14 May 2024. NASA Solar Dynamics Observatory / Scientific Visualization Studio (SVS 14592), public domain. Modern footage, shown as illustration of a solar flare; not the 1859 flare.",
+   "credit_authors": [
+    "NASA Solar Dynamics Observatory"
+   ],
+   "derived_from": "https://upload.wikimedia.org/wikipedia/commons/8/88/Largest_Flare_yet_from_Solar_Cycle_25_%28SVS14592_SDO_X8pt7_flare_May_14_2024_ProRes_Outro%29.webm",
+   "kind": "archive",
+   "licence": "PD-USGov",
+   "op": "trim 47.0\u201354.0 s, height \u2264 1440 px (clips.py gen); grade/fit in clips.py prep",
+   "provider": "Wikimedia Commons (NASA SDO / Scientific Visualization Studio)",
+   "screen_credit": "Illustrative: X8.7 solar flare, 2024 \u00b7 NASA SDO \u00b7 Public Domain",
    "sha256": "eb9587463162e05b798626354846f55602364c3774666bde88931376b5001f32",
    "size": 11346796,
+   "source": "https://commons.wikimedia.org/wiki/File:Largest_Flare_yet_from_Solar_Cycle_25_(SVS14592_SDO_X8pt7_flare_May_14_2024_ProRes_Outro).webm",
    "spec": "clips.json#arch_flare"
   },
   "clips/arch_iss_aurora.mp4": {
+   "ai": false,
    "cache_key": "6bb0f45bae22b0349ce16f852e59643c04f101ead93e069f5c6a0adfdebb4ff1",
+   "credit": "Aurora seen from the International Space Station, 17 Sept 2011. Crew Earth Observations, NASA Johnson Space Center, public domain. Modern footage, shown as illustration; the red upper glow is the same oxygen emission seen in 1859.",
+   "credit_authors": [
+    "NASA Johnson Space Center"
+   ],
+   "derived_from": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Aurora_Australis_from_ISS_2011_-_1.ogv",
+   "kind": "archive",
+   "licence": "PD-USGov",
+   "op": "trim 9.0\u201316.0 s (clips.py gen); grade/fit in clips.py prep",
+   "provider": "Wikimedia Commons (NASA Johnson Space Center)",
+   "screen_credit": "Illustrative: aurora from the ISS, 2011 \u00b7 NASA JSC \u00b7 Public Domain",
    "sha256": "550a70420f69090fd438bca2439aa2810e8549fb03669957331fdd55d08ce824",
    "size": 975308,
+   "source": "https://commons.wikimedia.org/wiki/File:Aurora_Australis_from_ISS_2011_-_1.ogv",
    "spec": "clips.json#arch_iss_aurora"
+  },
+  "vo/v01.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-02 (en, masculine, narration; owner audition 2026-10-14)",
+   "realistic": false,
+   "sha256": "015e23841d6379b466634789498860182a17a1f13168af1b5b1be8976bf771ce",
+   "size": 73996,
+   "source": "generated 2026-10-14 for ep02",
+   "spec": "voice.json#v01"
+  },
+  "vo/v02.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-02 (en, masculine, narration; owner audition 2026-10-14)",
+   "realistic": false,
+   "sha256": "56c2ad5c954034a2cfb08a5720b336645cf58f57f3e4062bd554627b385d3f45",
+   "size": 81729,
+   "source": "generated 2026-10-14 for ep02",
+   "spec": "voice.json#v02"
+  },
+  "vo/v03.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-02 (en, masculine, narration; owner audition 2026-10-14)",
+   "realistic": false,
+   "sha256": "231547d6c1f4500d728d126494566da30d9411d4288b157adeee0c2f53e38b0c",
+   "size": 56442,
+   "source": "generated 2026-10-14 for ep02",
+   "spec": "voice.json#v03"
+  },
+  "vo/v04.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-02 (en, masculine, narration; owner audition 2026-10-14)",
+   "realistic": false,
+   "sha256": "bb6075c1a8942a2930f48d649625cc44c40af856265576c1c7e4e471ed0cf61a",
+   "size": 70444,
+   "source": "generated 2026-10-14 for ep02",
+   "spec": "voice.json#v04"
+  },
+  "vo/v05.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-02 (en, masculine, narration; owner audition 2026-10-14)",
+   "realistic": false,
+   "sha256": "327be5219ac88776d3a26b90d1ee87973aa7b26e54915ab2306290b33720e080",
+   "size": 55188,
+   "source": "generated 2026-10-14 for ep02",
+   "spec": "voice.json#v05"
+  },
+  "vo/v06.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-02 (en, masculine, narration; owner audition 2026-10-14)",
+   "realistic": false,
+   "sha256": "aacfa41ea65ff5467680cef40fe82471a50bc032331abbcf6167aaea95e1ebf8",
+   "size": 68145,
+   "source": "generated 2026-10-14 for ep02",
+   "spec": "voice.json#v06"
+  },
+  "vo/v07.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-02 (en, masculine, narration; owner audition 2026-10-14)",
+   "realistic": false,
+   "sha256": "2841488f9cf3e4ae11f2452ef41f34d586098d267c9e861dbaa0c4688f816ff3",
+   "size": 69399,
+   "source": "generated 2026-10-14 for ep02",
+   "spec": "voice.json#v07"
+  },
+  "vo/v10.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-02 (en, masculine, narration; owner audition 2026-10-14)",
+   "realistic": false,
+   "sha256": "9d98f5c36ad2ce19c9fa665232ec076ece906835871c6aad97302ae7ba11b953",
+   "size": 54770,
+   "source": "generated 2026-10-14 for ep02 (sample gate winner, take1 of 3)",
+   "spec": "voice.json#v10"
   }
- }
+ },
+ "release": "media-ep02-carrington",
+ "repo": "zainkhan122/History"
 }

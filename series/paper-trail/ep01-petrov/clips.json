@@ -148,7 +148,13 @@
    "url": "https://upload.wikimedia.org/wikipedia/commons/0/00/Minuteman_GT_245_Operational_Test_Launch_-_LF-10_Vandenberg_Space_Force_Base_CA_-_9_Feb_2023.webm",
    "source": "https://commons.wikimedia.org/wiki/File:Minuteman_GT_245_Operational_Test_Launch_-_LF-10_Vandenberg_Space_Force_Base_CA_-_9_Feb_2023.webm",
    "credit": "Minuteman III test launch, Vandenberg SFB, 9 Feb 2023. SSgt Draeke Layman, Space Launch Delta 30 PA (U.S. Government work, public domain). Shown as illustrative footage of a U.S. ICBM launch; it is not 1983 footage.",
-   "eq": "contrast=1.35:brightness=0.06:gamma=1.35"
+   "eq": "contrast=1.35:brightness=0.06:gamma=1.35",
+   "licence": "PD-USGov",
+   "provider": "Wikimedia Commons (U.S. Space Force / USAF)",
+   "screen_credit": "Illustrative: Minuteman III test launch · USAF film · public domain",
+   "credit_authors": [
+    "Draeke Layman"
+   ]
   }
  ]
 }

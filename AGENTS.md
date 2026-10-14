@@ -13,6 +13,17 @@ disposable working copy. If it isn't in this repo (git or Release assets), it do
 `bash tools/sync.sh "what changed"` pushes media to Release assets and code/docs to git.
 Update `RESUME.md` (and `STATE.json` via `tools/state.py set`) **before** syncing.
 
+## Operator model (owner, 2026-10-14)
+The sandbox is the **operator**; GitHub is the **infrastructure**. The sandbox has 2 GB RAM and is wiped on restart.
+| Sandbox (agent) does | GitHub does |
+|---|---|
+| research, writing, decisions, audits; asks the owner | **repo** = source of truth (code, plans, ledgers, manifests) |
+| Arena-only generators: `generate_speech` (VO), `generate_image` (plates), `add_voice` auditions | **Releases** = all media (`media-<ep>`, `cache-clips`, finals) |
+| light gates on text/JSON: voice plan + takes, factcheck (timeline), clips lint, planlint/provenance with `--hf /nonexistent` | **Actions** (4 vCPU / 16 GB) = everything heavy: archival downloads + trims (`url` clips are materialised by `clips.py gen --cache-only` in the render job), clip prep, assets, build, hyperframes check, textqa, render, encode, QA |
+| orchestration: `media.py push`, `clipcache.py sync`, `cloud.py render/status/fetch` | renders publish a Release with every gate report |
+Never decode/encode >1080p video or run a full render in the sandbox. Archival footage is *declared* in `clips.json`
+(clean URL, in/out, `max_h` for >1440p sources) and trimmed in the cloud. Local frame checks use ≤720p proxies only.
+
 ## Hard rules
 - **No media in git.** Images, audio and video go to Release assets via `reelkit/media.py`. git holds only `media.json` manifests.
   `tools/repo_guard.py` enforces this: no media extensions, no file > 1 MB, total < 15 MB.

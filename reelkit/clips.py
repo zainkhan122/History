@@ -45,6 +45,7 @@ SPACES = {"wan": "zerogpu-aoti/wan2-2-fp8da-aoti-faster", "ltx": "Lightricks/ltx
 NEG_LTX = "worst quality, inconsistent motion, blurry, jittery, distorted, new objects, text, photorealistic"
 URL_ENCODE = "libx264 veryfast crf16 yuv420p -an"   # part of the cache key for trimmed footage; change => re-trim
 SLOTS = ("subject", "motion", "scene", "spatial", "camera")
+ARCHIVE_FIELDS = ("licence", "provider", "source", "credit", "screen_credit")   # required on every url clip
 OVERLAY = re.compile(r"\b(text|texts|caption|captions|title|titles|subtitle|subtitles|logo|logos|label|labels|watermark|watermarks|lettering|typography|words?)\b", re.I)
 NEGATION = re.compile(r"\b(no|not|never|without|don't|doesn't|nothing)\b", re.I)
 CAMERA = {"translation": r"\b(pan|pans|panning|truck|trucks|dolly|dollies|track|tracks|tracking|crane|cranes|pedestal|push(?:es)?[- ]in|pull(?:s)?[- ](?:back|out)|slides?|drifts? (?:left|right|up|down|forward|back))\b",
@@ -117,6 +118,9 @@ def lint_clip(c, tpl, generated):
         for k in ("url", "in", "out"):
             if k not in c: out.append(("FAIL", f"{cid}: url clip needs '{k}'"))
         if "in" in c and "out" in c and not float(c["out"]) > float(c["in"]): out.append(("FAIL", f"{cid}: out must be > in"))
+        for k in ARCHIVE_FIELDS:     # provenance travels with the declaration (record_provenance copies it into media.json)
+            if not c.get(k): out.append(("FAIL", f"{cid}: archival clip needs '{k}' (provenance + on-screen credit)"))
+        if "?" in str(c.get("url", "")): out.append(("FAIL", f"{cid}: strip the query string from url (it is part of the cache key)"))
         return out
     if "seed" not in c: out.append(("FAIL", f"{cid}: no seed — unpinned calls can't be cached or reproduced"))
     if not c.get("image"): out.append(("FAIL", f"{cid}: no input image"))
@@ -300,6 +304,10 @@ def record_provenance(ep, c, key, spec, path, how):
                   "provider": {"wan": "Wan 2.2 image-to-video (Apache-2.0 weights) via HF Space " + SPACES["wan"],
                                "ltx": "LTX-Video image-to-video via HF Space " + SPACES["ltx"]}[c["engine"]]})
         if how == "generated" or "source" not in e: e["source"] = f"generated {time.strftime('%Y-%m-%d')} from {c['image']}"
+    else:
+        e.update({"ai": False, "kind": "archive", "derived_from": c["url"],
+                  "op": f"trim {c['in']}–{c['out']} s" + (f", height ≤ {c['max_h']} px" if c.get("max_h") else "") + " (clips.py gen); grade/fit in clips.py prep",
+                  **{k: c[k] for k in ARCHIVE_FIELDS + ("credit_authors",) if c.get(k)}})
     _write_json(mp, man)
 
 

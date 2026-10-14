@@ -17,11 +17,8 @@ _Last updated: 2026-10-13 PKT by the Arena agent. Short form: `python3 tools/sta
   - **If local commits are not on origin, push first:** `bash tools/sync.sh`. The token was lost in a sandbox restart.
 - **Repo SSOT live:** `zainkhan122/History` (public). Code and docs are in git (~1.8 MB). Media is in **Releases**:
   - `media-ep01-petrov`: plates, VO, raw clips (24 files, 11.8 MB, manifest `series/paper-trail/ep01-petrov/media.json`);
-  - `media-reel-hamilton`: Hamilton proof reel (15 files, 64.8 MB);
   - `archive-research`: research scrapes tarball;
-  - `ep01-petrov-v1`: delivered v1 (final.mp4, cover, POST_KIT, qa.json);
-  - `ep01-petrov-cloud-test`: cloud render proof. Run #1: 10 min, QA pass, identical to local.
-  - `ep01-petrov-v2`: **v2 delivered** (cloud run #2: QA pass, −14.08 LUFS, ASR 0.963).
+  - (2026-10-14, owner: old versions deleted — ep01-petrov-v1/-v2/-cloud-test and media-reel-hamilton releases + tags, `archive/reel-hamilton/`; only the latest version of each episode is kept)
   - `ep01-petrov-v2.2`: **v2.2 delivered 2026-10-13** (cloud run #5: QA pass, −14.07 LUFS, TP −1.9, 12.1 Mbps, ASR 0.963) — +s01/s06 Wan clips, motion 40 %.
 - **Ep01 v2 engine upgrade (done, in git):**
   - Wan 2.2 motion clips on s03 (console) and s07 (sunlight / satellite);
@@ -65,8 +62,7 @@ Next:
 2. `plan.py` (FIX map: whisper writes "11 .18", "60", "17", "5") → set arch_aurora window (gives 3.6 s for 4–9 s; widen) + arch_nightlights clip.
 3. Wan clips after quota reset (~14:20 UTC): `clips.py gen <ep> --only s01_telegraph s05_campers`.
 4. `build.py`, `score.py`, `make_assets.py`, `shots.json`, `episode.json` (promise lock), `POST_KIT.md` → all gates (planlint cross-episode vs ep01).
-5. With token: deletion plan (releases ep01-petrov-v1, -v2, -cloud-test, media-reel-hamilton; `git rm archive/reel-hamilton/`; fix refs),
-   `media.py push`, `clipcache.py sync`, `cloud.py render ep02 --tag ep02-carrington-v1`.
+5. ✅ deletion plan done 2026-10-14. With token: `media.py push`, `clipcache.py sync`, `cloud.py render ep02 --tag ep02-carrington-v1`.
 
 ## Next
 1. Owner review of v2.2 (delivered 2026-10-13) + confirm the min_motion exception.
