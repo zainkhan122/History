@@ -329,7 +329,7 @@ end_txt = ('<div id="wires" class="wires" data-tq-spoken="true">'
            f'<div id="l10b" class="w2 tu">{html.escape(lines10[1][1])}</div></div>'
            f'<div id="l10c" class="w3 tu" data-tq-spoken="true" data-layout-allow-caption-zone="true">it will find a world built on <span class="wr">wires.</span></div>')
 riley = tag("t_riley", "12% CHANCE PER DECADE", 300, 1250, 34, -1.2)
-nl_credit = f'<div id="crN">{credit(sc("arch_nightlights"), 120, 1540, dark=True)}</div>' 
+nl_credit = f'<div id="crN">{credit(sc("arch_nightlights"), 120, 430, dark=True)}</div>' 
 endcard = ('<div id="endcard" class="wash endcard" style="opacity:0" data-layout-allow-overlap="true">'
            '<div class="eklogo">PAPER TRAIL</div>'
            '<div class="strip ink big" id="e1" data-layout-allow-overlap="true" data-layout-allow-overflow="true">THE DAY THE SKY</div>'
