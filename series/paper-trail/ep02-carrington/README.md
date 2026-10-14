@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Deliverables | Release `ep02-carrington-v1`: `final.mp4` (1080×1920, 30 fps, 88.5 s) + every gate report, `cover.jpg`, `POST_KIT.md` |
+| Deliverables | Release `ep02-carrington-v1` (cloud run #10): `The-Day-the-Sky-Ran-the-Telegraph.mp4` (1080×1920, 30 fps, 88.5 s) + every gate report, `The-Day-the-Sky-Ran-the-Telegraph.jpg`, `POST_KIT.md` |
 | Inputs (media store) | Release `media-ep02-carrington`: `assets/` (4 collage plates + 3 PD Commons stills), `clips/` (2 Wan + 5 NASA PD), `vo/` (TTS voice-02). Manifest + provenance: `media.json` |
 | In git | `research.json` (claims ledger) · `voice.json` (performance plan) · `shots.json` · `clips.json` · `episode.json` (promise) · `decisions.jsonl` · `plan.py` · `score.py` · `make_assets.py` · `build.py` · `words.json` · `timeline.json` · `script.md` · `POST_KIT.md` |
 

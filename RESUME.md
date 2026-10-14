@@ -10,6 +10,8 @@ _Last updated: 2026-10-14 (later) PKT by the Arena agent. Short form: `python3 t
     (both releases renamed) · R8 token-expiry warning · sandbox never decodes archival sources (deferred to CI).
   - Generators: Upsampler = HF Spaces → engines `wan14`, `ltx25` + per-clip `fallback`; browser-only tools (Creen, Media.io,
     Video-Generator.ai, Veo) manual only. Capacity lever: free HF token. No new clip was generated (none needed).
+  - Validated end-to-end: cloud run #10 @ecdda6d (pinned while 6978828 was pushed mid-run) re-rendered File 02 identically and
+    replaced the story-named assets in place; POST_KIT/README names fixed; check.yml now rejects `final.mp4`/`cover.jpg` in kits.
   - Media finding: `reelkit/find.py` (Commons/NASA/IA, licence-mapped to provenance, `add` → lint-clean url clip).
 - **2026-10-14: File 02 "The Day the Sky Ran the Telegraph" (Carrington Event 1859), first episode built fully on the new system.**
   - Files: `series/paper-trail/ep02-carrington/` (research ledger 15 claims / 11 sources; voice plan + sample gate; shots.json fingerprint

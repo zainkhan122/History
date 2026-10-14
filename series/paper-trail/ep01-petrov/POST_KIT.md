@@ -7,7 +7,7 @@
 | Length | 87 s |
 | Audio | −14 LUFS integrated, true peak −1.3 dBTP |
 
-`final.mp4` is the upload file. `cover.jpg` is the thumbnail / Reels cover.
+`The-Man-Who-Did-Nothing.mp4` is the upload file. `The-Man-Who-Did-Nothing.jpg` is the thumbnail / Reels cover.
 
 ---
 

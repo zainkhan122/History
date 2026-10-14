@@ -7,7 +7,7 @@
 | Length | 88.5 s |
 | Audio | −14 LUFS integrated, true peak ≤ −1.5 dBTP |
 
-`final.mp4` is the upload file. `cover.jpg` is the thumbnail / Reels cover.
+`The-Day-the-Sky-Ran-the-Telegraph.mp4` is the upload file. `The-Day-the-Sky-Ran-the-Telegraph.jpg` is the thumbnail / Reels cover.
 
 ---
 

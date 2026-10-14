@@ -48,3 +48,5 @@ jobs:
           for e in $(git ls-files 'series/*/*/episode.json'); do
             ep=$(dirname "$e"); echo "== $ep → $(python3 reelkit/naming.py stem "$ep").mp4 · $(python3 reelkit/naming.py title "$ep")"
           done
+          if git grep -n -E '`(final\.mp4|cover\.jpg)`' -- 'series/*/*/POST_KIT.md' 'series/*/*/README.md'; then
+            echo "::error::deliverables are named after the story: use <Story-Title>.mp4/.jpg, not final.mp4/cover.jpg"; exit 1; fi

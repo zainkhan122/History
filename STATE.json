@@ -25,7 +25,7 @@
   "huggingface": "not provided (optional: raises ZeroGPU quota)",
   "cloudflare": "not provided (optional: Workers AI images 10k neurons/day)"
  },
- "updated_at": "2026-10-14T12:30:00Z",
+ "updated_at": "2026-10-14T10:35:00Z",
  "episodes": {
   "series/paper-trail/ep01-petrov": {
    "title": "The Man Who Did Nothing",
@@ -36,7 +36,7 @@
   },
   "series/paper-trail/ep02-carrington": {
    "title": "The Day the Sky Ran the Telegraph",
-   "status": "v1 delivered (cloud run #9, QA pass: -14.1 LUFS, TP -1.81, 11.7 Mbps, ASR 0.99); motion 58 % vs promise 55 %",
+   "status": "v1 delivered; re-rendered identically by cloud run #10 @ecdda6d to validate the hardened workflow (QA pass: -14.1 LUFS, TP -1.81, 11.7 Mbps, ASR 0.98; textqa 0 FAIL)",
    "release": "ep02-carrington-v1",
    "updated": "2026-10-14",
    "release_asset": "The-Day-the-Sky-Ran-the-Telegraph.mp4"
