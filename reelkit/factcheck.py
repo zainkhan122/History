@@ -33,7 +33,8 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 UNIT = set("tag cap stamp node strip kicker quote bigserif hr filmlabel filmcredit credit ename efollow "
-           "clabel fivelabel bug waitbox counter startglow eklogo qby num title".split())
+           "clabel fivelabel bug waitbox counter startglow eklogo qby num title "
+           "tu".split())          # tu = generic text unit: any new on-screen text element in a build must carry a unit class
 SPOKEN_UNITS = {"cap"}                       # captions mirror the VO; checked via the VO path
 TYPES = {"primary", "scholarly", "reference", "press"}
 STRONG = {"primary", "scholarly"}
@@ -60,7 +61,7 @@ class Units(HTMLParser):
 
     def __init__(self):
         super().__init__(convert_charrefs=True)
-        self.stack, self.units, self.skip = [], [], 0
+        self.stack, self.units, self.skip, self.bare = [], [], 0, []
 
     def handle_starttag(self, tag, attrs):
         if tag in self.VOID:
@@ -93,8 +94,20 @@ class Units(HTMLParser):
                 return
 
     def handle_data(self, d):
-        if not self.skip:
-            self._append(d)
+        if self.skip:
+            return
+        if d.strip() and not any(u is not None for _, _, u in self.stack) and not any(t in ("head", "title") for t, _, _ in self.stack):
+            # visible text outside every unit would escape the ledger check — reported as a FAIL by run()
+            key = " ".join(c for _, cls, _ in self.stack[-2:] for c in sorted(cls))
+            if self.bare and self.bare[-1][0] == key: self.bare[-1][1] += d
+            else: self.bare.append([key, d])
+        self._append(d)
+
+
+def bare_text(index_html: Path):
+    """Visible text that sits in no text unit (give its element class `tu`)."""
+    p = Units(); p.feed(index_html.read_text(encoding="utf-8"))
+    return [f".{k.replace(' ', '.')} :: {re.sub(r'\s+', ' ', t).strip()[:70]}" for k, t in p.bare]
 
 
 def screen_units(index_html: Path):
@@ -271,6 +284,8 @@ def main():
     exempt = [re.compile(x) for x in R.get("screen_exempt", [])]
     if (hf / "index.html").exists():
         units = screen_units(hf / "index.html")
+        for b in bare_text(hf / "index.html"):
+            F("unit", f"on-screen text outside any text unit (add class `tu`): {b}")
         scr_norms = [(norm(u["text"]), u) for u in units]
         anchors_scr = []
         for c in claims:

@@ -1,0 +1,175 @@
+{
+ "version": 1,
+ "episode": "ep02-carrington",
+ "_doc": "Shot plan: one entry per timeline scene. motion = what is ON SCREEN as the primary visual (clip | film | graphic | parallax | kenburns | still | text); inserts = timed segments of another kind inside the scene. build:<id> = a procedural graphic drawn by build.py (no media file). planlint verifies motion against clips.json + media.json and measures static holds from the built timeline.",
+ "fingerprint": {
+  "brand": {
+   "palette": "cream/ink/red/mustard",
+   "fonts": "Oswald, Anton, DM Serif, Special Elite",
+   "title": "red-band headline + paper kicker",
+   "end_card": "FILE NN · CLOSED",
+   "bug": "PAPER TRAIL · FILE NN"
+  },
+  "format": "File",
+  "hook_type": "impossible-fact cold open (machines running with no power)",
+  "opening_shot": "CU insert: hand lifting off a telegraph key, tape still feeding",
+  "first_line": "In 1859, two telegraph operators unplugged their batteries… and kept on talking.",
+  "music": "E minor, 72 bpm telegraph-sounder pulse, unresolved Esus2 ending",
+  "climax_device": "night-side Earth globe under the closing warning line",
+  "structure": "10 scenes: anomaly → cause (flare) → arrival → effects ×3 → paradox → doubt → near miss → warning"
+ },
+ "shots": [
+  {
+   "scene": "s01",
+   "subject": "telegraph key working by itself",
+   "shot_size": "CU",
+   "motion": "clip",
+   "primary": "clips/s01_telegraph.mp4",
+   "inserts": [
+    {
+     "motion": "film",
+     "source": "clips/arch_aurora.mp4",
+     "seconds": 2.83,
+     "label": "NASA aurora time-lapse, full-bleed"
+    }
+   ],
+   "information_role": "Hook: the impossible fact, a telegraph working with its battery disconnected, then the sky as the source.",
+   "reason": "Opens on the anomaly itself so the question lands before any context.",
+   "transition_in": "cut"
+  },
+  {
+   "scene": "s02",
+   "subject": "Carrington at Redhill and his drawing",
+   "shot_size": "MS",
+   "motion": "kenburns",
+   "primary": "assets/s02_sketch.jpg",
+   "secondary": [
+    "assets/redhill_observatory.jpg",
+    "assets/carrington_portrait.jpg"
+   ],
+   "inserts": [
+    {
+     "motion": "graphic",
+     "source": "assets/carrington_drawing.jpg",
+     "seconds": 3.62,
+     "label": "his own drawing, A/B patches glow and travel to C/D"
+    }
+   ],
+   "information_role": "Who saw the flare, where and when, shown with the primary evidence: Carrington's own drawing.",
+   "reason": "Real archive (engraving, photo, drawing) proves the date-and-time claim on screen.",
+   "transition_in": "tear"
+  },
+  {
+   "scene": "s03",
+   "subject": "solar flare footage",
+   "shot_size": "INSERT",
+   "motion": "film",
+   "primary": "clips/arch_flare.mp4",
+   "information_role": "The flare fades within sixty seconds and is gone in five minutes.",
+   "reason": "Real NASA SDO flare footage makes the brief event visible, labelled as illustrative.",
+   "transition_in": "zoom_punch"
+  },
+  {
+   "scene": "s04",
+   "subject": "magnetic storm and aurora",
+   "shot_size": "GRAPHIC",
+   "motion": "graphic",
+   "primary": "build:magnetogram",
+   "inserts": [
+    {
+     "motion": "film",
+     "source": "clips/arch_iss_aurora.mp4",
+     "seconds": 3.62,
+     "label": "aurora from the ISS"
+    }
+   ],
+   "information_role": "Seventeen hours later the field trace goes wild and aurora reaches as far south as Cuba.",
+   "reason": "An animated trace turns an abstract storm into a visible event before the aurora footage.",
+   "transition_in": "tear"
+  },
+  {
+   "scene": "s05",
+   "subject": "campers under the aurora",
+   "shot_size": "WS",
+   "motion": "clip",
+   "primary": "clips/s05_campers.mp4",
+   "information_role": "Human scale: campers thought the aurora was dawn and started breakfast.",
+   "reason": "The most relatable anecdote, from the Rocky Mountain News, animated as a living diorama.",
+   "transition_in": "zoom_punch"
+  },
+  {
+   "scene": "s06",
+   "subject": "telegraph office sparking",
+   "shot_size": "MS",
+   "motion": "kenburns",
+   "primary": "assets/s06_office.jpg",
+   "information_role": "Effects on the network: sparks, shocks, burning paper, lines unusable for hours.",
+   "reason": "Electric-arc overlays, flashes and a burn sell the danger on the office plate.",
+   "transition_in": "tear"
+  },
+  {
+   "scene": "s07",
+   "subject": "Boston to Portland line on auroral current",
+   "shot_size": "GRAPHIC",
+   "motion": "graphic",
+   "primary": "build:telegraph_map",
+   "information_role": "Pays off the hook: operators disconnected batteries and worked about two hours on the auroral current.",
+   "reason": "Map, live-current pulse and the real transcript quote make the paradox concrete and sourced.",
+   "transition_in": "flash"
+  },
+  {
+   "scene": "s08",
+   "subject": "Carrington's caution",
+   "shot_size": "MCU",
+   "motion": "kenburns",
+   "primary": "assets/carrington_portrait.jpg",
+   "inserts": [
+    {
+     "motion": "graphic",
+     "source": "build:flare_storm_link",
+     "seconds": 2.4,
+     "label": "FLARE ? STORM link + swallow flight"
+    }
+   ],
+   "information_role": "Carrington refused to claim the flare caused the storm: one swallow does not make a summer.",
+   "reason": "His real portrait plus his own words give the scientific-humility beat weight.",
+   "transition_in": "tear"
+  },
+  {
+   "scene": "s09",
+   "subject": "July 2012 near miss",
+   "shot_size": "EWS",
+   "motion": "film",
+   "primary": "clips/arch_cme2012.mp4",
+   "inserts": [
+    {
+     "motion": "graphic",
+     "source": "build:orbit",
+     "seconds": 3.75,
+     "label": "orbit diagram: STEREO-A hit, Earth missed, 1 week earlier"
+    }
+   ],
+   "information_role": "A storm at least as strong crossed Earth's orbit in 2012; a week earlier it would have hit us.",
+   "reason": "Actual STEREO-A footage of the eruption, then a diagram explains why it missed.",
+   "transition_in": "flash"
+  },
+  {
+   "scene": "s10",
+   "subject": "Earth at night",
+   "shot_size": "EWS",
+   "motion": "film",
+   "primary": "clips/arch_nightlights.mp4",
+   "inserts": [
+    {
+     "motion": "text",
+     "source": "build:endcard",
+     "seconds": 3.35,
+     "label": "end card"
+    }
+   ],
+   "information_role": "Stakes today: the next storm will find a world built on wires.",
+   "reason": "The lit night side shows how much now depends on the grid, closing on the warning line.",
+   "transition_in": "fade"
+  }
+ ]
+}

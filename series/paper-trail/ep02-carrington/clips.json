@@ -39,7 +39,6 @@
    "scene": "s01",
    "seconds": 5,
    "seed": 21,
-   "dur": 4.2,
    "shot": {
     "subject": "A man's hand in a white shirt cuff and dark sleeve hovers just above a brass Victorian telegraph key on a scarred dark-red wooden desk, with a strip of paper tape and coiled cloth-covered wires beside it",
     "motion": [
@@ -52,7 +51,8 @@
     "spatial": "The window with red aurora light fills the upper left of the vertical frame, the hand enters from the upper right, the telegraph key sits in the lower centre and the paper tape curls along the bottom edge",
     "camera": "static, locked-off close-up"
    },
-   "prompt": "A man's hand in a white shirt cuff and dark sleeve hovers just above a brass Victorian telegraph key on a scarred dark-red wooden desk, with a strip of paper tape and coiled cloth-covered wires beside it. First, small blue-white sparks crackle and flicker between the brass contacts of the telegraph key. Then the hand hesitates, then the index finger presses the key down once and lifts again. Then the deep red aurora light in the window behind pulses slowly brighter and dimmer. Finally, the loose paper tape trembles slightly on the desk. A dark telegraph office in 1859: rough stone walls, a bookshelf, an oil lamp and brass instruments in the background, lit by the red glow of the aurora through a tall paned window. The window with red aurora light fills the upper left of the vertical frame, the hand enters from the upper right, the telegraph key sits in the lower centre and the paper tape curls along the bottom edge. Camera: static, locked-off close-up. Hand-made illustrated cut-paper collage animation. The picture keeps exactly the same drawing, ink linework, halftone grain, torn paper edges, aged cream paper texture and limited palette of deep red, ink black, mustard and cream as the input image. Every figure and object stays exactly as drawn, with the same face, clothing and proportions from the first frame to the last. Movement is slow, small and physically plausible, like a finely animated paper diorama lit by practical lights. Only the elements described above move; the rest of the collage stays perfectly still."
+   "prompt": "A man's hand in a white shirt cuff and dark sleeve hovers just above a brass Victorian telegraph key on a scarred dark-red wooden desk, with a strip of paper tape and coiled cloth-covered wires beside it. First, small blue-white sparks crackle and flicker between the brass contacts of the telegraph key. Then the hand hesitates, then the index finger presses the key down once and lifts again. Then the deep red aurora light in the window behind pulses slowly brighter and dimmer. Finally, the loose paper tape trembles slightly on the desk. A dark telegraph office in 1859: rough stone walls, a bookshelf, an oil lamp and brass instruments in the background, lit by the red glow of the aurora through a tall paned window. The window with red aurora light fills the upper left of the vertical frame, the hand enters from the upper right, the telegraph key sits in the lower centre and the paper tape curls along the bottom edge. Camera: static, locked-off close-up. Hand-made illustrated cut-paper collage animation. The picture keeps exactly the same drawing, ink linework, halftone grain, torn paper edges, aged cream paper texture and limited palette of deep red, ink black, mustard and cream as the input image. Every figure and object stays exactly as drawn, with the same face, clothing and proportions from the first frame to the last. Movement is slow, small and physically plausible, like a finely animated paper diorama lit by practical lights. Only the elements described above move; the rest of the collage stays perfectly still.",
+   "max_slow": 1.45
   },
   {
    "id": "s05_campers",
@@ -79,7 +79,7 @@
    "id": "arch_aurora",
    "engine": "url",
    "scene": "s01",
-   "dur": 4.6,
+   "dur": 3.4,
    "in": 4.0,
    "out": 9.0,
    "grade": "none",
@@ -120,8 +120,8 @@
    "out": 16.0,
    "grade": "none",
    "fit": [
-    1040,
-    690
+    960,
+    636
    ],
    "url": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Aurora_Australis_from_ISS_2011_-_1.ogv",
    "source": "https://commons.wikimedia.org/wiki/File:Aurora_Australis_from_ISS_2011_-_1.ogv",
@@ -141,8 +141,8 @@
    "out": 6.0,
    "grade": "none",
    "fit": [
-    1000,
-    1000
+    860,
+    860
    ],
    "url": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Fastest_cme_20120723a_combo.mpg",
    "source": "https://commons.wikimedia.org/wiki/File:Fastest_cme_20120723a_combo.mpg",
@@ -152,6 +152,29 @@
    "screen_credit": "Archive: the 23 July 2012 eruption · NASA STEREO-A · Public Domain",
    "credit_authors": [
     "NASA STEREO"
+   ]
+  },
+  {
+   "id": "arch_nightlights",
+   "engine": "url",
+   "scene": "s10",
+   "dur": 7.2,
+   "in": 12.0,
+   "out": 19.5,
+   "grade": "none",
+   "fit": [
+    1080,
+    1080
+   ],
+   "url": "https://upload.wikimedia.org/wikipedia/commons/9/90/Night_Lights_2012_-_The_Black_Marble.webm",
+   "source": "https://commons.wikimedia.org/wiki/File:Night_Lights_2012_-_The_Black_Marble.webm",
+   "credit": "Night Lights 2012 - The Black Marble. NASA Earth Observatory / NASA Goddard (Suomi NPP VIIRS composite), public domain. Modern imagery, shown as illustration of today's electrified world.",
+   "licence": "PD-USGov",
+   "provider": "Wikimedia Commons (NASA Earth Observatory)",
+   "screen_credit": "Illustrative: Earth at night, 2012 · NASA Earth Observatory · Public Domain",
+   "credit_authors": [
+    "NASA Earth Observatory",
+    "NASA Goddard Space Flight Center"
    ]
   }
  ]

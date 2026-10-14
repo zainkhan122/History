@@ -1,0 +1,18 @@
+{
+ "series": "paper-trail",
+ "episode": 2,
+ "title": "The Day the Sky Ran the Telegraph",
+ "subject": "The Carrington Event: solar flare of 1 Sept 1859 and the geomagnetic storm of 1–2 Sept 1859",
+ "status": "v1 in production: built, gated locally; cloud render pending",
+ "format": "9:16 1080x1920 30fps, 88.5 s",
+ "voice": "Arena TTS (en, masculine, narration); performance plan voice.json; v06 tempo 1.05x (original vo/orig/v06.mp3)",
+ "release": "ep02-carrington-v1",
+ "media_release": "media-ep02-carrington",
+ "updated": "2026-10-14",
+ "promise": {
+  "type": "motion_led",
+  "min_motion": 0.55,
+  "locked": "2026-10-14",
+  "means": "At least 55 % of the runtime (weighted: clips/film 1, animated graphics 0.5, Ken Burns 0) is real motion. A shortfall needs an approved promise_exception in decisions.jsonl; missing clips are never swapped for stills silently."
+ }
+}

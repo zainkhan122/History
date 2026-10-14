@@ -20,6 +20,7 @@ MEASURED against it.
 
 Measured per take (waveform first; whisper only locates words):
   fidelity  words actually spoken vs plan text (numbers compared as values)   FAIL > 8 % WER or a wrong number
+            (base.en first; any error is re-checked with small.en — VOICE_ASR2, 'off' to disable — and the better reading kept)
   pace      syllables per second of phonation, banded per tone                FAIL outside band ±15 %, WARN outside band
   pauses    every marked pause (… : —, plus explicit "pauses") must exist as a real silence
                                                                               FAIL if dropped (< 0.12 s), WARN if < 80 % of target
@@ -200,9 +201,9 @@ def silences(y):
     return out
 
 
-def transcribe(y):
+def transcribe(y, model=None):
     from faster_whisper import WhisperModel
-    m = WhisperModel(os.environ.get("VOICE_ASR", "base.en"), device="cpu", compute_type="int8")
+    m = WhisperModel(model or os.environ.get("VOICE_ASR", "base.en"), device="cpu", compute_type="int8")
     segs, _ = m.transcribe(y, language="en", word_timestamps=True, beam_size=5)
     return [{"w": w.word.strip(), "s": round(w.start, 3), "e": round(w.end, 3)} for s in segs for w in s.words]
 
@@ -224,17 +225,29 @@ def measure(line: dict, y, words: list):
         warns.append(f"pace {m['pace']} syl/s outside {line['tone']} band {lo}–{hi}")
 
     # fidelity
-    P = tokens(line["text"]); A = tokens(" ".join(w["w"] for w in words))
-    sm = difflib.SequenceMatcher(a=[t for t, _ in P], b=[t for t, _ in A], autojunk=False)
-    err = sum(max(i2 - i1, j2 - j1) for op, i1, i2, j1, j2 in sm.get_opcodes() if op != "equal")
-    m["wer"] = round(err / max(1, len(P)), 3)
-    pn = [t for t, _ in P if t.isdigit()]; an = [t for t, _ in A if t.isdigit()]
+    P = tokens(line["text"])
+
+    def wer_of(ws):
+        A = tokens(" ".join(w["w"] for w in ws))
+        sm = difflib.SequenceMatcher(a=[t for t, _ in P], b=[t for t, _ in A], autojunk=False)
+        return round(sum(max(i2 - i1, j2 - j1) for op, i1, i2, j1, j2 in sm.get_opcodes() if op != "equal") / max(1, len(P)), 3), A, sm
+    m["wer"], A, sm = wer_of(words)                                   # A/sm (words.json timings) drive the pause mapping below
+    heard, An = words, A                                               # fidelity reading (may come from the second opinion)
+    # Second opinion: base.en mishears reduced function words ("as" -> "a"/"is"). When it reports errors, re-listen with a
+    # larger model and keep the better reading for FIDELITY only (timings stay from words.json). Real skips fail both.
+    asr2 = os.environ.get("VOICE_ASR2", "small.en")
+    if m["wer"] > 0 and asr2 and asr2 != "off":
+        w2 = transcribe(y, asr2); wer2, A2, _ = wer_of(w2)
+        if wer2 < m["wer"]:
+            m["wer_base"], m["wer"], heard, An = m["wer"], wer2, w2, A2
+            m["asr"] = asr2
+    pn = [t for t, _ in P if t.isdigit()]; an = [t for t, _ in An if t.isdigit()]
     if pn != an:
         fails.append(f"numbers spoken {an} ≠ script {pn}")
     if m["wer"] > WER_FAIL:
-        fails.append(f"word error {m['wer']:.0%} (skipped/garbled words): heard “{' '.join(w['w'] for w in words)}”")
+        fails.append(f"word error {m['wer']:.0%} (skipped/garbled words): heard “{' '.join(w['w'] for w in heard)}”")
     elif m["wer"] > WER_WARN:
-        warns.append(f"word error {m['wer']:.0%}: heard “{' '.join(w['w'] for w in words)}”")
+        warns.append(f"word error {m['wer']:.0%}: heard “{' '.join(w['w'] for w in heard)}”")
 
     # marked pauses: map plan raw-word → ASR word via the token alignment, then find the real silence
     tgt, raw = marks(line["text"], line.get("pauses"))
@@ -284,6 +297,26 @@ def measure(line: dict, y, words: list):
 
 
 # ---------------------------------------------------------------- plan
+def script_words(text: str, asr: list) -> list:
+    """The script owns the WORDS, ASR owns the TIMING: align whisper words to the plan text and return
+    [{w: script spelling + punctuation, s, e}]. 1:1 substitutions take the script word ("60" -> "sixty,", "is" -> "as");
+    whisper splits ("11", ".18") or merges are re-timed across the span; unmatched ASR words keep their own text."""
+    sw = [w for w in text.replace("—", " — ").replace("…", "… ").split() if re.sub(r"[^\w']", "", w)]
+    key = lambda w: [t for t, _ in tokens(w)]
+    a = [" ".join(key(w)) for w in sw]; b = [" ".join(key(w["w"])) for w in asr]
+    out = []
+    for op, i1, i2, j1, j2 in difflib.SequenceMatcher(a=a, b=b, autojunk=False).get_opcodes():
+        if op == "equal" or (op == "replace" and i2 - i1 == j2 - j1):
+            out += [{"w": sw[i1 + k], "s": asr[j1 + k]["s"], "e": asr[j1 + k]["e"]} for k in range(i2 - i1)]
+        elif op == "replace" and j2 > j1:                              # n script words over m ASR words: spread the span
+            s0, e0 = asr[j1]["s"], asr[j2 - 1]["e"]; n = i2 - i1; d = (e0 - s0) / n
+            out += [{"w": sw[i1 + k], "s": round(s0 + k * d, 3), "e": round(s0 + (k + 1) * d, 3)} for k in range(n)]
+        elif op == "insert":
+            out += [dict(asr[j]) for j in range(j1, j2)]              # spoken but not scripted: keep (the voice gate flags it)
+        # "delete" (scripted, not heard) -> nothing to time; the voice gate already FAILs real skips
+    return out
+
+
 def load_plan(ep: Path):
     p = ep / "voice.json"
     if not p.exists():

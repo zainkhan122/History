@@ -22,10 +22,10 @@ ok(){ printf '  \033[32m✓\033[0m %s\n' "$*"; }; bad(){ printf '  \033[31m✗\0
 get(){ [ -s "$2" ] || { echo "  ↓ $(basename "$2")"; curl -fsSL --retry 3 -o "$2.part" "$1" && mv "$2.part" "$2"; }; }
 
 echo "[1/8] python packages"
-PKGS="imageio-ffmpeg faster-whisper librosa soundfile rembg onnxruntime kokoro-onnx auto-editor rlottie-python"
+PKGS="imageio-ffmpeg faster-whisper librosa soundfile rembg onnxruntime kokoro-onnx auto-editor rlottie-python gradio_client"
 python3 - <<'EOF' 2>/dev/null || pip install -q --user $PKGS 2>&1 | grep -v "^\s*$" | tail -3
 import importlib.util as u, sys
-mods = ["imageio_ffmpeg","faster_whisper","librosa","soundfile","rembg","onnxruntime","kokoro_onnx","rlottie_python"]
+mods = ["imageio_ffmpeg","faster_whisper","librosa","soundfile","rembg","onnxruntime","kokoro_onnx","rlottie_python","gradio_client"]
 sys.exit(0 if all(u.find_spec(m) for m in mods) else 1)
 EOF
 ok "pip: $PKGS"

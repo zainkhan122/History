@@ -107,7 +107,7 @@ def cmd_push(a):
     for f in files:
         h, sz = sha256(d / f), (d / f).stat().st_size
         old = man.get("files", {}).get(f)
-        if old and old["sha256"] == h and flat(f) in existing:
+        if old and old.get("sha256") == h and flat(f) in existing:   # provenance may be declared before the first upload
             new[f] = old; continue
         print(f"  ↑ {f} ({sz/1e6:.2f} MB)"); upload(slug, rel, d / f, flat(f), existing)
         # keep provenance (kind/licence/credit/source/…) across re-uploads; provenance.py re-verifies it

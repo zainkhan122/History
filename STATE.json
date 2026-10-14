@@ -1,10 +1,7 @@
 {
- "now": "Ep02 (Carrington Event 1859) in production: research/voice plan/VO 8/10/plates/clips.json done; old versions deleted (owner); operator model adopted (sandbox = operator, GitHub = infra). Ep01 v2.2 delivered; min_motion exception confirmed by owner until 2026-12-31.",
+ "now": "Ep02 (Carrington Event 1859) v1 built and passing every local gate (facts 0 FAIL, voice 0/0, provenance 0/0, planlint 0/0 motion 58% vs promise 55%, hyperframes check 0 errors); cloud render ep02-carrington-v1 next. Old versions deleted (owner); operator model (sandbox = operator, GitHub = infra).",
  "next": [
-  "Ep02: TTS v08, v09 + retake v06 \u2192 voice gate",
-  "Ep02: plan.py, shots.json, episode.json (promise), build.py/score.py/make_assets.py, POST_KIT.md",
-  "Ep02: 2 Wan clips (s01_telegraph, s05_campers) after the ZeroGPU quota resets (~14:20 UTC 2026-10-14)",
-  "Ep02: media push \u2192 cloud render ep02-carrington-v1 \u2192 QA \u2192 deliver",
+  "Ep02: cloud render ep02-carrington-v1 (cloud.py render series/paper-trail/ep02-carrington --tag ep02-carrington-v1 --wait) -> fetch -> review frames -> deliver",
   "Ep01 v3 (optional): s05/s09 clips with HF_TOKEN; retire exception"
  ],
  "owner_rules": [
@@ -25,7 +22,7 @@
   "huggingface": "not provided (optional: raises ZeroGPU quota)",
   "cloudflare": "not provided (optional: Workers AI images 10k neurons/day)"
  },
- "updated_at": "2026-10-14T08:40:00Z",
+ "updated_at": "2026-10-14T09:10:00Z",
  "episodes": {
   "series/paper-trail/ep01-petrov": {
    "title": "The Man Who Did Nothing",
@@ -35,7 +32,7 @@
   },
   "series/paper-trail/ep02-carrington": {
    "title": "The Day the Sky Ran the Telegraph",
-   "status": "in production",
+   "status": "v1 built, local gates pass; cloud render pending",
    "release": "ep02-carrington-v1 (planned)",
    "updated": "2026-10-14"
   }
@@ -50,6 +47,7 @@
  "releases": [
   "ep01-petrov-v2.2",
   "media-ep01-petrov",
+  "media-ep02-carrington",
   "cache-clips",
   "archive-research"
  ]

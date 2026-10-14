@@ -51,13 +51,26 @@ class FX:
         t0, d = win; self.layers.append((kbid, img, t0, d, w, h, self.clips[img]["scene"]))
         return ""
 
+    def footage(self, kbid, cid, t0, t1, box=None):
+        """Archival (url) clip as a FULL-BLEED moving layer — same root-level timed <video> mechanism as plate().
+        box=(left, top, w, h) places it instead of the 1.2x Ken Burns frame (e.g. a 1080x1080 globe).
+        Returns False (caller draws a fallback) when the clip was not prepped into hf/assets/clips."""
+        if cid not in self.clips: return False
+        if self.hf and not (self.hf / "assets/clips" / f"{cid}.mp4").exists(): return False
+        W, H = (box[2], box[3]) if box else (1296, 2322)
+        self.layers.append((kbid, cid, t0, t1 - t0, W, H, self.clips[cid].get("scene"), box))
+        return True
+
     def video_layers(self):
-        return "\n".join(
-            f'<div id="{kbid}_vs" class="fxvs"><div id="{kbid}_vw" class="kb">'
-            f'<video id="v_{img}" src="assets/clips/{img}.mp4" muted playsinline preload="auto" data-start="{f(t0)}" '
-            f'data-duration="{f(d)}" data-media-start="0" data-track-index="1" '
-            f'style="position:absolute;left:0;top:0;width:{w}px;height:{h}px;object-fit:cover"></video></div></div>'
-            for kbid, img, t0, d, w, h, _ in self.layers)
+        out = []
+        for kbid, img, t0, d, w, h, _sc, *rest in self.layers:
+            box = rest[0] if rest else None
+            pos = f' style="left:{box[0]}px;top:{box[1]}px;width:{w}px;height:{h}px"' if box else ""
+            out.append(f'<div id="{kbid}_vs" class="fxvs"><div id="{kbid}_vw" class="kb"{pos}>'
+                       f'<video id="v_{img}" src="assets/clips/{img}.mp4" muted playsinline preload="auto" data-start="{f(t0)}" '
+                       f'data-duration="{f(d)}" data-media-start="0" data-track-index="1" '
+                       f'style="position:absolute;left:0;top:0;width:{w}px;height:{h}px;object-fit:cover"></video></div></div>')
+        return "\n".join(out)
 
     def kb_targets(self, sel):
         """'#kb03' -> '#kb03,#kb03_vw' when that plate is animated."""
@@ -66,25 +79,25 @@ class FX:
     def shake_targets(self, sel):
         """'#sc03' -> also shake the video wrappers belonging to scene s03."""
         sc = sel.lstrip("#").replace("sc", "s", 1)
-        return sel + "".join(f",#{k}_vs" for k, *_, scene in self.layers if scene == sc)
+        return sel + "".join(f",#{L[0]}_vs" for L in self.layers if L[6] == sc)
 
     # ---------------------------------------------------------------- archival film insert
-    def film_insert(self, id_, cid, t0, t1, label, credit=""):
+    def film_insert(self, id_, cid, t0, t1, label, credit="", dy=0):
         """Projected archive film: dark backing, sprocketed frame, gate weave, exposure flicker, typed label."""
         c = self.clips[cid]; W, H = c.get("fit", [1000, 562]); d = t1 - t0
-        top = 960 - H // 2 - 40
+        top = 960 - H // 2 - 40 + dy           # dy < 0 lifts the frame (keeps the credit clear of the caption band)
         html = (f'<div class="wash" style="background:radial-gradient(ellipse at 50% 48%,#2a241c 0%,#0c0a08 78%)"></div>'
                 f'<div id="{id_}_f" class="filmframe" style="left:{540 - W // 2 - 26}px;top:{top}px;width:{W + 52}px;height:{H + 52}px">'
                 f'<div id="{id_}_w" class="filmweave"><video id="{id_}_v" src="assets/clips/{cid}.mp4" muted playsinline preload="auto" '
                 f'data-start="{f(t0)}" data-duration="{f(d)}" data-media-start="0" style="width:{W}px;height:{H}px;display:block"></video>'
                 f'<div id="{id_}_k" class="filmflick"></div></div>'
                 f'<div class="sprk l"></div><div class="sprk r"></div></div>'
-                f'<div id="{id_}_l" class="filmlabel" style="top:{top - 92}px">{label}</div>'
+                + (f'<div id="{id_}_l" class="filmlabel" style="top:{top - 92}px">{label}</div>' if label else "")
                 + (f'<div class="filmcredit" data-tq-dwell="off" style="top:{top + H + 70}px">{credit}</div>' if credit else ""))
         J = self.J
         J(f"tl.fromTo('#{id_}_f',{{scale:1.12,rotation:-2.2,autoAlpha:0}},{{scale:1,rotation:-0.8,autoAlpha:1,duration:0.22,ease:'power3.out',immediateRender:false}},{f(t0)});")
         J(f"tl.to('#{id_}_f',{{scale:1.035,duration:{f(max(0.1, d - 0.22))},ease:'none'}},{f(t0 + 0.22)});")
-        J(f"tl.fromTo('#{id_}_l',{{autoAlpha:0,x:-30}},{{autoAlpha:1,x:0,duration:0.2,ease:'power2.out',immediateRender:false}},{f(t0 + 0.06)});")
+        if label: J(f"tl.fromTo('#{id_}_l',{{autoAlpha:0,x:-30}},{{autoAlpha:1,x:0,duration:0.2,ease:'power2.out',immediateRender:false}},{f(t0 + 0.06)});")
         t = t0                                  # gate weave + flicker at ~12 Hz (film is never perfectly still)
         while t < t1 - 0.05:
             J(f"tl.set('#{id_}_w',{{x:{f((self.rng() - .5) * 3)},y:{f((self.rng() - .5) * 5)}}},{f(t)});")

@@ -57,8 +57,23 @@ Never decode/encode >1080p video or run a full render in the sandbox. Archival f
   2. `voice.json`: per-line tone, energy, direction and pauses. Mark one `climax` and one `sample_line`.
   3. `voice.py lines <ep>` prints the TTS lines with the sample line first.
   4. Generate 2–3 takes of the sample line, then run `voice.py sample <ep> --take …`. Only produce the other lines once a take PASSes.
-  5. Produce the rest, run whisper for `words.json`, then `plan.py`, then `voice.py check`.
-  6. If a marked pause is short, run `voice.py shape <ep>`. It extends only the take's own silence and keeps the original in `vo/orig/`. Then push the media.
+  5. Produce the rest, then `voice.py words <ep>` (faster-whisper base.en → `words.json`), then `plan.py`, then `voice.py check`.
+     The fidelity check re-hears any mismatch with a second-opinion ASR (`VOICE_ASR2`, default small.en) before it FAILs: base.en
+     mishears reduced function words ("as" → "is"). A word wrong in both models is a real misread → regenerate the take.
+  6. **The script owns the words, ASR owns the timing.** `plan.py` builds captions with `voice.script_words(text, asr_words)`:
+     script words take ASR timings (difflib alignment: 1:1 keeps timing, n:m spreads it), so "60"/"sixty" or "11 .18"/"11:18"
+     never reach the screen as ASR spellings.
+  7. If a marked pause is short, run `voice.py shape <ep>`. It extends only the take's own silence and keeps the original in `vo/orig/`.
+     A small pace fix (`atempo` ≤ 1.05) is allowed: keep the original in `vo/orig/`, log it in `decisions.jsonl` and `media.json` `op`. Then push the media.
+- **Build rules (learned on File 02):**
+  - Every on-screen text element carries a text-unit class (the series set, or the generic `tu`). factcheck FAILs on visible text
+    outside a unit (it would otherwise escape the ledger); textqa uses the same unit list.
+  - Archival `url` clips: framed with `FX.film_insert(..., dy=)` (lift the frame so its credit clears the caption band y 1340–1540)
+    or full-bleed / boxed with `FX.footage(kbid, cid, t0, t1, box=None)` (root-level timed video, same mechanism as AI plates).
+    `fit`/`dur` are prep-only (not in the cache key); `in`/`out`/`max_h`/`url` are the key.
+  - Procedural graphics in `shots.json` use `build:<id>` as their source (no media file); clip/film motion still needs a real `clips/` file.
+  - `clips.py gen` re-validates existing files against `media.json` `cache_key`: a stale url clip is re-trimmed, a stale AI clip FAILs unless cached.
+  - Never fade/hide a clip element itself with GSAP (`gsap_animates_clip_element`): wrap its content in a child div.
 - **Accuracy:** no fact goes in a script before it is in `research.json` with sources (protocol in `docs/CONTENT_STRATEGY.md` §3). Record conflicts between sources as a `caveat` instead of picking silently.
 - **Licensing:** commercial-safe assets only (PD / CC0 / CC BY with credit / own-generated). Avoid CC BY-SA for monetised video. Credit everything in `POST_KIT.md`.
 - Auto-posting (Buffer / YouTube API) is **not wanted yet**. Do not build or trigger it until the owner asks.

@@ -107,7 +107,7 @@ def main():
             if s.get(k) and words(s[k]) < 6:
                 F.append(f"{sid}: {k} too vague (< 6 words): '{s[k]}'")
         for src in [s.get("primary")] + s.get("secondary", []) + [i["source"] for i in s.get("inserts", [])]:
-            if src and src not in M:
+            if src and not str(src).startswith("build:") and src not in M:     # build:<id> = procedural graphic drawn by build.py
                 F.append(f"{sid}: source {src} not in media.json")
 
     # ---------- truth: motion claims vs files; silent fallbacks ----------

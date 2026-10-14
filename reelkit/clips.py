@@ -389,7 +389,15 @@ def main():
         for c in cfg:
             if a.only and c["id"] not in a.only: continue
             out = ep / "clips" / f"{c['id']}.mp4"
-            if out.exists() and not a.force: print(f"  = {out.name} exists"); continue
+            if out.exists() and not a.force:
+                # an existing file only counts as done when it was made from the CURRENT spec (media.json cache_key)
+                rec = json.loads((ep / "media.json").read_text()).get("files", {}).get(f"clips/{c['id']}.mp4", {}) if (ep / "media.json").exists() else {}
+                cur = clipcache.make_key(call_spec(c, ep, tpl)) if (c["engine"] == "url" or c.get("shot") or c.get("prompt")) else None
+                if not rec.get("cache_key") or not cur or rec["cache_key"] == cur: print(f"  = {out.name} exists"); continue
+                if c["engine"] != "url" and cur not in cache:
+                    print(f"  ✗ {out.name}: STALE — spec changed since it was generated ({rec['cache_key'][:12]} -> {cur[:12]}); "
+                          f"revert clips.json or regenerate with --force"); bad += 1; continue
+                print(f"  ~ {out.name}: stale ({rec['cache_key'][:12]} -> {cur[:12]}), rebuilding from {'archive' if c['engine'] == 'url' else 'cache'}")
             fails = [m for lv, m in lint_clip(c, tpl, False) if lv == "FAIL" and "legacy" not in m and "pending Wan clip" not in m]
             if c["engine"] == "wan" and not c.get("shot") and c["id"] not in generated_ids(ep):
                 fails.append(f"{c['id']}: pending Wan clip without `shot` slots")

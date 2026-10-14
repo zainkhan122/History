@@ -1,5 +1,53 @@
 {
  "files": {
+  "assets/carrington_drawing.jpg": {
+   "ai": false,
+   "credit": "Richard C. Carrington, drawing of the sunspot group and the flare of 1 September 1859 (Monthly Notices of the RAS 20, 1859). Public domain.",
+   "credit_authors": [
+    "Richard Christopher Carrington"
+   ],
+   "derived_from": "https://upload.wikimedia.org/wikipedia/commons/9/92/Carrington_Richard_drawing_of_1859_sunspots.jpeg",
+   "kind": "archive",
+   "licence": "PD",
+   "op": "crop to the spot group + ink/paper tone (make_assets.py)",
+   "provider": "Wikimedia Commons",
+   "screen_credit": "Archive: Carrington's drawing of the flare, 1 Sept 1859 \u00b7 MNRAS 20 \u00b7 Public Domain",
+   "sha256": "459c4e6608a1604e3afbeffba8e73de5b62d697b13be1bbd9566106f8dfdb050",
+   "size": 1004983,
+   "source": "https://commons.wikimedia.org/wiki/File:Carrington_Richard_drawing_of_1859_sunspots.jpeg"
+  },
+  "assets/carrington_portrait.jpg": {
+   "ai": false,
+   "credit": "Richard C. Carrington, photograph by Maull & Polyblank (before 1875). Public domain.",
+   "credit_authors": [
+    "Maull & Polyblank"
+   ],
+   "derived_from": "https://upload.wikimedia.org/wikipedia/commons/8/84/Maull_%26_Polyblank_photograph_of_Richard_C._Carrington.jpg",
+   "kind": "photo",
+   "licence": "PD",
+   "op": "fit + mounted-print border (make_assets.py)",
+   "provider": "Wikimedia Commons",
+   "screen_credit": "Archive: R. C. Carrington \u00b7 photo Maull & Polyblank \u00b7 Public Domain",
+   "sha256": "1f7bbeb771d8fed989ea14d9b071bca1353bc1702bf94b76e625778c0738d6cd",
+   "size": 420928,
+   "source": "https://commons.wikimedia.org/wiki/File:Maull_%26_Polyblank_photograph_of_Richard_C._Carrington.jpg"
+  },
+  "assets/redhill_observatory.jpg": {
+   "ai": false,
+   "credit": "Richard Carrington's house and observatory, Redhill, Surrey \u2014 engraving, 1857 (artist unknown). Public domain.",
+   "credit_authors": [
+    "Unknown engraver (1857)"
+   ],
+   "derived_from": "https://upload.wikimedia.org/wikipedia/commons/2/26/Richard-Carringtons-house-and-observatory-Redhill-Surrey-UK.jpg",
+   "kind": "archive",
+   "licence": "PD",
+   "op": "fit + mounted-print border (make_assets.py)",
+   "provider": "Wikimedia Commons",
+   "screen_credit": "Archive: Redhill Observatory, 1857 engraving \u00b7 Public Domain",
+   "sha256": "ca387173befcf93f5d16441b384b07a3e9e13e0e109eb73fa74b0f49fd0e76dc",
+   "size": 209543,
+   "source": "https://commons.wikimedia.org/wiki/File:Richard-Carringtons-house-and-observatory-Redhill-Surrey-UK.jpg"
+  },
   "assets/s01_telegraph.jpg": {
    "ai": true,
    "kind": "plate",
@@ -116,6 +164,68 @@
    "source": "https://commons.wikimedia.org/wiki/File:Aurora_Australis_from_ISS_2011_-_1.ogv",
    "spec": "clips.json#arch_iss_aurora"
   },
+  "clips/arch_nightlights.mp4": {
+   "ai": false,
+   "cache_key": "2f7dfa9acd50788f4a478912816945780d63a43b3cf09ee7ca48f40540de44bc",
+   "credit": "Night Lights 2012 - The Black Marble. NASA Earth Observatory / NASA Goddard (Suomi NPP VIIRS composite), public domain. Modern imagery, shown as illustration of today's electrified world.",
+   "credit_authors": [
+    "NASA Earth Observatory",
+    "NASA Goddard Space Flight Center"
+   ],
+   "derived_from": "https://upload.wikimedia.org/wikipedia/commons/9/90/Night_Lights_2012_-_The_Black_Marble.webm",
+   "kind": "archive",
+   "licence": "PD-USGov",
+   "op": "trim 12.0\u201319.5 s (clips.py gen); grade/fit in clips.py prep",
+   "provider": "Wikimedia Commons (NASA Earth Observatory)",
+   "screen_credit": "Illustrative: Earth at night, 2012 \u00b7 NASA Earth Observatory \u00b7 Public Domain",
+   "sha256": "c23ca58a5a002a8212ebfacfb57f9b2fd389a42e7a8bbe69aa0de75b8ef32421",
+   "size": 1335286,
+   "source": "https://commons.wikimedia.org/wiki/File:Night_Lights_2012_-_The_Black_Marble.webm",
+   "spec": "clips.json#arch_nightlights"
+  },
+  "clips/s01_telegraph.mp4": {
+   "ai": true,
+   "cache_key": "b3ef10144c7d227f774edf2d8ed9872a7226f2b98173789d2ba70212137e587a",
+   "derived_from": "assets/s01_telegraph.jpg",
+   "kind": "clip",
+   "licence": "own-ai",
+   "op": "image-to-video, style preserved",
+   "prompt_sha1": "083a78473f52330054c9c54028a8e132314b540b",
+   "provider": "Wan 2.2 image-to-video (Apache-2.0 weights) via HF Space zerogpu-aoti/wan2-2-fp8da-aoti-faster",
+   "realistic": false,
+   "seed": 21,
+   "sha256": "c61b32eae9354ace59688daffe4588a9d539f070759003de4c60c0b90ddf3626",
+   "size": 1548954,
+   "source": "generated 2026-10-14 from assets/s01_telegraph.jpg",
+   "spec": "clips.json#s01_telegraph"
+  },
+  "clips/s05_campers.mp4": {
+   "ai": true,
+   "cache_key": "6f3514f9c30c633c4e8a61d81713af9674bafdd49eb11e7865587f80b19e9bf3",
+   "derived_from": "assets/s05_campers.jpg",
+   "kind": "clip",
+   "licence": "own-ai",
+   "op": "image-to-video, style preserved",
+   "prompt_sha1": "e5df77ddbace1079dd7c95e54be45ac840a98436",
+   "provider": "Wan 2.2 image-to-video (Apache-2.0 weights) via HF Space zerogpu-aoti/wan2-2-fp8da-aoti-faster",
+   "realistic": false,
+   "seed": 15,
+   "sha256": "22c373ff228b350e1c91bd21db6fb0fc873661c0dd7076e2feb7ed2aba8660cb",
+   "size": 2400326,
+   "source": "generated 2026-10-14 from assets/s05_campers.jpg",
+   "spec": "clips.json#s05_campers"
+  },
+  "vo/orig/v06.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-02 (en, masculine, narration; owner audition 2026-10-14)",
+   "realistic": false,
+   "sha256": "7b71865931cd736739306cdfbcb5e392ee7775a1f6207b3aebc9d0d1412779a5",
+   "size": 59786,
+   "source": "generated 2026-10-14 for ep02 (sample gate winner, take2 of 3) \u2014 untouched original of vo/v06.wav",
+   "spec": "voice.json#v06"
+  },
   "vo/v01.mp3": {
    "ai": true,
    "kind": "vo",
@@ -171,15 +281,17 @@
    "source": "generated 2026-10-14 for ep02",
    "spec": "voice.json#v05"
   },
-  "vo/v06.mp3": {
+  "vo/v06.wav": {
    "ai": true,
+   "derived_from": "vo/orig/v06.mp3",
    "kind": "vo",
    "licence": "own-tts",
+   "op": "atempo 1.05 (pace into the urgent band; logged in decisions.jsonl)",
    "provider": "Arena generate_speech, voice-02 (en, masculine, narration; owner audition 2026-10-14)",
    "realistic": false,
-   "sha256": "aacfa41ea65ff5467680cef40fe82471a50bc032331abbcf6167aaea95e1ebf8",
-   "size": 68145,
-   "source": "generated 2026-10-14 for ep02",
+   "sha256": "632d8517f4bd014654fff8c37b470f4907620f96f02bd1489476f30fb1310b02",
+   "size": 679296,
+   "source": "generated 2026-10-14 for ep02 (sample gate winner, take2 of 3), tempo-edited",
    "spec": "voice.json#v06"
   },
   "vo/v07.mp3": {
@@ -193,6 +305,28 @@
    "source": "generated 2026-10-14 for ep02",
    "spec": "voice.json#v07"
   },
+  "vo/v08.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-02 (en, masculine, narration; owner audition 2026-10-14)",
+   "realistic": false,
+   "sha256": "f5489e8ecaf865778f0d55a0af9cb6eeed612ac5bde12e42a6bb3e6485c66179",
+   "size": 72533,
+   "source": "generated 2026-10-14 for ep02",
+   "spec": "voice.json#v08"
+  },
+  "vo/v09.mp3": {
+   "ai": true,
+   "kind": "vo",
+   "licence": "own-tts",
+   "provider": "Arena generate_speech, voice-02 (en, masculine, narration; owner audition 2026-10-14)",
+   "realistic": false,
+   "sha256": "2a5e83290a3040b16caeb45507c27ab133b8118db34797c2761039f58702de4c",
+   "size": 62293,
+   "source": "generated 2026-10-14 for ep02 (sample gate winner, take3 of 3)",
+   "spec": "voice.json#v09"
+  },
   "vo/v10.mp3": {
    "ai": true,
    "kind": "vo",
@@ -203,6 +337,39 @@
    "size": 54770,
    "source": "generated 2026-10-14 for ep02 (sample gate winner, take1 of 3)",
    "spec": "voice.json#v10"
+  }
+ },
+ "generated": {
+  "bg_paper.jpg": {
+   "by": "make_assets.py (procedural)",
+   "kind": "texture",
+   "licence": "own"
+  },
+  "grain.png": {
+   "by": "make_assets.py (procedural)",
+   "kind": "texture",
+   "licence": "own"
+  },
+  "mix.wav": {
+   "by": "score.py (procedural score + SFX) + voice takes",
+   "derived_from": "procedural score.py + vo/*",
+   "kind": "mix",
+   "licence": "own"
+  },
+  "paper_dark.jpg": {
+   "by": "make_assets.py (procedural)",
+   "kind": "texture",
+   "licence": "own"
+  },
+  "stampmask.png": {
+   "by": "make_assets.py (procedural)",
+   "kind": "texture",
+   "licence": "own"
+  },
+  "tear.png": {
+   "by": "make_assets.py (procedural)",
+   "kind": "texture",
+   "licence": "own"
   }
  },
  "release": "media-ep02-carrington",

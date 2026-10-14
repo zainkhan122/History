@@ -6,7 +6,7 @@ const fs = require("fs"), path = require("path");
 const puppeteer = require("puppeteer-core");
 const [hf, out, timesArg] = process.argv.slice(2);
 const times = timesArg.split(",").map(Number);
-const UNIT = ".tag,.cap,.stamp,.node,.strip,.kicker,.quote,.bigserif,.hr,.filmlabel,.filmcredit,.credit,.ename,.efollow," +
+const UNIT = ".tu,.tag,.cap,.stamp,.node,.strip,.kicker,.quote,.bigserif,.hr,.filmlabel,.filmcredit,.credit,.ename,.efollow," +
              ".clabel,.fivelabel,.bug,.waitbox,.counter,.startglow,.eklogo,.qby,.num,.title";
 function chrome() {
   if (process.env.CHROME) return process.env.CHROME;

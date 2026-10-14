@@ -109,6 +109,7 @@
    "scene": "s10",
    "tone": "reverent",
    "energy": 2,
+   "pause_after": 0.0,
    "text": "In 1859, the sky ran a telegraph line. Next time… it will find a world built on wires.",
    "direction": "Slow, warm and grave: the closing thought. Leave real space after 'telegraph line'; the last words almost whispered.",
    "pauses": {
