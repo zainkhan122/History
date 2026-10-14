@@ -29,7 +29,11 @@ Never decode/encode >1080p video or run a full render in the sandbox. Archival f
   `tools/repo_guard.py` enforces this: no media extensions, no file > 1 MB, total < 15 MB.
 - **Builds run in `~/.cache/build/`**, never inside the repo.
 - **Workspace budget:** the Arena save limit is ~128 MB / 10k files. Keep only `~/History` in the workspace. Caches and models go in `~/.cache`.
-- **Renders:** short drafts or snapshots run locally. Full renders run in the cloud: `python3 reelkit/cloud.py render <episode_dir> --wait`.
+- **Renders:** before every cloud render run `bash reelkit/episode.sh <ep> preflight` (~1 min: build, facts, provenance, planlint,
+  hyperframes check, textqa `--layout-only`). Then `python3 reelkit/cloud.py render <ep> --tag <name>-vN --wait`. The run is pinned to
+  the local HEAD sha (workflow input `sha`). On failure `--wait` prints the gate failures; `cloud.py why [run_id]` re-prints them.
+  Deliverables are named after the story (`reelkit/naming.py`, from `episode.json` title): `<Story-Title>.mp4` + `.jpg`.
+  Release uploads are replace-safe (upload `.part` → delete old → rename); every GitHub API call retries 429/5xx/network errors.
 - **Lightpanda can't render frames.** Tested 2026-10-11: `--dump png` is text-only, with no CSS, images or SVG. It's used for fast research scraping only. Frame capture uses chrome-headless-shell (via HyperFrames).
 - **Quality gates** (all in `episode.sh`; a FAIL blocks the render):
   - `facts` → `reelkit/factcheck.py`: every narrated sentence with a number/date/name/quote, and every on-screen label, must map to a claim in the episode's `research.json`. Evidence tiers: core ≥2 publishers incl. ≥1 primary/scholarly; record ≥2 incl. a fact-checked reference; detail ≥2; framing ≥1; quotes trace to their first publication. Guardrail phrases are checked in VO, on screen and in `POST_KIT.md`. Also writes `out/sources.md` (paste-ready description citations). `--online --archive` checks links and stores Wayback snapshots in the ledger.
@@ -47,6 +51,17 @@ Never decode/encode >1080p video or run a full render in the sandbox. Archival f
     `shot` are frozen legacy (their prompt is part of their cache key).
   - **Generation goes through the cache only:** `clips.py status <ep>` → `clips.py gen <ep>` (local → release `cache-clips` → GPU).
     Every call pins a seed; a clip is generated once, ever. Review frames before putting a new clip in `shots.json`.
+    Engines (all HF ZeroGPU Spaces; they share ONE daily quota: anonymous 2 min, free HF account 5 min, so `HF_TOKEN` ≈ 2.5× clips):
+    `wan` (Wan 2.2 fp8 fast), `wan14` (full Wan 2.2 14B, Upsampler's Space), `ltx25` (LTX-2.5, Upsampler's Space; prompt
+    enhancement off so calls stay reproducible), `ltx` (legacy). Optional `"fallback": ["wan14", "ltx25"]` per clip: tried only
+    when a Space is broken/asleep (never on quota); the engine that succeeds is written back to clips.json.
+    Browser-only generators (Creen, Media.io, Video-Generator.ai, AI Studio Veo) cannot be scripted and their free-tier commercial
+    terms are unclear: use only if the owner generates a clip manually and the terms are recorded in media.json provenance.
+  - **Archival media is found with `reelkit/find.py`** (metadata only, never downloads): `find.py search <ep> "<query>"` over
+    Wikimedia Commons, NASA, Internet Archive → `<ep>/candidates.json` (in git, survives restarts) → `find.py add <ep> <cand> --id …
+    --in --out --scene [--use insert|bleed]` writes a lint-clean url clip (licence, provider, source, credit, screen_credit,
+    credit_authors; resolution picked for the use; `max_h` on >2160 px). IA licences are uploader-declared → review-only.
+    In the sandbox `clips.py gen` defers archival trims to CI (`CLIPS_LOCAL_TRIM=1` only for a known ≤1080p source).
   - **Exceptions live in `decisions.jsonl`** (`reelkit/decide.py add …`): append-only, with an approver and an expiry. Never edit old lines; supersede them.
   - `check` → `reelkit/hfcheck.py`: `hyperframes check` (lint + runtime + layout collisions, sampled at transitions) + the caption-zone audit. Intentional overlaps need explicit `data-layout-allow-*` on the text element itself (not inherited).
   - `textqa` → `reelkit/textqa.py`: contrast ≥3:1 (target 4.5), platform UI dead zones (top 230 / bottom 320 / right 120 px), reading time.

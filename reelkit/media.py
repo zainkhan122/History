@@ -10,7 +10,7 @@ a small manifest (media.json) with sha256 + size per file. Release assets don't 
 Auth: $GH_TOKEN / $GITHUB_TOKEN, else ~/.cache/secrets/gh_token. Repo: $GITHUB_REPOSITORY or the git remote.
 Stdlib only, so it runs on a bare runner before anything else is installed.
 """
-import argparse, fnmatch, hashlib, json, os, re, subprocess, sys, urllib.request, urllib.error
+import argparse, fnmatch, hashlib, http.client, json, os, re, subprocess, sys, time, urllib.error, urllib.parse, urllib.request
 from pathlib import Path
 
 API = "https://api.github.com"
@@ -36,19 +36,48 @@ def repo_slug():
     return slug or sys.exit("cannot determine repo (no origin remote, no .repo file)")
 
 
-def req(method, url, data=None, headers=None, raw=False):
+RETRY_CODES = (408, 429, 500, 502, 503, 504)
+
+
+class _StripAuthOnRedirect(urllib.request.HTTPRedirectHandler):
+    """Release assets and job logs redirect to signed blob URLs on another host. Like curl, never forward the GitHub
+    token there: Azure rejects a foreign Authorization header (401) and the token must not leak to third-party hosts."""
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        new = super().redirect_request(req, fp, code, msg, headers, newurl)
+        if new is not None and urllib.parse.urlsplit(newurl).netloc != urllib.parse.urlsplit(req.full_url).netloc:
+            for k in [k for k in new.headers if k.lower() == "authorization"]: del new.headers[k]
+            new.unredirected_hdrs.pop("Authorization", None)
+        return new
+
+
+_OPENER = urllib.request.build_opener(_StripAuthOnRedirect)
+
+
+def req(method, url, data=None, headers=None, raw=False, tries=5):
+    """GitHub API call. Transient failures (429/5xx, resets, timeouts) retry with backoff; 404 -> None; else exit."""
     tk = token(required=method != "GET")          # public repo: reads work without a token (60 req/h)
     h = {"Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", **({"Authorization": f"Bearer {tk}"} if tk else {})}
     h.update(headers or {})
     body = json.dumps(data).encode() if isinstance(data, (dict, list)) else data
-    r = urllib.request.Request(url, data=body, method=method, headers=h)
-    try:
-        with urllib.request.urlopen(r, timeout=600) as resp:
-            out = resp.read()
-            return out if raw else (json.loads(out) if out else {})
-    except urllib.error.HTTPError as e:
-        if e.code == 404: return None
-        sys.exit(f"GitHub API {method} {url} -> {e.code}: {e.read()[:400]!r}")
+    for i in range(tries):
+        r = urllib.request.Request(url, data=body, method=method, headers=h)
+        try:
+            with _OPENER.open(r, timeout=600) as resp:
+                out = resp.read()
+                return out if raw else (json.loads(out) if out else {})
+        except urllib.error.HTTPError as e:
+            if e.code == 404: return None
+            if e.code in RETRY_CODES and i < tries - 1:
+                wait = int(e.headers.get("Retry-After") or 0) or min(60, 4 * 2 ** i)
+                print(f"  … GitHub {e.code} on {method} {url.split('?')[0][-60:]}, retry {i + 1}/{tries - 1} in {wait}s", file=sys.stderr)
+                time.sleep(wait); continue
+            sys.exit(f"GitHub API {method} {url} -> {e.code}: {e.read()[:400]!r}")
+        except (urllib.error.URLError, TimeoutError, ConnectionError, http.client.HTTPException) as e:
+            if i < tries - 1:
+                wait = min(60, 4 * 2 ** i)
+                print(f"  … {type(e).__name__} on {method} {url.split('?')[0][-60:]}, retry {i + 1}/{tries - 1} in {wait}s", file=sys.stderr)
+                time.sleep(wait); continue
+            sys.exit(f"GitHub API {method} {url} failed after {tries} tries: {e}")
 
 
 def sha256(p):
@@ -79,11 +108,34 @@ def assets_of(slug, rel):
     return out
 
 
-def upload(slug, rel, path, name, existing):
-    if name in existing: req("DELETE", f"{API}/repos/{slug}/releases/assets/{existing[name]['id']}")
-    url = rel["upload_url"].split("{")[0] + "?name=" + urllib.request.quote(name)
+def upload(slug, rel, path, name, existing, tries=4):
+    """Never lose the published copy: upload as <name>.part, then delete the old asset, then rename .part -> name.
+    A failed or interrupted upload leaves the old asset untouched (a stale .part is cleaned up on the next try)."""
+    part = name + ".part"; base = rel["upload_url"].split("{")[0]
     with open(path, "rb") as f: data = f.read()
-    req("POST", url, data, headers={"Content-Type": "application/octet-stream"})
+    for i in range(tries):
+        cur = assets_of(slug, rel)
+        if part in cur: req("DELETE", f"{API}/repos/{slug}/releases/assets/{cur[part]['id']}")
+        new = _try_post(f"{base}?name={urllib.request.quote(part)}", data)
+        if new and new.get("id"):
+            if new.get("size") not in (None, len(data)): print(f"  ! {name}: uploaded size {new.get('size')} != {len(data)}, retrying", file=sys.stderr); continue
+            old = assets_of(slug, rel).get(name)
+            if old: req("DELETE", f"{API}/repos/{slug}/releases/assets/{old['id']}")
+            req("PATCH", f"{API}/repos/{slug}/releases/assets/{new['id']}", {"name": name})
+            return new
+        time.sleep(min(60, 5 * 2 ** i))
+    sys.exit(f"upload of {name} failed after {tries} tries (published copy left untouched)")
+
+
+def _try_post(url, data):
+    """One upload attempt that reports failure instead of exiting (upload() owns the retry + cleanup)."""
+    tk = token(required=True)
+    r = urllib.request.Request(url, data=data, method="POST", headers={"Accept": "application/vnd.github+json", "Authorization": f"Bearer {tk}",
+                                                                       "Content-Type": "application/octet-stream"})
+    try:
+        with urllib.request.urlopen(r, timeout=900) as resp: return json.loads(resp.read() or b"{}")
+    except Exception as e:
+        print(f"  … upload attempt failed: {type(e).__name__} {str(e)[:120]}", file=sys.stderr); return None
 
 
 def collect(d, globs):
@@ -129,9 +181,12 @@ def cmd_pull(a):
         asset = existing.get(flat(f))
         if not asset: sys.exit(f"missing asset {flat(f)} in release {man['release']}")
         p.parent.mkdir(parents=True, exist_ok=True)
-        data = req("GET", asset["url"], headers={"Accept": "application/octet-stream"}, raw=True)
-        p.write_bytes(data)
-        if sha256(p) != meta["sha256"]: sys.exit(f"checksum mismatch: {f}")
+        for i in range(3):                                          # a truncated body passes HTTP but not sha256
+            data = req("GET", asset["url"], headers={"Accept": "application/octet-stream"}, raw=True)
+            p.write_bytes(data)
+            if sha256(p) == meta["sha256"]: break
+            print(f"  … checksum mismatch on {f} (attempt {i + 1}/3)", file=sys.stderr); time.sleep(5 * (i + 1))
+        else: sys.exit(f"checksum mismatch: {f}")
         n += 1; print(f"  ↓ {f}")
     print(f"pulled {n} file(s); {len(man['files'])} verified in {d}")
 

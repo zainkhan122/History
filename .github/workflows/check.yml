@@ -42,3 +42,9 @@ jobs:
             ep=$(dirname "$c"); echo "== $ep"; python3 reelkit/clips.py lint "$ep"
           done
           python3 reelkit/clipcache.py verify --remote
+      - name: Delivery names (episode.json title → <Story-Title>.mp4; fails here, not after a 13-minute render)
+        run: |
+          set -e
+          for e in $(git ls-files 'series/*/*/episode.json'); do
+            ep=$(dirname "$e"); echo "== $ep → $(python3 reelkit/naming.py stem "$ep").mp4 · $(python3 reelkit/naming.py title "$ep")"
+          done

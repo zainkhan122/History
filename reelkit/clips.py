@@ -31,7 +31,7 @@ Engines (all free, tested 2026-10-11, see docs/VIDEO_SOURCES.md):
   url  any public-domain/CC0 footage URL (Wikimedia Commons, Internet Archive, NASA) trimmed in→out
 Every call goes through reelkit/clipcache.py (key = exact call incl. seed + input-image sha256), so a clip is generated
 once, ever. Raw clips are inputs (tracked by media.json + the media release). Prepped clips live only in the build dir.
-Optional HF_TOKEN env raises the ZeroGPU quota (~3 anonymous runs/day).
+Optional HF token (env HF_TOKEN or ~/.cache/secrets/hf_token, free account) raises the ZeroGPU quota 2 -> 5 GPU-min/day.
 """
 import argparse, hashlib, json, os, re, shutil, subprocess, sys, tempfile, time
 from pathlib import Path
@@ -41,7 +41,15 @@ import clipcache  # noqa: E402
 
 FF = "/usr/bin/ffmpeg" if os.path.exists("/usr/bin/ffmpeg") else (shutil.which("ffmpeg") or "ffmpeg")
 FP = "/usr/bin/ffprobe" if os.path.exists("/usr/bin/ffprobe") else (shutil.which("ffprobe") or "ffprobe")
-SPACES = {"wan": "zerogpu-aoti/wan2-2-fp8da-aoti-faster", "ltx": "Lightricks/ltx-video-distilled"}
+SPACES = {"wan": "zerogpu-aoti/wan2-2-fp8da-aoti-faster", "ltx": "Lightricks/ltx-video-distilled",
+          # Upsampler's public ZeroGPU Spaces (the backends of upsampler.com's no-signup generator, verified 2026-10-14).
+          # Same per-IP / per-account ZeroGPU quota as every Space: they add model choice + availability, not quota.
+          "wan14": "Upsampler/wan-2-2-14b-image-to-video",      # full Wan 2.2 14B i2v (Apache-2.0)
+          "ltx25": "Upsampler/ltx-2-5"}                          # LTX-2.5 i2v (LTX-2.x Community License: free < $10M revenue)
+AI_ENGINES = ("wan", "ltx", "wan14", "ltx25")
+TEMPLATED = ("wan", "wan14", "ltx25")                          # engines whose pending clips must use the 5-slot shot template
+PROVIDER = {"wan": "Wan 2.2 image-to-video (Apache-2.0 weights) via HF Space ", "wan14": "Wan 2.2 14B image-to-video (Apache-2.0 weights) via HF Space ",
+            "ltx": "LTX-Video image-to-video via HF Space ", "ltx25": "LTX-2.5 image-to-video (LTX-2.x Community License) via HF Space "}
 NEG_LTX = "worst quality, inconsistent motion, blurry, jittery, distorted, new objects, text, photorealistic"
 URL_ENCODE = "libx264 veryfast crf16 yuv420p -an"   # part of the cache key for trimmed footage; change => re-trim
 SLOTS = ("subject", "motion", "scene", "spatial", "camera")
@@ -51,7 +59,7 @@ NEGATION = re.compile(r"\b(no|not|never|without|don't|doesn't|nothing)\b", re.I)
 CAMERA = {"translation": r"\b(pan|pans|panning|truck|trucks|dolly|dollies|track|tracks|tracking|crane|cranes|pedestal|push(?:es)?[- ]in|pull(?:s)?[- ](?:back|out)|slides?|drifts? (?:left|right|up|down|forward|back))\b",
           "rotation": r"\b(tilt|tilts|tilting|roll|rolls|orbit|orbits|orbiting|rotat\w*|arc|arcs)\b",
           "zoom": r"\b(zoom|zooms|zooming)\b"}
-WORDS = {"wan": (200, 400), "ltx": (0, 80)}
+WORDS = {"wan": (200, 400), "wan14": (200, 400), "ltx": (0, 80), "ltx25": (60, 400)}
 
 
 def words(t): return len(re.findall(r"[A-Za-z0-9'’-]+", t or ""))
@@ -97,8 +105,8 @@ def call_spec(c, ep, tpl=None):
         if c.get("max_h"): spec["max_h"] = int(c["max_h"])     # opt-in height cap for >4K sources (x264 memory); keeps 9:16 crop resolution
         return spec
     if "seed" not in c: raise ValueError(f"{c['id']}: AI clips must pin a seed (cacheable + reproducible)")
-    if e == "wan":
-        return {"engine": "wan", "space": SPACES["wan"], "api": "/generate_video", "seed": int(c["seed"]), "prompt": c["prompt"],
+    if e in ("wan", "wan14"):
+        return {"engine": e, "space": SPACES[e], "api": "/generate_video", "seed": int(c["seed"]), "prompt": c["prompt"],
                 "input_sha256": input_sha(ep, c["image"]),
                 "params": {"steps": int(c.get("steps", 6)), "duration_seconds": min(float(c.get("seconds", 5)), 5.0),
                            "guidance_scale": 1, "guidance_scale_2": 1, "negative_prompt": negative(c, tpl)}}
@@ -107,13 +115,20 @@ def call_spec(c, ep, tpl=None):
                 "input_sha256": input_sha(ep, c["image"]),
                 "params": {"negative_prompt": negative(c, tpl) or NEG_LTX, "height_ui": 1216, "width_ui": 704, "mode": "image-to-video",
                            "duration_ui": min(float(c.get("seconds", 5)), 8), "ui_frames_to_use": 9, "ui_guidance_scale": 1, "improve_texture_flag": True}}
+    if e == "ltx25":       # do_enhance False: a server-side prompt rewrite would make the call irreproducible (and uncacheable)
+        return {"engine": "ltx25", "space": SPACES["ltx25"], "api": "/generate_video", "seed": int(c["seed"]), "prompt": c["prompt"],
+                "input_sha256": input_sha(ep, c["image"]),
+                "params": {"height": 1472, "width": 832, "duration_s": min(float(c.get("seconds", 5)), 5.0), "decoder": "conv",
+                           "auto_len": False, "do_enhance": False}}
     raise ValueError(f"{c['id']}: unknown engine {e}")
 
 
 def lint_clip(c, tpl, generated):
     """-> list of (level, msg). level in FAIL/WARN/INFO."""
     out, cid, e = [], c.get("id", "?"), c.get("engine")
-    if e not in ("wan", "ltx", "url"): return [("FAIL", f"{cid}: unknown engine {e!r}")]
+    if e not in AI_ENGINES + ("url",): return [("FAIL", f"{cid}: unknown engine {e!r}")]
+    for fb in c.get("fallback", []):
+        if fb not in AI_ENGINES or e == "url": out.append(("FAIL", f"{cid}: fallback {fb!r} must be an AI engine on an AI clip"))
     if e == "url":
         for k in ("url", "in", "out"):
             if k not in c: out.append(("FAIL", f"{cid}: url clip needs '{k}'"))
@@ -127,7 +142,7 @@ def lint_clip(c, tpl, generated):
     sh = c.get("shot")
     if not sh:
         if generated: out.append(("INFO", f"{cid}: legacy prompt (generated before the 5-slot template) — frozen"))
-        elif e == "wan": out.append(("FAIL", f"{cid}: pending Wan clip without `shot` slots — write the 5-slot template, then `clips.py compose`"))
+        elif e in TEMPLATED: out.append(("FAIL", f"{cid}: pending Wan clip without `shot` slots — write the 5-slot template, then `clips.py compose`"))
         if e == "ltx" and words(c.get("prompt")) > WORDS["ltx"][1]: out.append(("WARN", f"{cid}: ltx prompt {words(c.get('prompt'))} words > 80"))
         return out
     miss = [k for k in SLOTS if not sh.get(k)]
@@ -179,17 +194,20 @@ def probe(p):
 def gen_ai(spec, image, out, retries=3):
     """Run exactly `spec` (from call_spec) against its Space. Returns True on success."""
     from gradio_client import Client, handle_file
-    kw = {"hf_token": os.environ["HF_TOKEN"]} if os.environ.get("HF_TOKEN") else {}
+    tok = os.environ.get("HF_TOKEN") or (lambda f: f.read_text().strip() if f.exists() else "")(Path.home() / ".cache/secrets/hf_token")
+    kw = {"hf_token": tok} if tok else {}
     P = {k: v for k, v in spec["params"].items() if v is not None}       # None => leave the Space default
     for attempt in range(retries):
         try:
             t = time.time(); cl = Client(spec["space"], verbose=False, **kw)
-            if spec["engine"] == "wan":
+            if spec["engine"] in ("wan", "wan14"):
                 res = cl.predict(input_image=handle_file(str(image)), prompt=spec["prompt"], seed=spec["seed"], randomize_seed=False, api_name=spec["api"], **P)
+            elif spec["engine"] == "ltx25":
+                res = cl.predict(prompt=spec["prompt"], image_path=handle_file(str(image)), seed=spec["seed"], randomize_seed=False, api_name=spec["api"], **P)
             else:
                 res = cl.predict(prompt=spec["prompt"], input_image_filepath=handle_file(str(image)), input_video_filepath=None,
                                  seed_ui=spec["seed"], randomize_seed=False, api_name=spec["api"], **P)
-            v = res[0]["video"] if isinstance(res[0], dict) else res[0]
+            v = res if isinstance(res, str) else (res[0]["video"] if isinstance(res[0], dict) else res[0])
             Path(out).parent.mkdir(parents=True, exist_ok=True); shutil.copy(v, out)
             print(f"  ✓ {Path(out).name} via {spec['engine']} in {time.time() - t:.0f}s  {probe(out)}"); return True
         except Exception as e:
@@ -264,7 +282,7 @@ def target_dur(c, scenes):
 def prep_one(c, src, dst, dur):
     W, H = c.get("fit", [1296, 2322]); P = probe(src)
     vf = []
-    if c.get("engine") in ("wan", "ltx"):
+    if c.get("engine") in AI_ENGINES:
         slow = 1.0 if not dur else min(max(dur / P["dur"], 1.0), float(c.get("max_slow", 1.8)))
         if slow > 1.001: vf.append(f"setpts={slow:.4f}*PTS")
         # motion-compensated interpolation to 30 fps at native res (cheap), then upscale
@@ -301,8 +319,7 @@ def record_provenance(ep, c, key, spec, path, how):
     if c["engine"] != "url":
         e.update({"ai": True, "kind": "clip", "licence": "own-ai", "realistic": bool(c.get("realistic", False)), "derived_from": c["image"],
                   "op": "image-to-video, style preserved", "seed": spec["seed"], "prompt_sha1": hashlib.sha1(c["prompt"].encode()).hexdigest(),
-                  "provider": {"wan": "Wan 2.2 image-to-video (Apache-2.0 weights) via HF Space " + SPACES["wan"],
-                               "ltx": "LTX-Video image-to-video via HF Space " + SPACES["ltx"]}[c["engine"]]})
+                  "provider": PROVIDER[c["engine"]] + SPACES[c["engine"]]})
         if how == "generated" or "source" not in e: e["source"] = f"generated {time.strftime('%Y-%m-%d')} from {c['image']}"
     else:
         e.update({"ai": False, "kind": "archive", "derived_from": c["url"],
@@ -399,7 +416,7 @@ def main():
                           f"revert clips.json or regenerate with --force"); bad += 1; continue
                 print(f"  ~ {out.name}: stale ({rec['cache_key'][:12]} -> {cur[:12]}), rebuilding from {'archive' if c['engine'] == 'url' else 'cache'}")
             fails = [m for lv, m in lint_clip(c, tpl, False) if lv == "FAIL" and "legacy" not in m and "pending Wan clip" not in m]
-            if c["engine"] == "wan" and not c.get("shot") and c["id"] not in generated_ids(ep):
+            if c["engine"] in TEMPLATED and not c.get("shot") and c["id"] not in generated_ids(ep):
                 fails.append(f"{c['id']}: pending Wan clip without `shot` slots")
             if fails: print("  ✗ " + "\n  ✗ ".join(fails)); bad += 1; continue
             spec = call_spec(c, ep, tpl); key = clipcache.make_key(spec)
@@ -410,7 +427,25 @@ def main():
             if a.cache_only and c["engine"] != "url": print(f"  ✗ {out.name}: not cached and --cache-only"); bad += 1; continue
             tmp = Path(tempfile.mkdtemp(dir=os.environ.get("TMPDIR"))) / out.name
             if quota and c["engine"] != "url": print(f"  - {out.name}: skipped (quota exhausted this run)"); bad += 1; continue
+            if c["engine"] == "url" and not os.environ.get("GITHUB_ACTIONS") and not os.environ.get("CLIPS_LOCAL_TRIM"):
+                # Operator model: archival sources are often 4K; decoding them in the 2 GB sandbox froze it once (2026-10-14).
+                # The render job trims them (`gen --cache-only`). Set CLIPS_LOCAL_TRIM=1 only for a known ≤1080p source.
+                print(f"  ↷ {out.name}: archival trim deferred to CI (sandbox never decodes archive sources)"); continue
             ok = gen_url(c["url"], c["in"], c["out"], tmp, spec.get("max_h")) if c["engine"] == "url" else gen_ai(spec, ep / c["image"], tmp)
+            # Space broken/asleep (not quota: every ZeroGPU Space shares it) -> declared fallback engines, in order.
+            # The engine that succeeds is written back to clips.json so declaration, cache key and file stay one truth.
+            for fb in (c.get("fallback", []) if ok is False and c["engine"] != "url" else []):
+                c2 = {**c, "engine": fb}
+                if any(lv == "FAIL" for lv, _ in lint_clip(c2, tpl, False)): print(f"    fallback {fb}: lint FAIL (prompt length?) — skipped"); continue
+                spec2 = call_spec(c2, ep, tpl); key2 = clipcache.make_key(spec2)
+                print(f"    → fallback {fb} ({SPACES[fb]})")
+                ok = "cached" if clipcache.get(key2, tmp) else gen_ai(spec2, ep / c["image"], tmp)
+                if ok == "quota" or not ok: continue
+                c["engine"], spec, key = fb, spec2, key2
+                d = json.loads((ep / "clips.json").read_text())
+                for x in d["clips"]:
+                    if x["id"] == c["id"]: x["engine"] = fb; x["fallback"] = [e for e in x.get("fallback", []) if e != fb]
+                _write_json(ep / "clips.json", d); print(f"    clips.json: {c['id']} engine -> {fb}"); ok = True; break
             if ok == "quota": quota, ok = True, False
             runs += c["engine"] != "url" and ok
             if ok:

@@ -13,7 +13,9 @@ Layout checks (from the same probe):
     dead zone for ≥ 1 s (not just while animating in/out) = FAIL. Opt out a decorative unit with data-tq-safe="off".
   · Reading time: non-spoken text must stay on screen ≥ max(1.0 s, chars/13 s) -> WARN. Exempt by declaration:
     captions and text that mirrors the VO (data-tq-spoken), and deliberate graphic flashes (data-tq-dwell="off").
-Exit 1 on any contrast FAIL or dead-zone FAIL."""
+Exit 1 on any contrast FAIL or dead-zone FAIL.
+--layout-only: dead zones + reading time from DOM boxes only (no screenshots, no contrast). Light enough for the
+sandbox: run it before every cloud render so a dead-zone FAIL costs seconds, not a 5-minute cloud run."""
 import argparse, json, os, re, shutil, subprocess, sys, tempfile
 from pathlib import Path
 import numpy as np
@@ -23,6 +25,7 @@ HERE = Path(__file__).resolve().parent
 ap = argparse.ArgumentParser(); ap.add_argument("hf"); ap.add_argument("--step", type=float, default=0.5)
 ap.add_argument("--report"); ap.add_argument("--sheet"); ap.add_argument("--keep", action="store_true")
 ap.add_argument("--no-layout", action="store_true", help="skip dead-zone + reading-time checks")
+ap.add_argument("--layout-only", action="store_true", help="dead zones + reading time only (DOM boxes, no screenshots/contrast)")
 a = ap.parse_args()
 hf = Path(a.hf).resolve()
 total = float(re.search(r'data-composition-id="main"[^>]*data-duration="([\d.]+)"', (hf / "index.html").read_text()).group(1))
@@ -45,7 +48,7 @@ def _node_path() -> str:
     sys.exit("textqa: puppeteer-core not found (is the HyperFrames CLI installed? run reelkit/setup.sh)")
 node_path = _node_path()
 r = subprocess.run(["node", str(HERE / "textqa.cjs"), str(hf), str(tmp), ",".join(map(str, times))],
-                   env={**os.environ, "NODE_PATH": node_path}, capture_output=True, text=True)
+                   env={**os.environ, "NODE_PATH": node_path, **({"TQ_LAYOUT_ONLY": "1"} if a.layout_only else {})}, capture_output=True, text=True)
 print(r.stdout.strip() or r.stderr[-2000:])
 if r.returncode: sys.exit(2)
 meta = json.load(open(tmp / "meta.json"))
@@ -91,7 +94,7 @@ n = {s: sum(u["status"] == s for u in units) for s in ("FAIL", "WARN", "PASS")}
 for u in units:
     if u["status"] != "PASS":
         print(f"  {u['status']}  {u['contrast_p10']:>5.2f}:1  t={u['t']:>5.1f}s  {u['size']:.0f}px  {u['text'][:60]!r}")
-print(f"text units: {len(units)}  PASS {n['PASS']}  WARN {n['WARN']}  FAIL {n['FAIL']}")
+print(f"text units: {len(units)}  PASS {n['PASS']}  WARN {n['WARN']}  FAIL {n['FAIL']}" if not a.layout_only else "contrast: skipped (--layout-only; runs in the render job)")
 # ---------- layout: platform dead zones + reading time ----------
 DEAD = [("top bar", lambda b: b[1] < 210), ("bottom UI", lambda b: b[3] > 1600),
         ("right action column", lambda b: b[2] > 960 and b[3] > 640), ("edge margin", lambda b: b[0] < 40 or b[2] > 1040)]

@@ -1,8 +1,16 @@
 # RESUME: living handoff (update before every sync)
 
-_Last updated: 2026-10-14 PKT by the Arena agent. Short form: `python3 tools/state.py show`._
+_Last updated: 2026-10-14 (later) PKT by the Arena agent. Short form: `python3 tools/state.py show`._
 
 ## Where we are
+- **2026-10-14 (later): robustness pass** (owner: "anything else to fix… rendering on GitHub, media finding?"; mp4 named after the story).
+  - Audit fixes: R1 dispatch pinned to HEAD sha (race of run #8 impossible) · R2 `episode.sh <ep> preflight` (textqa `--layout-only` locally,
+    ~1 min, catches what stopped runs #6/#7) · R3 failure summary in the Actions page + `cloud.py why` · R4 API retries, `.part` replace-safe
+    uploads, auth stripped on cross-host redirects (job logs) · R5 ci_setup retries + fail-fast tool checks · R6 story-named assets
+    (both releases renamed) · R8 token-expiry warning · sandbox never decodes archival sources (deferred to CI).
+  - Generators: Upsampler = HF Spaces → engines `wan14`, `ltx25` + per-clip `fallback`; browser-only tools (Creen, Media.io,
+    Video-Generator.ai, Veo) manual only. Capacity lever: free HF token. No new clip was generated (none needed).
+  - Media finding: `reelkit/find.py` (Commons/NASA/IA, licence-mapped to provenance, `add` → lint-clean url clip).
 - **2026-10-14: File 02 "The Day the Sky Ran the Telegraph" (Carrington Event 1859), first episode built fully on the new system.**
   - Files: `series/paper-trail/ep02-carrington/` (research ledger 15 claims / 11 sources; voice plan + sample gate; shots.json fingerprint
     rotated vs ep01; promise motion_led 0.55; 2 Wan clips + 5 NASA PD archival clips (url clips trimmed in CI); 3 PD stills credited on screen).

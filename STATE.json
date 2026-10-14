@@ -1,8 +1,8 @@
 {
- "now": "Ep02 (Carrington Event 1859) v1 delivered: release ep02-carrington-v1 (cloud run #9, every new-system gate passed). Ep01 v2.2 delivered under exception until 2026-12-31. Operator model: sandbox = operator, GitHub = infra.",
+ "now": "Robustness pass done (2026-10-14): sha-pinned cloud renders, preflight gate, cloud.py why, retrying/replace-safe uploads, story-named deliverables, generator engines wan14/ltx25 + fallback, find.py media finder. Ep02 v1 + Ep01 v2.2 delivered (story-named assets).",
  "next": [
-  "Owner review of File 02 v1",
-  "Ep03: pick topic (rotate format/hook/opening vs ep01+ep02 fingerprints)",
+  "Owner: optional free HF token (ZeroGPU 2 -> 5 min/day, ~2.5x clips) at ~/.cache/secrets/hf_token",
+  "Ep03: pick topic (rotate format/hook/opening vs ep01+ep02 fingerprints); media via find.py; preflight before cloud render",
   "Ep01 v3 (optional): s05/s09 clips with HF_TOKEN; retire exception"
  ],
  "owner_rules": [
@@ -13,29 +13,33 @@
   "Lightpanda requested instead of Chrome: tested \u2014 cannot paint frames; used for scraping only",
   "Buffer / YouTube auto-sharing: NOT now (later)",
   "Ideas must run inside the agent; give real inputs (prompts, scripts, beat maps), not generic advice",
-  "Text must be readable wherever it appears (plates/scrims/outlines; textqa gate \u22653:1, target 4.5:1) \u2014 casual-looking text = viewers leave"
+  "Text must be readable wherever it appears (plates/scrims/outlines; textqa gate \u22653:1, target 4.5:1) \u2014 casual-looking text = viewers leave",
+  "Deliverables named after the story: <Story-Title>.mp4/.jpg (reelkit/naming.py), never final.mp4",
+  "Free AI video generators only IF a clip is actually needed (scriptable: Upsampler Spaces = engines wan14/ltx25)"
  ],
  "blockers": [
-  "HF token optional (more Wan clips/day)"
+  "HF token optional (free account: 2.5x daily ZeroGPU quota)"
  ],
  "secrets": {
   "github": "fine-grained PAT, expires 2026-11-10, stored only at ~/.cache/secrets/gh_token (ask owner each new session)",
   "huggingface": "not provided (optional: raises ZeroGPU quota)",
   "cloudflare": "not provided (optional: Workers AI images 10k neurons/day)"
  },
- "updated_at": "2026-10-14T09:40:00Z",
+ "updated_at": "2026-10-14T12:30:00Z",
  "episodes": {
   "series/paper-trail/ep01-petrov": {
    "title": "The Man Who Did Nothing",
    "status": "v2.2 delivered (cloud run #5, QA pass); 40 % motion under owner-confirmed exception until 2026-12-31",
    "release": "ep01-petrov-v2.2",
-   "updated": "2026-10-14"
+   "updated": "2026-10-14",
+   "release_asset": "The-Man-Who-Did-Nothing.mp4"
   },
   "series/paper-trail/ep02-carrington": {
    "title": "The Day the Sky Ran the Telegraph",
    "status": "v1 delivered (cloud run #9, QA pass: -14.1 LUFS, TP -1.81, 11.7 Mbps, ASR 0.99); motion 58 % vs promise 55 %",
    "release": "ep02-carrington-v1",
-   "updated": "2026-10-14"
+   "updated": "2026-10-14",
+   "release_asset": "The-Day-the-Sky-Ran-the-Telegraph.mp4"
   }
  },
  "proven": {

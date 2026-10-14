@@ -67,6 +67,7 @@ function chrome() {
       const sv = seen[u.id] || (seen[u.id] = { id: u.id, first: t, last: t, text: "", spoken: u.spoken, dwellOff: u.dwellOff, safeOff: u.safeOff, cls: u.cls, boxes: [] });
       sv.last = t; if (u.text.trim().length > sv.text.length) sv.text = u.text.trim();
       sv.boxes.push([t, u.box.map(Math.round)]);                     // per-sample box -> persistent dead-zone intrusions only
+      if (process.env.TQ_LAYOUT_ONLY) continue;                       // layout-only: boxes are all we need (no screenshots)
       const key = u.id + "|" + u.text.trim();
       if (last[key] !== undefined && t - last[key] < 1.5) continue;
       last[key] = t;

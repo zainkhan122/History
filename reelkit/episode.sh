@@ -2,6 +2,9 @@
 # One-command episode pipeline — identical in the sandbox and on GitHub Actions.
 #   bash reelkit/episode.sh <episode_dir> [stage...]
 # stages (default: all): pull trim plan voice score assets build facts provenance planlint check textqa snap render encode qa   ('lint' = alias of check)
+#   layout    = textqa --layout-only (platform dead zones + reading time from DOM boxes; ~20 s, sandbox-safe)
+#   preflight = build facts provenance planlint check layout (+ pull trim plan score assets when this session has no build yet).
+#               Run it before every `cloud.py render`: it catches in seconds what would otherwise fail a cloud run.
 # out/ is SCRATCH (snapshot-excluded): finished files live only in GitHub Releases (cloud.py render --tag …).
 # Build dir: $BUILD (default ~/.cache/build/<episode-name>) — never inside the repo.
 set -euo pipefail
@@ -10,8 +13,11 @@ EP="$(cd "$1" && pwd)"; shift || true
 NAME="$(basename "$EP")"
 BUILD="${BUILD:-$HOME/.cache/build/$NAME}"; HF="$BUILD/hf"
 STAGES="${*:-pull trim plan voice score assets build facts provenance planlint check textqa render encode qa}"
-_st=""; for _w in $STAGES; do [ "$_w" = lint ] && _w=check; _st="$_st $_w"; done; STAGES="$_st "   # whole-word alias only
-KNOWN="pull trim plan voice score assets build facts provenance planlint check textqa snap render encode qa"
+_st=""; for _w in $STAGES; do [ "$_w" = lint ] && _w=check
+  if [ "$_w" = preflight ]; then _w="build facts provenance planlint check layout"
+    [ -f "$BUILD/mix.wav" ] || _w="pull trim plan score $_w"; [ -d "$HF/assets" ] || _w="assets $_w"; fi
+  _st="$_st $_w"; done; STAGES="$_st "   # whole-word aliases only
+KNOWN="pull trim plan voice score assets build facts provenance planlint check textqa layout snap render encode qa"
 for _w in $STAGES; do [[ " $KNOWN " == *" $_w "* ]] || { echo "episode.sh: unknown stage '$_w' (known: $KNOWN)" >&2; exit 2; }; done
 FPS="${FPS:-30}"; CRF="${CRF:-18}"; WORKERS="${WORKERS:-auto}"
 export HYPERFRAMES_NO_TELEMETRY=1 HYPERFRAMES_NO_UPDATE_CHECK=1 DO_NOT_TRACK=1 HYPERFRAMES_SKIP_SKILLS=1
@@ -32,6 +38,7 @@ has provenance && { log "provenance gate (origin + licence of every shipped file
 has planlint && { log "plan lint (shots, motion promise, silent fallbacks, static holds, slideshow risk, series drift)"; mkdir -p "$EP/out"; python3 "$REPO/reelkit/planlint.py" "$EP" --hf "$HF" --report "$EP/out/planlint.json"; }
 has check  && { log "composition check (lint + runtime + layout collisions)"; mkdir -p "$EP/out"; python3 "$REPO/reelkit/hfcheck.py" "$HF" --report "$EP/out/check.json"; }
 has textqa && { log "readability gate (every on-screen text ≥ 3:1, target 4.5:1)"; mkdir -p "$EP/out"; python3 "$REPO/reelkit/textqa.py" "$HF" --report "$EP/out/textqa.json" --sheet "$BUILD/textqa_fails.jpg"; }
+has layout && { log "layout gate (dead zones + reading time, DOM only)"; python3 "$REPO/reelkit/textqa.py" "$HF" --layout-only; }
 has snap   && { log "snapshots"; (cd "$HF" && hyperframes snapshot --at "${SNAP_AT:-1,20,47,71,86}" --no-end --timeout 30000 -o "$BUILD/snaps" >/dev/null 2>&1); ls "$BUILD/snaps"; }
 has render && { log "render ${FPS}fps crf $CRF workers $WORKERS"; (cd "$HF" && hyperframes render -f "$FPS" -w "$WORKERS" --crf "$CRF" -o "$BUILD/render.mp4" 2>&1 | grep -vE "@hf-progress|Render:trace|^\s+█" | tail -12); }
 has encode && { log "upload master (H.264 High 4.2, CRF 18 capped 12 Mbps, AAC 256k, faststart)"; mkdir -p "$EP/out"
