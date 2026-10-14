@@ -92,7 +92,9 @@ def call_spec(c, ep, tpl=None):
         cf = ep / "clips.json"; tpl = json.loads(cf.read_text()).get("template", {}) if cf.exists() else {}
     e = c["engine"]
     if e == "url":
-        return {"engine": "url", "url": c["url"], "in": c["in"], "out": c["out"], "encode": URL_ENCODE}
+        spec = {"engine": "url", "url": c["url"], "in": c["in"], "out": c["out"], "encode": URL_ENCODE}
+        if c.get("max_h"): spec["max_h"] = int(c["max_h"])     # opt-in height cap for >4K sources (x264 memory); keeps 9:16 crop resolution
+        return spec
     if "seed" not in c: raise ValueError(f"{c['id']}: AI clips must pin a seed (cacheable + reproducible)")
     if e == "wan":
         return {"engine": "wan", "space": SPACES["wan"], "api": "/generate_video", "seed": int(c["seed"]), "prompt": c["prompt"],
@@ -201,16 +203,45 @@ def space_sha(space):
     except Exception: return None
 
 
-def gen_url(url, t_in, t_out, out):
+def fetch(url, dl, tries=6):
+    """Download with backoff: archives (upload.wikimedia.org, archive.org) answer bursts with 429/503.
+    Honours Retry-After; writes <dl>.part then renames, so a cut download is never mistaken for a cached file."""
+    import urllib.request, urllib.error
+    dl = Path(dl); dl.parent.mkdir(parents=True, exist_ok=True); part = dl.with_name(dl.name + ".part")
+    rq = urllib.request.Request(url, headers={"User-Agent": "HistoryShortsResearch/1.0 (github.com/zainkhan122/History)"})
+    for i in range(tries):
+        try:
+            with urllib.request.urlopen(rq, timeout=60) as r, open(part, "wb") as o: shutil.copyfileobj(r, o, 1 << 20)
+            os.replace(part, dl); return dl
+        except (urllib.error.HTTPError, urllib.error.URLError, TimeoutError, ConnectionError) as e:
+            code = getattr(e, "code", None)
+            if code and code not in (408, 425, 429, 500, 502, 503, 504) or i == tries - 1: raise
+            ra = (getattr(e, "headers", None) or {}).get("Retry-After") if code else None
+            wait = float(ra) if ra and str(ra).isdigit() else min(90, 5 * 2 ** i)
+            print(f"  … {code or type(e).__name__} from {url.split('/')[2]}, retry {i + 1}/{tries - 1} in {wait:.0f}s"); time.sleep(wait)
+
+
+def gen_url(url, t_in, t_out, out, max_h=None):
     Path(out).parent.mkdir(parents=True, exist_ok=True)
     import hashlib, urllib.request
     dl = Path.home() / ".cache/tmp/dl" / (hashlib.sha1(url.encode()).hexdigest()[:12] + Path(url.split("?")[0]).suffix)
     if not dl.exists():
-        dl.parent.mkdir(parents=True, exist_ok=True)
-        rq = urllib.request.Request(url, headers={"User-Agent": "HistoryShortsResearch/1.0 (github.com/zainkhan122/History)"})
-        with urllib.request.urlopen(rq, timeout=120) as r, open(dl, "wb") as o: shutil.copyfileobj(r, o)
-    subprocess.run([FF, "-hide_banner", "-loglevel", "error", "-y", "-ss", str(t_in), "-to", str(t_out), "-i", str(dl),
-                    "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "16", "-pix_fmt", "yuv420p", str(out)], check=True)
+        fetch(url, dl)
+    # yuv420p needs even dimensions (e.g. 640x425 Commons ogv); the crop is a no-op for even sources, so older cache keys stay valid
+    vf = ["-vf", f"scale=w=-2:h='trunc(min(ih,{max_h})/2)*2':flags=lanczos" if max_h else "crop=trunc(iw/2)*2:trunc(ih/2)*2:0:0"]
+    # Memory guard: a 4K+ archival source decoded+encoded in a 2 GB sandbox swap-thrashed the whole machine (2026-10-14).
+    # Hard address-space ceiling + single-threaded decode/encode + short lookahead: an oversized job now fails fast
+    # with a clear message (add "max_h" to the clip) instead of hanging the session. Peak measured: 4240x2832 -> h1440 ≈ 0.76 GB.
+    def guard():
+        import resource
+        lim = int(os.environ.get("CLIP_MEM_MB", "1400")) << 20
+        resource.setrlimit(resource.RLIMIT_AS, (lim, lim))
+    r = subprocess.run([FF, "-hide_banner", "-loglevel", "error", "-y", "-threads", "1", "-ss", str(t_in), "-to", str(t_out), "-i", str(dl), *vf,
+                        "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "16", "-pix_fmt", "yuv420p", "-threads", "1", "-rc-lookahead", "10", str(out)],
+                       preexec_fn=guard, capture_output=True, text=True, timeout=900)
+    if r.returncode:
+        raise SystemExit(f"  ✗ trim failed ({r.returncode}) for {url.rsplit('/', 1)[-1]}: {r.stderr.strip().splitlines()[-1] if r.stderr.strip() else ''}\n"
+                         f"    if the source is >1440p, add \"max_h\": 1440 to the clip (memory ceiling CLIP_MEM_MB={os.environ.get('CLIP_MEM_MB', '1400')})")
     print(f"  ✓ {Path(out).name} from archive {t_in}-{t_out}s  {probe(out)}")
     return True
 
@@ -363,7 +394,7 @@ def main():
             if a.cache_only and c["engine"] != "url": print(f"  ✗ {out.name}: not cached and --cache-only"); bad += 1; continue
             tmp = Path(tempfile.mkdtemp(dir=os.environ.get("TMPDIR"))) / out.name
             if quota and c["engine"] != "url": print(f"  - {out.name}: skipped (quota exhausted this run)"); bad += 1; continue
-            ok = gen_url(c["url"], c["in"], c["out"], tmp) if c["engine"] == "url" else gen_ai(spec, ep / c["image"], tmp)
+            ok = gen_url(c["url"], c["in"], c["out"], tmp, spec.get("max_h")) if c["engine"] == "url" else gen_ai(spec, ep / c["image"], tmp)
             if ok == "quota": quota, ok = True, False
             runs += c["engine"] != "url" and ok
             if ok:

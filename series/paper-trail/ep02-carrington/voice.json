@@ -1,0 +1,120 @@
+{
+ "version": 1,
+ "episode": "ep02-carrington",
+ "backend": "arena",
+ "voice": "Arena TTS (en, narration) — chosen by owner audition 2026-10-14",
+ "kokoro_fallback": {
+  "voice": "am_michael",
+  "speed": 1.0
+ },
+ "intent": "Wonder first, then quiet unease: the audience should feel the strangeness of the sky running a wire, admire the people who improvised, and leave thinking about now — without fear-mongering.",
+ "pacing_profile": "intrigued hush on the hook, calm scene-setting, a breathless sprint (v03) and a peak list (v06), a warm human beat (v05), reflective slow-down for Carrington's caution (v08), then a held breath on the near miss and a reverent close",
+ "pause_policy": "Ellipses are real held breaths (the hook, the storm, the batteries, the near miss); longer silences once the story turns reflective (v08–v10), and the longest hold at the end. Never pause mid-phrase except at marked ellipses.",
+ "start_hold": 0.35,
+ "end_hold": 3.6,
+ "sample_line": "v10",
+ "lines": [
+  {
+   "id": "v01",
+   "scene": "s01",
+   "tone": "tense",
+   "energy": 3,
+   "pause_after": 0.55,
+   "text": "In 1859, two telegraph operators unplugged their batteries… and kept on talking. The power was coming from the sky.",
+   "direction": "Intimate and intrigued, like sharing a secret that sounds impossible. Let the ellipsis hang; a small lift on 'kept on talking'; 'from the sky' lands low and certain.",
+   "pauses": {
+    "talking": 0.45
+   }
+  },
+  {
+   "id": "v02",
+   "scene": "s02",
+   "tone": "neutral",
+   "energy": 2,
+   "pause_after": 0.45,
+   "text": "On September 1st, at 11:18 in the morning, the astronomer Richard Carrington was sketching sunspots… when two patches of intensely bright, white light broke out.",
+   "direction": "Calm storyteller setting the scene; unhurried on the date and time. Slight wonder rising on 'intensely bright, white light'."
+  },
+  {
+   "id": "v03",
+   "scene": "s03",
+   "tone": "urgent",
+   "energy": 4,
+   "pause_after": 0.5,
+   "text": "He ran to find a witness. Within sixty seconds, it was fading. Five minutes, and it was gone.",
+   "direction": "Quick, breathless sentences; the hurry of a man running. Drop the energy on 'it was gone', almost deflated."
+  },
+  {
+   "id": "v04",
+   "scene": "s04",
+   "tone": "tense",
+   "energy": 4,
+   "pause_after": 0.6,
+   "text": "About seventeen hours later, Earth's magnetic field began to shake… and the night sky turned blood red, as far south as Cuba.",
+   "direction": "Building dread. Weight on 'seventeen hours'; hold the ellipsis; 'blood red' slow and vivid."
+  },
+  {
+   "id": "v05",
+   "scene": "s05",
+   "tone": "revelatory",
+   "energy": 3,
+   "pause_after": 0.6,
+   "text": "In the Rocky Mountains, campers woke after midnight, and some started making breakfast. They thought it was dawn.",
+   "direction": "A touch of warmth and gentle amusement; the human, almost funny detail. 'They thought it was dawn' soft and slightly awed.",
+   "pauses": {
+    "breakfast": 0.4
+   }
+  },
+  {
+   "id": "v06",
+   "scene": "s06",
+   "tone": "urgent",
+   "energy": 5,
+   "pause_after": 0.6,
+   "text": "Telegraph lines went wild. Sparks jumped from the equipment, operators took shocks, and telegraph paper caught fire.",
+   "direction": "Peak energy: a rapid list, each clause hitting harder. 'Caught fire' crisp, then stop."
+  },
+  {
+   "id": "v07",
+   "scene": "s07",
+   "tone": "resolute",
+   "energy": 3,
+   "pause_after": 0.75,
+   "text": "So between Boston and Portland, the operators disconnected their batteries… and worked the line for about two hours, on the aurora's current alone.",
+   "direction": "Admiring, steady: ingenuity under pressure. Let the ellipsis breathe; quiet pride on 'on the aurora's current alone'."
+  },
+  {
+   "id": "v08",
+   "scene": "s08",
+   "tone": "somber",
+   "energy": 2,
+   "pause_after": 0.9,
+   "text": "Carrington had seen the flare, and the storm. But he wouldn't claim they were connected. One swallow, he said, does not make a summer.",
+   "direction": "Reflective and respectful of his caution. Slow down for the quote; small pauses around 'he said'.",
+   "pauses": {
+    "said": 0.3
+   }
+  },
+  {
+   "id": "v09",
+   "scene": "s09",
+   "tone": "tense",
+   "energy": 4,
+   "pause_after": 0.8,
+   "text": "In July 2012, a storm at least as strong crossed Earth's orbit. One week earlier… and it would have hit us.",
+   "direction": "Modern, close, unsettling. Plain delivery of the date; a long held breath at the ellipsis; 'hit us' quiet, not dramatic."
+  },
+  {
+   "id": "v10",
+   "scene": "s10",
+   "tone": "reverent",
+   "energy": 2,
+   "text": "In 1859, the sky ran a telegraph line. Next time… it will find a world built on wires.",
+   "direction": "Slow, warm and grave: the closing thought. Leave real space after 'telegraph line'; the last words almost whispered.",
+   "pauses": {
+    "line": 0.6
+   },
+   "climax": true
+  }
+ ]
+}

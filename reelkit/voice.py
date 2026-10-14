@@ -10,6 +10,9 @@ MEASURED against it.
         --kokoro synthesise 3 speed variants locally with the Kokoro fallback voice and judge them
   python3 reelkit/voice.py lines  <ep>              # TTS-ready lines + direction (for generate_speech)
   python3 reelkit/voice.py kokoro <ep> [--only v01,v02] [--out DIR]   # synthesise with per-tone speed
+  python3 reelkit/voice.py words  <ep> [--only v08,v09]
+        Word timings: trims each vo/ take exactly like trim_vo.py and transcribes it with word timestamps
+        -> <ep>/words.json {id: {dur, words: [{w, s, e}]}} (merged with --only). Run after every new take.
   python3 reelkit/voice.py shape  <ep> [--only v10] [--dry-run]
         Lengthen marked pauses that fall short of the plan by extending the take's own silence (never
         touches speech). Original take is kept at vo/orig/<id>.<ext>; shaped take = vo/<id>.wav (lossless);
@@ -122,6 +125,11 @@ def tokens(text: str):
         out.append((str(num), run_idx)); run = []
 
     for i, rw in enumerate(raw):
+        t = re.fullmatch(r"(\d{1,2})?[:.](\d{2})\W*", rw)              # clock times: 11:18 / "11" ".18" -> 1118
+        if t and t.group(1):
+            flush(); out.append((t.group(1) + t.group(2), i)); continue
+        if t and out and re.fullmatch(r"\d{1,2}", out[-1][0]) and not run:
+            out[-1] = (out[-1][0] + t.group(2), i); continue           # raw indices stay aligned to ASR words
         for part in re.split(r"[-–]", rw):
             w = re.sub(r"[^\w']", "", part.lower())
             if not w:
@@ -462,6 +470,33 @@ def cmd_kokoro(a):
         print(f"{l['id']}  {d:5.2f}s  speed {sp}  {l['text'][:60]}")
 
 
+def cmd_words(a):
+    """words.json from the takes in vo/: dur = trim_vo.py's trimmed length (48 kHz), words from whisper."""
+    import numpy as np
+    ep = Path(a.ep); V = load_plan(ep)
+    wp = ep / "words.json"
+    Wj = json.loads(wp.read_text()) if wp.exists() else {}
+    only = set(a.only.split(",")) if a.only else None
+    missing = []
+    for l in V["lines"]:
+        if only and l["id"] not in only:
+            continue
+        p = take_path(ep, l["id"])
+        if not p:
+            missing.append(l["id"]); continue
+        pcm = subprocess.run(["ffmpeg", "-v", "error", "-i", str(p), "-ac", "1", "-ar", "48000", "-f", "f32le", "-"],
+                             capture_output=True, check=True).stdout
+        x = np.frombuffer(pcm, np.float32); idx = np.flatnonzero(np.abs(x) > 0.01)
+        n = (min(len(x), idx[-1] + int(0.12 * 48000)) - max(0, idx[0] - int(0.04 * 48000))) if len(idx) else len(x)
+        words = transcribe(load(p))
+        Wj[l["id"]] = {"dur": round(n / 48000, 3), "words": words}
+        print(f"{l['id']}: {Wj[l['id']]['dur']:.3f}s  {' '.join(w['w'] for w in words)}")
+    order = [l["id"] for l in V["lines"]]
+    Wj = {k: Wj[k] for k in sorted(Wj, key=lambda k: order.index(k) if k in order else 99)}
+    wp.write_text(json.dumps(Wj, indent=1) + "\n")
+    print(f"words.json: {len(Wj)}/{len(order)} lines" + (f" · no take yet: {', '.join(missing)}" if missing else ""))
+
+
 def cmd_shape(a):
     import numpy as np, soundfile as sf, shutil
     ep = Path(a.ep).resolve(); V = load_plan(ep); Wj = json.loads((ep / "words.json").read_text())
@@ -536,8 +571,9 @@ def main():
     l = sp.add_parser("lines"); l.add_argument("ep")
     k = sp.add_parser("kokoro"); k.add_argument("ep"); k.add_argument("--only"); k.add_argument("--out")
     h = sp.add_parser("shape"); h.add_argument("ep"); h.add_argument("--only"); h.add_argument("--dry-run", action="store_true")
+    w = sp.add_parser("words"); w.add_argument("ep"); w.add_argument("--only")
     a = ap.parse_args()
-    {"check": cmd_check, "sample": cmd_sample, "lines": cmd_lines, "kokoro": cmd_kokoro, "shape": cmd_shape}[a.cmd](a)
+    {"check": cmd_check, "sample": cmd_sample, "lines": cmd_lines, "kokoro": cmd_kokoro, "shape": cmd_shape, "words": cmd_words}[a.cmd](a)
 
 
 if __name__ == "__main__":

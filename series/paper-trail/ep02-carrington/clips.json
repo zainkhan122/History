@@ -1,0 +1,134 @@
+{
+ "_doc": "Motion layers for File 02. Two Wan i2v clips animate the original plates (s01 key, s05 campers) through the 5-slot `shot` template — `prompt` is written by `python3 reelkit/clips.py compose <ep>`, never by hand. Archival clips (engine url) are public-domain NASA footage trimmed in→out through the clip cache; every one is modern illustrative footage and carries an on-screen credit. Generate: clips.py gen <ep> (cache first).",
+ "template": {
+  "style": "Hand-made illustrated cut-paper collage animation. The picture keeps exactly the same drawing, ink linework, halftone grain, torn paper edges, aged cream paper texture and limited palette of deep red, ink black, mustard and cream as the input image. Every figure and object stays exactly as drawn, with the same face, clothing and proportions from the first frame to the last. Movement is slow, small and physically plausible, like a finely animated paper diorama lit by practical lights. Only the elements described above move; the rest of the collage stays perfectly still.",
+  "avoid": [
+   "photorealistic",
+   "photograph",
+   "3D render",
+   "CGI",
+   "glossy",
+   "plastic skin",
+   "morphing",
+   "melting",
+   "warped face",
+   "extra fingers",
+   "extra limbs",
+   "new people",
+   "new objects",
+   "text",
+   "captions",
+   "subtitles",
+   "watermark",
+   "logo",
+   "flicker",
+   "jitter",
+   "fast motion",
+   "camera shake",
+   "colour shift",
+   "oversaturated",
+   "blurry",
+   "low quality"
+  ]
+ },
+ "clips": [
+  {
+   "id": "s01_telegraph",
+   "engine": "wan",
+   "image": "assets/s01_telegraph.jpg",
+   "scene": "s01",
+   "seconds": 5,
+   "seed": 21,
+   "dur": 4.2,
+   "shot": {
+    "subject": "A man's hand in a white shirt cuff and dark sleeve hovers just above a brass Victorian telegraph key on a scarred dark-red wooden desk, with a strip of paper tape and coiled cloth-covered wires beside it",
+    "motion": [
+     "small blue-white sparks crackle and flicker between the brass contacts of the telegraph key",
+     "the hand hesitates, then the index finger presses the key down once and lifts again",
+     "the deep red aurora light in the window behind pulses slowly brighter and dimmer",
+     "the loose paper tape trembles slightly on the desk"
+    ],
+    "scene": "A dark telegraph office in 1859: rough stone walls, a bookshelf, an oil lamp and brass instruments in the background, lit by the red glow of the aurora through a tall paned window",
+    "spatial": "The window with red aurora light fills the upper left of the vertical frame, the hand enters from the upper right, the telegraph key sits in the lower centre and the paper tape curls along the bottom edge",
+    "camera": "static, locked-off close-up"
+   },
+   "prompt": "A man's hand in a white shirt cuff and dark sleeve hovers just above a brass Victorian telegraph key on a scarred dark-red wooden desk, with a strip of paper tape and coiled cloth-covered wires beside it. First, small blue-white sparks crackle and flicker between the brass contacts of the telegraph key. Then the hand hesitates, then the index finger presses the key down once and lifts again. Then the deep red aurora light in the window behind pulses slowly brighter and dimmer. Finally, the loose paper tape trembles slightly on the desk. A dark telegraph office in 1859: rough stone walls, a bookshelf, an oil lamp and brass instruments in the background, lit by the red glow of the aurora through a tall paned window. The window with red aurora light fills the upper left of the vertical frame, the hand enters from the upper right, the telegraph key sits in the lower centre and the paper tape curls along the bottom edge. Camera: static, locked-off close-up. Hand-made illustrated cut-paper collage animation. The picture keeps exactly the same drawing, ink linework, halftone grain, torn paper edges, aged cream paper texture and limited palette of deep red, ink black, mustard and cream as the input image. Every figure and object stays exactly as drawn, with the same face, clothing and proportions from the first frame to the last. Movement is slow, small and physically plausible, like a finely animated paper diorama lit by practical lights. Only the elements described above move; the rest of the collage stays perfectly still."
+  },
+  {
+   "id": "s05_campers",
+   "engine": "wan",
+   "image": "assets/s05_campers.jpg",
+   "scene": "s05",
+   "seconds": 5,
+   "seed": 15,
+   "shot": {
+    "subject": "Two 1850s campers in wool coats and hats sit on their bedrolls beside a small campfire on a Rocky Mountain slope at night; the man on the left in a mustard coat holds a tin coffee pot over the fire and the man on the right in a red coat watches",
+    "motion": [
+     "tall curtains of crimson and pale aurora ripple slowly across the sky above the peaks",
+     "the campfire flames flicker and a thin column of smoke rises and drifts to the right",
+     "the man on the left slowly lowers the coffee pot toward the embers",
+     "the man on the right tilts his head up toward the glowing sky"
+    ],
+    "scene": "A Rocky Mountain slope in 1859: dark pine trees, jagged red mountain peaks and rolled bedrolls, the whole slope lit by the glowing sky as if dawn had come in the middle of the night",
+    "spatial": "The aurora fills the upper two thirds of the vertical frame above the peaks, pine trees frame the left and right edges, and the two campers and the fire sit in the lower third with the bedrolls at the bottom corners",
+    "camera": "slow, gentle push-in toward the campfire"
+   },
+   "prompt": "Two 1850s campers in wool coats and hats sit on their bedrolls beside a small campfire on a Rocky Mountain slope at night; the man on the left in a mustard coat holds a tin coffee pot over the fire and the man on the right in a red coat watches. First, tall curtains of crimson and pale aurora ripple slowly across the sky above the peaks. Then the campfire flames flicker and a thin column of smoke rises and drifts to the right. Then the man on the left slowly lowers the coffee pot toward the embers. Finally, the man on the right tilts his head up toward the glowing sky. A Rocky Mountain slope in 1859: dark pine trees, jagged red mountain peaks and rolled bedrolls, the whole slope lit by the glowing sky as if dawn had come in the middle of the night. The aurora fills the upper two thirds of the vertical frame above the peaks, pine trees frame the left and right edges, and the two campers and the fire sit in the lower third with the bedrolls at the bottom corners. Camera: slow, gentle push-in toward the campfire. Hand-made illustrated cut-paper collage animation. The picture keeps exactly the same drawing, ink linework, halftone grain, torn paper edges, aged cream paper texture and limited palette of deep red, ink black, mustard and cream as the input image. Every figure and object stays exactly as drawn, with the same face, clothing and proportions from the first frame to the last. Movement is slow, small and physically plausible, like a finely animated paper diorama lit by practical lights. Only the elements described above move; the rest of the collage stays perfectly still."
+  },
+  {
+   "id": "arch_aurora",
+   "engine": "url",
+   "scene": "s01",
+   "dur": 4.6,
+   "in": 4.0,
+   "out": 9.0,
+   "grade": "none",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Alaskan_Aurora_Time_Lapse_%28SVS15077%29.webm",
+   "source": "https://commons.wikimedia.org/wiki/File:Alaskan_Aurora_Time_Lapse_(SVS15077).webm",
+   "credit": "Aurora over Alaska, time-lapse. NASA Scientific Visualization Studio (SVS 15077), public domain. Modern footage, shown as illustration of an aurora; not 1859.",
+   "max_h": 1440
+  },
+  {
+   "id": "arch_flare",
+   "engine": "url",
+   "scene": "s03",
+   "in": 47.0,
+   "out": 54.0,
+   "grade": "none",
+   "url": "https://upload.wikimedia.org/wikipedia/commons/8/88/Largest_Flare_yet_from_Solar_Cycle_25_%28SVS14592_SDO_X8pt7_flare_May_14_2024_ProRes_Outro%29.webm",
+   "source": "https://commons.wikimedia.org/wiki/File:Largest_Flare_yet_from_Solar_Cycle_25_(SVS14592_SDO_X8pt7_flare_May_14_2024_ProRes_Outro).webm",
+   "credit": "X8.7 solar flare, 14 May 2024. NASA Solar Dynamics Observatory / Scientific Visualization Studio (SVS 14592), public domain. Modern footage, shown as illustration of a solar flare; not the 1859 flare.",
+   "max_h": 1440
+  },
+  {
+   "id": "arch_iss_aurora",
+   "engine": "url",
+   "scene": "s04",
+   "in": 9.0,
+   "out": 16.0,
+   "grade": "none",
+   "fit": [
+    1040,
+    690
+   ],
+   "url": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Aurora_Australis_from_ISS_2011_-_1.ogv",
+   "source": "https://commons.wikimedia.org/wiki/File:Aurora_Australis_from_ISS_2011_-_1.ogv",
+   "credit": "Aurora seen from the International Space Station, 17 Sept 2011. Crew Earth Observations, NASA Johnson Space Center, public domain. Modern footage, shown as illustration; the red upper glow is the same oxygen emission seen in 1859."
+  },
+  {
+   "id": "arch_cme2012",
+   "engine": "url",
+   "scene": "s09",
+   "in": 1.0,
+   "out": 6.0,
+   "grade": "none",
+   "fit": [
+    1000,
+    1000
+   ],
+   "url": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Fastest_cme_20120723a_combo.mpg",
+   "source": "https://commons.wikimedia.org/wiki/File:Fastest_cme_20120723a_combo.mpg",
+   "credit": "The coronal mass ejection of 23 July 2012 as seen by NASA's STEREO-Ahead (coronagraphs COR1/COR2 with EUVI), public domain. Actual footage of the event."
+  }
+ ]
+}

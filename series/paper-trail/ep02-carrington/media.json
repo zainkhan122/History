@@ -1,0 +1,28 @@
+{
+ "files": {
+  "clips/arch_aurora.mp4": {
+   "cache_key": "e7370fb6394144b0b0e13a24e0de16cd0a92149c5a3c216729f95a6e0275e5d1",
+   "sha256": "2476d05454d11094c80244b834aaa590e0113ca6ec8466e2a7dc9f3f677d78b7",
+   "size": 6431477,
+   "spec": "clips.json#arch_aurora"
+  },
+  "clips/arch_cme2012.mp4": {
+   "cache_key": "1e80da77964b2f97ce03d1b6b2848fafd877ebd971992c47e6ead25043f3c336",
+   "sha256": "0031e6bf3f77aaa414d7f9983712ab2aa3b72211df30ed6b89688898b73dd42c",
+   "size": 4228132,
+   "spec": "clips.json#arch_cme2012"
+  },
+  "clips/arch_flare.mp4": {
+   "cache_key": "50a16b66865a262933cef665955f74ea2e5580a06ad3008272f70e437c4cd191",
+   "sha256": "eb9587463162e05b798626354846f55602364c3774666bde88931376b5001f32",
+   "size": 11346796,
+   "spec": "clips.json#arch_flare"
+  },
+  "clips/arch_iss_aurora.mp4": {
+   "cache_key": "6bb0f45bae22b0349ce16f852e59643c04f101ead93e069f5c6a0adfdebb4ff1",
+   "sha256": "550a70420f69090fd438bca2439aa2810e8549fb03669957331fdd55d08ce824",
+   "size": 975308,
+   "spec": "clips.json#arch_iss_aurora"
+  }
+ }
+}

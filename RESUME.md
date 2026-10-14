@@ -51,6 +51,23 @@ python3 reelkit/cloud.py status        # last cloud renders
 python3 reelkit/media.py pull series/paper-trail/ep01-petrov   # only if you need the media locally
 ```
 
+## In progress — ep02 `series/paper-trail/ep02-carrington` (File 02, Carrington Event 1859), 2026-10-14
+Owner choices: topic carrington · delete old releases but keep `ep01-petrov-v2.2`, `media-ep01-petrov`, `cache-clips` + ep01 source · motion = archival PD + 2 Wan clips.
+Done (local, NOT yet committed/pushed — token needed):
+- `research.json` 11 sources, 15 claims (C01–C14, Q01), 3 myths ("gold miners" → original says campers), 5 guardrails, landscape.
+- `voice.json` 10 lines, plan check 0/0. Narrator = Arena TTS **voice-02** (owner audition; IDs don't survive sessions — re-audition if lost).
+  Sample gate on v10: take1 best (wer 0, pauses on target) → `vo/v10.mp3`. Takes v01–v07 + v10 in `vo/`; `words.json` via new `voice.py words`.
+- Plates `assets/s01_telegraph s02_sketch s05_campers s06_office.jpg` (collage style). `clips.json`: 2 Wan (s01_telegraph seed 21, s05_campers seed 15, composed, lint 0/0)
+  + 4 PD archival trimmed via clip cache (arch_aurora, arch_flare, arch_iss_aurora, arch_cme2012; blobs local, `clipcache.py sync` needs token).
+  Black Marble webm downloaded to `~/.cache/tmp/dl` (for s10, not in clips.json yet).
+Next:
+1. TTS v08, v09 + **retake v06** (pace 4.6 < urgent band 5.0) → `voice.py words --only v06,v08,v09` → `voice.py check` 0 FAIL.
+2. `plan.py` (FIX map: whisper writes "11 .18", "60", "17", "5") → set arch_aurora window (gives 3.6 s for 4–9 s; widen) + arch_nightlights clip.
+3. Wan clips after quota reset (~14:20 UTC): `clips.py gen <ep> --only s01_telegraph s05_campers`.
+4. `build.py`, `score.py`, `make_assets.py`, `shots.json`, `episode.json` (promise lock), `POST_KIT.md` → all gates (planlint cross-episode vs ep01).
+5. With token: deletion plan (releases ep01-petrov-v1, -v2, -cloud-test, media-reel-hamilton; `git rm archive/reel-hamilton/`; fix refs),
+   `media.py push`, `clipcache.py sync`, `cloud.py render ep02 --tag ep02-carrington-v1`.
+
 ## Next
 1. Owner review of v2.2 (delivered 2026-10-13) + confirm the min_motion exception.
 2. Generate s05 + s09 (daily quota reset or owner HF token) → review → shots.json → render v3 in the cloud.
@@ -72,4 +89,7 @@ python3 reelkit/media.py pull series/paper-trail/ep01-petrov   # only if you nee
   - Elements that start hidden need autoAlpha in the destination.
   - Don't let two tweens animate the same property of one element at the same time.
 - read_file sometimes misses a just-written image; retry once.
+- The sandbox has **2 GB RAM**. Encoding a >1440p archival source thrashed the whole machine; `clips.gen_url` now runs ffmpeg under a 1.4 GB RLIMIT_AS (CLIP_MEM_MB) — give 4K sources `"max_h": 1440`.
+- Commons API file URLs now carry `?utm_…` params: strip them before putting a URL in clips.json (the cache key hashes the URL).
+- upload.wikimedia.org answers bursts with 429; `clips.fetch` backs off (Retry-After) — space out downloads.
 - The fine-grained token expires **2026-11-10**.
