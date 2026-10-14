@@ -74,6 +74,10 @@ Never decode/encode >1080p video or run a full render in the sandbox. Archival f
   - Procedural graphics in `shots.json` use `build:<id>` as their source (no media file); clip/film motion still needs a real `clips/` file.
   - `clips.py gen` re-validates existing files against `media.json` `cache_key`: a stale url clip is re-trimmed, a stale AI clip FAILs unless cached.
   - Never fade/hide a clip element itself with GSAP (`gsap_animates_clip_element`): wrap its content in a child div.
+  - `textqa` runs only in the render job (it sweeps every 0.5 s). It measures the worst-case box over an element's whole dwell,
+    including pop-in offsets: keep ≥ 15 px clearance from the dead zones (bottom UI y ≥ 1600, right column x > 960 below y 640).
+  - **Dispatch a cloud render only after the commit + push call has returned** (never in parallel with it): `cloud.py` renders
+    the HEAD it reads at start (File 02 run #8 rendered the previous commit this way).
 - **Accuracy:** no fact goes in a script before it is in `research.json` with sources (protocol in `docs/CONTENT_STRATEGY.md` §3). Record conflicts between sources as a `caveat` instead of picking silently.
 - **Licensing:** commercial-safe assets only (PD / CC0 / CC BY with credit / own-generated). Avoid CC BY-SA for monetised video. Credit everything in `POST_KIT.md`.
 - Auto-posting (Buffer / YouTube API) is **not wanted yet**. Do not build or trigger it until the owner asks.

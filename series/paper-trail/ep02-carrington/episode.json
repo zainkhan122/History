@@ -3,7 +3,7 @@
  "episode": 2,
  "title": "The Day the Sky Ran the Telegraph",
  "subject": "The Carrington Event: solar flare of 1 Sept 1859 and the geomagnetic storm of 1–2 Sept 1859",
- "status": "v1 in production: built, gated locally; cloud render pending",
+ "status": "v1 delivered 2026-10-14 (cloud run #9 @4e7eb35, QA pass: -14.1 LUFS, TP -1.81, 11.7 Mbps, ASR 0.99; motion 58 %)",
  "format": "9:16 1080x1920 30fps, 88.5 s",
  "voice": "Arena TTS (en, masculine, narration); performance plan voice.json; v06 tempo 1.05x (original vo/orig/v06.mp3)",
  "release": "ep02-carrington-v1",

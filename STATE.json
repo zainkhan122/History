@@ -1,7 +1,8 @@
 {
- "now": "Ep02 (Carrington Event 1859) v1 built and passing every local gate (facts 0 FAIL, voice 0/0, provenance 0/0, planlint 0/0 motion 58% vs promise 55%, hyperframes check 0 errors); cloud render ep02-carrington-v1 next. Old versions deleted (owner); operator model (sandbox = operator, GitHub = infra).",
+ "now": "Ep02 (Carrington Event 1859) v1 delivered: release ep02-carrington-v1 (cloud run #9, every new-system gate passed). Ep01 v2.2 delivered under exception until 2026-12-31. Operator model: sandbox = operator, GitHub = infra.",
  "next": [
-  "Ep02: cloud render ep02-carrington-v1 (cloud.py render series/paper-trail/ep02-carrington --tag ep02-carrington-v1 --wait) -> fetch -> review frames -> deliver",
+  "Owner review of File 02 v1",
+  "Ep03: pick topic (rotate format/hook/opening vs ep01+ep02 fingerprints)",
   "Ep01 v3 (optional): s05/s09 clips with HF_TOKEN; retire exception"
  ],
  "owner_rules": [
@@ -22,7 +23,7 @@
   "huggingface": "not provided (optional: raises ZeroGPU quota)",
   "cloudflare": "not provided (optional: Workers AI images 10k neurons/day)"
  },
- "updated_at": "2026-10-14T09:10:00Z",
+ "updated_at": "2026-10-14T09:40:00Z",
  "episodes": {
   "series/paper-trail/ep01-petrov": {
    "title": "The Man Who Did Nothing",
@@ -32,8 +33,8 @@
   },
   "series/paper-trail/ep02-carrington": {
    "title": "The Day the Sky Ran the Telegraph",
-   "status": "v1 built, local gates pass; cloud render pending",
-   "release": "ep02-carrington-v1 (planned)",
+   "status": "v1 delivered (cloud run #9, QA pass: -14.1 LUFS, TP -1.81, 11.7 Mbps, ASR 0.99); motion 58 % vs promise 55 %",
+   "release": "ep02-carrington-v1",
    "updated": "2026-10-14"
   }
  },
@@ -42,10 +43,12 @@
   "media_roundtrip": "fresh clone + media pull: 21/21 sha256 verified",
   "cloud_render_v2": "run #2 success, QA pass: -14.08 LUFS, TP -1.22, ASR 0.963",
   "clip_cache": "2026-10-13: local/remote tiers byte-identical, corrupt/tampered blobs rejected, 8 concurrent writers -> 1 line; 15/15 lint sabotage caught",
-  "cloud_render_v2_2": "run #5 success 13 min @2e0fee4: QA pass -14.07 LUFS, TP -1.9 dBTP, 12.09 Mbps, ASR 0.963, no freezes/black/silence"
+  "cloud_render_v2_2": "run #5 success 13 min @2e0fee4: QA pass -14.07 LUFS, TP -1.9 dBTP, 12.09 Mbps, ASR 0.963, no freezes/black/silence",
+  "cloud_render_ep02": "run #9 success 13 min @4e7eb35: all gates (voice, facts, provenance, planlint, check, textqa, QA) pass; url clips trimmed in CI; 0 GPU runs (clip cache)"
  },
  "releases": [
   "ep01-petrov-v2.2",
+  "ep02-carrington-v1",
   "media-ep01-petrov",
   "media-ep02-carrington",
   "cache-clips",
